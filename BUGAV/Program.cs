@@ -16,7 +16,8 @@ namespace BUGAV
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form_BUGAV());
+            //Application.Run(new Form_BUGAV());
+            Application.Run(new AVContext());
         }
     }
 }

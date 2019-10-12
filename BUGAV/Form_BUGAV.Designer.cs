@@ -46,7 +46,9 @@
             this.groupBox_CloudScan = new System.Windows.Forms.GroupBox();
             this.groupBox_NetworkProtection = new System.Windows.Forms.GroupBox();
             this.groupBox_Update = new System.Windows.Forms.GroupBox();
+            this.darkTextBox1 = new DarkUI.Controls.DarkTextBox();
             this.menuStrip1.SuspendLayout();
+            this.groupBox_Info.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -135,6 +137,7 @@
             // 
             // groupBox_Info
             // 
+            this.groupBox_Info.Controls.Add(this.darkTextBox1);
             this.groupBox_Info.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.groupBox_Info.Location = new System.Drawing.Point(48, 55);
             this.groupBox_Info.Name = "groupBox_Info";
@@ -209,6 +212,16 @@
             this.groupBox_Update.Text = "Update";
             this.groupBox_Update.Visible = false;
             // 
+            // darkTextBox1
+            // 
+            this.darkTextBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
+            this.darkTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.darkTextBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.darkTextBox1.Location = new System.Drawing.Point(26, 31);
+            this.darkTextBox1.Name = "darkTextBox1";
+            this.darkTextBox1.Size = new System.Drawing.Size(186, 20);
+            this.darkTextBox1.TabIndex = 0;
+            // 
             // Form_BUGAV
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -229,6 +242,8 @@
             this.Text = "BUGAV";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.groupBox_Info.ResumeLayout(false);
+            this.groupBox_Info.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -253,6 +268,7 @@
         private System.Windows.Forms.GroupBox groupBox_NetworkProtection;
         private System.Windows.Forms.GroupBox groupBox_Update;
         private System.Windows.Forms.ToolStripMenuItem infoToolStripMenuItem;
+        private DarkUI.Controls.DarkTextBox darkTextBox1;
     }
 }
 
