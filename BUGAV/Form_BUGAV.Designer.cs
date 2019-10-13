@@ -339,9 +339,9 @@
             this.groupBox_NetworkProtection.Controls.Add(this.darkLabel10);
             this.groupBox_NetworkProtection.Controls.Add(this.NP_checkedListBox_Interfaces);
             this.groupBox_NetworkProtection.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.groupBox_NetworkProtection.Location = new System.Drawing.Point(23, 45);
+            this.groupBox_NetworkProtection.Location = new System.Drawing.Point(1173, 913);
             this.groupBox_NetworkProtection.Name = "groupBox_NetworkProtection";
-            this.groupBox_NetworkProtection.Size = new System.Drawing.Size(1061, 607);
+            this.groupBox_NetworkProtection.Size = new System.Drawing.Size(224, 126);
             this.groupBox_NetworkProtection.TabIndex = 7;
             this.groupBox_NetworkProtection.TabStop = false;
             this.groupBox_NetworkProtection.Text = "NetworkProtection";
