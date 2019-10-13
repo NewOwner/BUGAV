@@ -59,10 +59,21 @@
             this.Filter_TextBox_RegKey = new DarkUI.Controls.DarkTextBox();
             this.Filter_Button_DeleteRegKey = new DarkUI.Controls.DarkButton();
             this.Filter_checkedListBox_RegKeys = new System.Windows.Forms.CheckedListBox();
+            this.SA_checkedListBox_Files = new System.Windows.Forms.CheckedListBox();
+            this.darkLabel5 = new DarkUI.Controls.DarkLabel();
+            this.SA_Button_AddFile = new DarkUI.Controls.DarkButton();
+            this.SA_Button_DeleteFile = new DarkUI.Controls.DarkButton();
+            this.SA_checkedListBox_Directories = new System.Windows.Forms.CheckedListBox();
+            this.darkLabel6 = new DarkUI.Controls.DarkLabel();
+            this.SA_Button_AddDir = new DarkUI.Controls.DarkButton();
+            this.SA_Button_DeleteDir = new DarkUI.Controls.DarkButton();
+            this.SA_Button_ScanFiles = new DarkUI.Controls.DarkButton();
+            this.SA_Button_ScanDirs = new DarkUI.Controls.DarkButton();
             this.menuStrip1.SuspendLayout();
             this.groupBox_Info.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox_Filter.SuspendLayout();
+            this.groupBox_StaticAnalysis.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -84,50 +95,50 @@
             // controlToolStripMenuItem
             // 
             this.controlToolStripMenuItem.Name = "controlToolStripMenuItem";
-            this.controlToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
-            this.controlToolStripMenuItem.Text = "control";
+            this.controlToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.controlToolStripMenuItem.Text = "Control";
             this.controlToolStripMenuItem.Click += new System.EventHandler(this.controlToolStripMenuItem_Click);
             // 
             // filterToolStripMenuItem
             // 
             this.filterToolStripMenuItem.Name = "filterToolStripMenuItem";
-            this.filterToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
-            this.filterToolStripMenuItem.Text = "filter";
+            this.filterToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
+            this.filterToolStripMenuItem.Text = "Filter";
             this.filterToolStripMenuItem.Click += new System.EventHandler(this.filterToolStripMenuItem_Click);
             // 
             // staticAnalyzisToolStripMenuItem
             // 
             this.staticAnalyzisToolStripMenuItem.Name = "staticAnalyzisToolStripMenuItem";
-            this.staticAnalyzisToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
-            this.staticAnalyzisToolStripMenuItem.Text = "static analysys";
+            this.staticAnalyzisToolStripMenuItem.Size = new System.Drawing.Size(97, 20);
+            this.staticAnalyzisToolStripMenuItem.Text = "Static Analysys";
             this.staticAnalyzisToolStripMenuItem.Click += new System.EventHandler(this.staticAnalyzisToolStripMenuItem_Click);
             // 
             // realtimeProtectionToolStripMenuItem
             // 
             this.realtimeProtectionToolStripMenuItem.Name = "realtimeProtectionToolStripMenuItem";
-            this.realtimeProtectionToolStripMenuItem.Size = new System.Drawing.Size(120, 20);
-            this.realtimeProtectionToolStripMenuItem.Text = "realtime protection";
+            this.realtimeProtectionToolStripMenuItem.Size = new System.Drawing.Size(123, 20);
+            this.realtimeProtectionToolStripMenuItem.Text = "Realtime Protection";
             this.realtimeProtectionToolStripMenuItem.Click += new System.EventHandler(this.realtimeProtectionToolStripMenuItem_Click);
             // 
             // cloudScanToolStripMenuItem
             // 
             this.cloudScanToolStripMenuItem.Name = "cloudScanToolStripMenuItem";
-            this.cloudScanToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
-            this.cloudScanToolStripMenuItem.Text = "cloud scan";
+            this.cloudScanToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
+            this.cloudScanToolStripMenuItem.Text = "Cloud Scan";
             this.cloudScanToolStripMenuItem.Click += new System.EventHandler(this.cloudScanToolStripMenuItem_Click);
             // 
             // networkProtectionToolStripMenuItem
             // 
             this.networkProtectionToolStripMenuItem.Name = "networkProtectionToolStripMenuItem";
-            this.networkProtectionToolStripMenuItem.Size = new System.Drawing.Size(120, 20);
-            this.networkProtectionToolStripMenuItem.Text = "network protection";
+            this.networkProtectionToolStripMenuItem.Size = new System.Drawing.Size(122, 20);
+            this.networkProtectionToolStripMenuItem.Text = "Network Protection";
             this.networkProtectionToolStripMenuItem.Click += new System.EventHandler(this.networkProtectionToolStripMenuItem_Click);
             // 
             // infoToolStripMenuItem
             // 
             this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
             this.infoToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
-            this.infoToolStripMenuItem.Text = "info";
+            this.infoToolStripMenuItem.Text = "Info";
             this.infoToolStripMenuItem.Click += new System.EventHandler(this.infoToolStripMenuItem_Click);
             // 
             // groupBox_Control
@@ -150,9 +161,9 @@
             this.groupBox_Info.Controls.Add(this.pictureBox1);
             this.groupBox_Info.Controls.Add(this.darkLabel1);
             this.groupBox_Info.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.groupBox_Info.Location = new System.Drawing.Point(339, 929);
+            this.groupBox_Info.Location = new System.Drawing.Point(91, 913);
             this.groupBox_Info.Name = "groupBox_Info";
-            this.groupBox_Info.Size = new System.Drawing.Size(259, 135);
+            this.groupBox_Info.Size = new System.Drawing.Size(200, 135);
             this.groupBox_Info.TabIndex = 2;
             this.groupBox_Info.TabStop = false;
             this.groupBox_Info.Text = "Info";
@@ -226,9 +237,9 @@
             this.groupBox_Filter.Controls.Add(this.Filter_Button_AddRegKey);
             this.groupBox_Filter.Controls.Add(this.Filter_Button_AddFile);
             this.groupBox_Filter.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.groupBox_Filter.Location = new System.Drawing.Point(12, 36);
+            this.groupBox_Filter.Location = new System.Drawing.Point(317, 913);
             this.groupBox_Filter.Name = "groupBox_Filter";
-            this.groupBox_Filter.Size = new System.Drawing.Size(1553, 682);
+            this.groupBox_Filter.Size = new System.Drawing.Size(223, 139);
             this.groupBox_Filter.TabIndex = 3;
             this.groupBox_Filter.TabStop = false;
             this.groupBox_Filter.Text = "Filter";
@@ -256,10 +267,20 @@
             // 
             // groupBox_StaticAnalysis
             // 
+            this.groupBox_StaticAnalysis.Controls.Add(this.SA_Button_ScanDirs);
+            this.groupBox_StaticAnalysis.Controls.Add(this.SA_Button_ScanFiles);
+            this.groupBox_StaticAnalysis.Controls.Add(this.SA_Button_DeleteDir);
+            this.groupBox_StaticAnalysis.Controls.Add(this.SA_Button_AddDir);
+            this.groupBox_StaticAnalysis.Controls.Add(this.darkLabel6);
+            this.groupBox_StaticAnalysis.Controls.Add(this.SA_checkedListBox_Directories);
+            this.groupBox_StaticAnalysis.Controls.Add(this.SA_Button_DeleteFile);
+            this.groupBox_StaticAnalysis.Controls.Add(this.SA_Button_AddFile);
+            this.groupBox_StaticAnalysis.Controls.Add(this.darkLabel5);
+            this.groupBox_StaticAnalysis.Controls.Add(this.SA_checkedListBox_Files);
             this.groupBox_StaticAnalysis.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.groupBox_StaticAnalysis.Location = new System.Drawing.Point(91, 807);
+            this.groupBox_StaticAnalysis.Location = new System.Drawing.Point(12, 39);
             this.groupBox_StaticAnalysis.Name = "groupBox_StaticAnalysis";
-            this.groupBox_StaticAnalysis.Size = new System.Drawing.Size(200, 100);
+            this.groupBox_StaticAnalysis.Size = new System.Drawing.Size(1453, 651);
             this.groupBox_StaticAnalysis.TabIndex = 4;
             this.groupBox_StaticAnalysis.TabStop = false;
             this.groupBox_StaticAnalysis.Text = "StaticAnalysis";
@@ -365,6 +386,100 @@
             this.Filter_checkedListBox_RegKeys.Size = new System.Drawing.Size(233, 199);
             this.Filter_checkedListBox_RegKeys.TabIndex = 8;
             // 
+            // SA_checkedListBox_Files
+            // 
+            this.SA_checkedListBox_Files.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.SA_checkedListBox_Files.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.SA_checkedListBox_Files.FormattingEnabled = true;
+            this.SA_checkedListBox_Files.Location = new System.Drawing.Point(39, 82);
+            this.SA_checkedListBox_Files.Name = "SA_checkedListBox_Files";
+            this.SA_checkedListBox_Files.Size = new System.Drawing.Size(225, 169);
+            this.SA_checkedListBox_Files.TabIndex = 0;
+            // 
+            // darkLabel5
+            // 
+            this.darkLabel5.AutoSize = true;
+            this.darkLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.darkLabel5.Location = new System.Drawing.Point(37, 56);
+            this.darkLabel5.Name = "darkLabel5";
+            this.darkLabel5.Size = new System.Drawing.Size(56, 13);
+            this.darkLabel5.TabIndex = 1;
+            this.darkLabel5.Text = "Select File";
+            // 
+            // SA_Button_AddFile
+            // 
+            this.SA_Button_AddFile.Location = new System.Drawing.Point(99, 51);
+            this.SA_Button_AddFile.Name = "SA_Button_AddFile";
+            this.SA_Button_AddFile.Padding = new System.Windows.Forms.Padding(5);
+            this.SA_Button_AddFile.Size = new System.Drawing.Size(75, 23);
+            this.SA_Button_AddFile.TabIndex = 2;
+            this.SA_Button_AddFile.Text = "Add";
+            // 
+            // SA_Button_DeleteFile
+            // 
+            this.SA_Button_DeleteFile.Location = new System.Drawing.Point(189, 51);
+            this.SA_Button_DeleteFile.Name = "SA_Button_DeleteFile";
+            this.SA_Button_DeleteFile.Padding = new System.Windows.Forms.Padding(5);
+            this.SA_Button_DeleteFile.Size = new System.Drawing.Size(75, 23);
+            this.SA_Button_DeleteFile.TabIndex = 3;
+            this.SA_Button_DeleteFile.Text = "Delete";
+            // 
+            // SA_checkedListBox_Directories
+            // 
+            this.SA_checkedListBox_Directories.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.SA_checkedListBox_Directories.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.SA_checkedListBox_Directories.FormattingEnabled = true;
+            this.SA_checkedListBox_Directories.Location = new System.Drawing.Point(320, 82);
+            this.SA_checkedListBox_Directories.Name = "SA_checkedListBox_Directories";
+            this.SA_checkedListBox_Directories.Size = new System.Drawing.Size(249, 169);
+            this.SA_checkedListBox_Directories.TabIndex = 4;
+            // 
+            // darkLabel6
+            // 
+            this.darkLabel6.AutoSize = true;
+            this.darkLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.darkLabel6.Location = new System.Drawing.Point(321, 56);
+            this.darkLabel6.Name = "darkLabel6";
+            this.darkLabel6.Size = new System.Drawing.Size(82, 13);
+            this.darkLabel6.TabIndex = 5;
+            this.darkLabel6.Text = "Select Directory";
+            // 
+            // SA_Button_AddDir
+            // 
+            this.SA_Button_AddDir.Location = new System.Drawing.Point(409, 51);
+            this.SA_Button_AddDir.Name = "SA_Button_AddDir";
+            this.SA_Button_AddDir.Padding = new System.Windows.Forms.Padding(5);
+            this.SA_Button_AddDir.Size = new System.Drawing.Size(75, 23);
+            this.SA_Button_AddDir.TabIndex = 6;
+            this.SA_Button_AddDir.Text = "Add";
+            // 
+            // SA_Button_DeleteDir
+            // 
+            this.SA_Button_DeleteDir.Location = new System.Drawing.Point(494, 51);
+            this.SA_Button_DeleteDir.Name = "SA_Button_DeleteDir";
+            this.SA_Button_DeleteDir.Padding = new System.Windows.Forms.Padding(5);
+            this.SA_Button_DeleteDir.Size = new System.Drawing.Size(75, 23);
+            this.SA_Button_DeleteDir.TabIndex = 7;
+            this.SA_Button_DeleteDir.Text = "Delete";
+            // 
+            // SA_Button_ScanFiles
+            // 
+            this.SA_Button_ScanFiles.Location = new System.Drawing.Point(40, 258);
+            this.SA_Button_ScanFiles.Name = "SA_Button_ScanFiles";
+            this.SA_Button_ScanFiles.Padding = new System.Windows.Forms.Padding(5);
+            this.SA_Button_ScanFiles.Size = new System.Drawing.Size(75, 23);
+            this.SA_Button_ScanFiles.TabIndex = 8;
+            this.SA_Button_ScanFiles.Text = "Scan";
+            // 
+            // SA_Button_ScanDirs
+            // 
+            this.SA_Button_ScanDirs.Location = new System.Drawing.Point(320, 257);
+            this.SA_Button_ScanDirs.Name = "SA_Button_ScanDirs";
+            this.SA_Button_ScanDirs.Padding = new System.Windows.Forms.Padding(5);
+            this.SA_Button_ScanDirs.Size = new System.Drawing.Size(75, 23);
+            this.SA_Button_ScanDirs.TabIndex = 9;
+            this.SA_Button_ScanDirs.Text = "Scan";
+            // 
             // Form_BUGAV
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -389,6 +504,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox_Filter.ResumeLayout(false);
             this.groupBox_Filter.PerformLayout();
+            this.groupBox_StaticAnalysis.ResumeLayout(false);
+            this.groupBox_StaticAnalysis.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -426,6 +543,16 @@
         private System.Windows.Forms.Label label1;
         private DarkUI.Controls.DarkButton Filter_Button_DeleteFile;
         private DarkUI.Controls.DarkLabel darkLabel4;
+        private DarkUI.Controls.DarkButton SA_Button_DeleteFile;
+        private DarkUI.Controls.DarkButton SA_Button_AddFile;
+        private DarkUI.Controls.DarkLabel darkLabel5;
+        private System.Windows.Forms.CheckedListBox SA_checkedListBox_Files;
+        private DarkUI.Controls.DarkButton SA_Button_DeleteDir;
+        private DarkUI.Controls.DarkButton SA_Button_AddDir;
+        private DarkUI.Controls.DarkLabel darkLabel6;
+        private System.Windows.Forms.CheckedListBox SA_checkedListBox_Directories;
+        private DarkUI.Controls.DarkButton SA_Button_ScanDirs;
+        private DarkUI.Controls.DarkButton SA_Button_ScanFiles;
     }
 }
 
