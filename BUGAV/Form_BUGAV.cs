@@ -45,11 +45,6 @@ namespace BUGAV {
             groupBox_NetworkProtection.Visible = true;
         }
 
-        private void updateToolStripMenuItem_Click(object sender, EventArgs e) {
-            groupBoxInvisibleAll();
-            groupBox_Update.Visible = true;
-        }
-
         private void infoToolStripMenuItem_Click(object sender, EventArgs e) {
             groupBoxInvisibleAll();
             groupBox_Info.Visible = true;
@@ -62,7 +57,6 @@ namespace BUGAV {
             groupBox_RealtimeProtection.Visible = false;
             groupBox_CloudScan.Visible = false;
             groupBox_NetworkProtection.Visible = false;
-            groupBox_Update.Visible = false;
             groupBox_Info.Visible = false;
         }
     }

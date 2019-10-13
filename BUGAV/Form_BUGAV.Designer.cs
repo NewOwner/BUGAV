@@ -36,7 +36,6 @@
             this.realtimeProtectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cloudScanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.networkProtectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox_Control = new System.Windows.Forms.GroupBox();
             this.groupBox_Info = new System.Windows.Forms.GroupBox();
@@ -46,9 +45,15 @@
             this.groupBox_CloudScan = new System.Windows.Forms.GroupBox();
             this.groupBox_NetworkProtection = new System.Windows.Forms.GroupBox();
             this.groupBox_Update = new System.Windows.Forms.GroupBox();
-            this.darkTextBox1 = new DarkUI.Controls.DarkTextBox();
+            this.darkLabel1 = new DarkUI.Controls.DarkLabel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.info_label_version = new System.Windows.Forms.Label();
+            this.darkLabel2 = new DarkUI.Controls.DarkLabel();
+            this.darkButton1 = new DarkUI.Controls.DarkButton();
+            this.darkLabel3 = new DarkUI.Controls.DarkLabel();
             this.menuStrip1.SuspendLayout();
             this.groupBox_Info.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -60,11 +65,10 @@
             this.realtimeProtectionToolStripMenuItem,
             this.cloudScanToolStripMenuItem,
             this.networkProtectionToolStripMenuItem,
-            this.updateToolStripMenuItem,
             this.infoToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1328, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(2328, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -110,13 +114,6 @@
             this.networkProtectionToolStripMenuItem.Text = "network protection";
             this.networkProtectionToolStripMenuItem.Click += new System.EventHandler(this.networkProtectionToolStripMenuItem_Click);
             // 
-            // updateToolStripMenuItem
-            // 
-            this.updateToolStripMenuItem.Name = "updateToolStripMenuItem";
-            this.updateToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
-            this.updateToolStripMenuItem.Text = "update";
-            this.updateToolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
-            // 
             // infoToolStripMenuItem
             // 
             this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
@@ -127,7 +124,7 @@
             // groupBox_Control
             // 
             this.groupBox_Control.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.groupBox_Control.Location = new System.Drawing.Point(324, 55);
+            this.groupBox_Control.Location = new System.Drawing.Point(1010, 807);
             this.groupBox_Control.Name = "groupBox_Control";
             this.groupBox_Control.Size = new System.Drawing.Size(247, 201);
             this.groupBox_Control.TabIndex = 1;
@@ -137,11 +134,16 @@
             // 
             // groupBox_Info
             // 
-            this.groupBox_Info.Controls.Add(this.darkTextBox1);
+            this.groupBox_Info.Controls.Add(this.darkLabel3);
+            this.groupBox_Info.Controls.Add(this.darkButton1);
+            this.groupBox_Info.Controls.Add(this.darkLabel2);
+            this.groupBox_Info.Controls.Add(this.info_label_version);
+            this.groupBox_Info.Controls.Add(this.pictureBox1);
+            this.groupBox_Info.Controls.Add(this.darkLabel1);
             this.groupBox_Info.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.groupBox_Info.Location = new System.Drawing.Point(48, 55);
+            this.groupBox_Info.Location = new System.Drawing.Point(12, 38);
             this.groupBox_Info.Name = "groupBox_Info";
-            this.groupBox_Info.Size = new System.Drawing.Size(243, 173);
+            this.groupBox_Info.Size = new System.Drawing.Size(1440, 703);
             this.groupBox_Info.TabIndex = 2;
             this.groupBox_Info.TabStop = false;
             this.groupBox_Info.Text = "Info";
@@ -149,7 +151,7 @@
             // groupBox_Filter
             // 
             this.groupBox_Filter.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.groupBox_Filter.Location = new System.Drawing.Point(607, 55);
+            this.groupBox_Filter.Location = new System.Drawing.Point(1293, 807);
             this.groupBox_Filter.Name = "groupBox_Filter";
             this.groupBox_Filter.Size = new System.Drawing.Size(200, 201);
             this.groupBox_Filter.TabIndex = 3;
@@ -160,7 +162,7 @@
             // groupBox_StaticAnalysis
             // 
             this.groupBox_StaticAnalysis.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.groupBox_StaticAnalysis.Location = new System.Drawing.Point(48, 274);
+            this.groupBox_StaticAnalysis.Location = new System.Drawing.Point(91, 807);
             this.groupBox_StaticAnalysis.Name = "groupBox_StaticAnalysis";
             this.groupBox_StaticAnalysis.Size = new System.Drawing.Size(200, 100);
             this.groupBox_StaticAnalysis.TabIndex = 4;
@@ -171,7 +173,7 @@
             // groupBox_RealtimeProtection
             // 
             this.groupBox_RealtimeProtection.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.groupBox_RealtimeProtection.Location = new System.Drawing.Point(274, 274);
+            this.groupBox_RealtimeProtection.Location = new System.Drawing.Point(317, 807);
             this.groupBox_RealtimeProtection.Name = "groupBox_RealtimeProtection";
             this.groupBox_RealtimeProtection.Size = new System.Drawing.Size(200, 100);
             this.groupBox_RealtimeProtection.TabIndex = 5;
@@ -182,7 +184,7 @@
             // groupBox_CloudScan
             // 
             this.groupBox_CloudScan.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.groupBox_CloudScan.Location = new System.Drawing.Point(517, 274);
+            this.groupBox_CloudScan.Location = new System.Drawing.Point(560, 807);
             this.groupBox_CloudScan.Name = "groupBox_CloudScan";
             this.groupBox_CloudScan.Size = new System.Drawing.Size(200, 100);
             this.groupBox_CloudScan.TabIndex = 6;
@@ -193,7 +195,7 @@
             // groupBox_NetworkProtection
             // 
             this.groupBox_NetworkProtection.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.groupBox_NetworkProtection.Location = new System.Drawing.Point(746, 274);
+            this.groupBox_NetworkProtection.Location = new System.Drawing.Point(789, 807);
             this.groupBox_NetworkProtection.Name = "groupBox_NetworkProtection";
             this.groupBox_NetworkProtection.Size = new System.Drawing.Size(200, 100);
             this.groupBox_NetworkProtection.TabIndex = 7;
@@ -204,7 +206,7 @@
             // groupBox_Update
             // 
             this.groupBox_Update.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.groupBox_Update.Location = new System.Drawing.Point(48, 396);
+            this.groupBox_Update.Location = new System.Drawing.Point(91, 929);
             this.groupBox_Update.Name = "groupBox_Update";
             this.groupBox_Update.Size = new System.Drawing.Size(200, 100);
             this.groupBox_Update.TabIndex = 8;
@@ -212,21 +214,68 @@
             this.groupBox_Update.Text = "Update";
             this.groupBox_Update.Visible = false;
             // 
-            // darkTextBox1
+            // darkLabel1
             // 
-            this.darkTextBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
-            this.darkTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.darkTextBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.darkTextBox1.Location = new System.Drawing.Point(26, 31);
-            this.darkTextBox1.Name = "darkTextBox1";
-            this.darkTextBox1.Size = new System.Drawing.Size(186, 20);
-            this.darkTextBox1.TabIndex = 0;
+            this.darkLabel1.AutoSize = true;
+            this.darkLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.darkLabel1.Location = new System.Drawing.Point(445, 44);
+            this.darkLabel1.Name = "darkLabel1";
+            this.darkLabel1.Size = new System.Drawing.Size(60, 13);
+            this.darkLabel1.TabIndex = 0;
+            this.darkLabel1.Text = "darkLabel1";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.ImageLocation = "F:\\UNIVER\\9_sem\\TISUIB\\2\\BUGAV\\31-5122.png";
+            this.pictureBox1.Location = new System.Drawing.Point(20, 30);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(510, 515);
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
+            // 
+            // info_label_version
+            // 
+            this.info_label_version.AutoSize = true;
+            this.info_label_version.Location = new System.Drawing.Point(537, 495);
+            this.info_label_version.Name = "info_label_version";
+            this.info_label_version.Size = new System.Drawing.Size(69, 13);
+            this.info_label_version.TabIndex = 2;
+            this.info_label_version.Text = "Version 0.0.1";
+            // 
+            // darkLabel2
+            // 
+            this.darkLabel2.AutoSize = true;
+            this.darkLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.darkLabel2.Location = new System.Drawing.Point(537, 30);
+            this.darkLabel2.Name = "darkLabel2";
+            this.darkLabel2.Size = new System.Drawing.Size(62, 13);
+            this.darkLabel2.TabIndex = 3;
+            this.darkLabel2.Text = "MAIN INFO";
+            // 
+            // darkButton1
+            // 
+            this.darkButton1.Location = new System.Drawing.Point(540, 523);
+            this.darkButton1.Name = "darkButton1";
+            this.darkButton1.Padding = new System.Windows.Forms.Padding(5);
+            this.darkButton1.Size = new System.Drawing.Size(88, 23);
+            this.darkButton1.TabIndex = 4;
+            this.darkButton1.Text = "Check Update";
+            // 
+            // darkLabel3
+            // 
+            this.darkLabel3.AutoSize = true;
+            this.darkLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.darkLabel3.Location = new System.Drawing.Point(548, 262);
+            this.darkLabel3.Name = "darkLabel3";
+            this.darkLabel3.Size = new System.Drawing.Size(50, 13);
+            this.darkLabel3.TabIndex = 5;
+            this.darkLabel3.Text = "STATUS";
             // 
             // Form_BUGAV
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1328, 736);
+            this.ClientSize = new System.Drawing.Size(2328, 1121);
             this.Controls.Add(this.groupBox_RealtimeProtection);
             this.Controls.Add(this.groupBox_Update);
             this.Controls.Add(this.groupBox_NetworkProtection);
@@ -244,6 +293,7 @@
             this.menuStrip1.PerformLayout();
             this.groupBox_Info.ResumeLayout(false);
             this.groupBox_Info.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -258,7 +308,6 @@
         private System.Windows.Forms.ToolStripMenuItem realtimeProtectionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cloudScanToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem networkProtectionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupBox_Control;
         private System.Windows.Forms.GroupBox groupBox_Info;
         private System.Windows.Forms.GroupBox groupBox_Filter;
@@ -268,7 +317,12 @@
         private System.Windows.Forms.GroupBox groupBox_NetworkProtection;
         private System.Windows.Forms.GroupBox groupBox_Update;
         private System.Windows.Forms.ToolStripMenuItem infoToolStripMenuItem;
-        private DarkUI.Controls.DarkTextBox darkTextBox1;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private DarkUI.Controls.DarkLabel darkLabel1;
+        private DarkUI.Controls.DarkButton darkButton1;
+        private DarkUI.Controls.DarkLabel darkLabel2;
+        private System.Windows.Forms.Label info_label_version;
+        private DarkUI.Controls.DarkLabel darkLabel3;
     }
 }
 
