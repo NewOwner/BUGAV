@@ -18,11 +18,6 @@ namespace BUGAV {
 
         // GENERAL
 
-        private void controlToolStripMenuItem_Click(object sender, EventArgs e) {
-            groupBoxInvisibleAll();
-            groupBox_Control.Visible = true;
-        }
-
         private void filterToolStripMenuItem_Click(object sender, EventArgs e) {
             groupBoxInvisibleAll();
             groupBox_Filter.Visible = true;
@@ -54,7 +49,6 @@ namespace BUGAV {
         }
 
         private void groupBoxInvisibleAll() {
-            groupBox_Control.Visible = false;
             groupBox_Filter.Visible = false;
             groupBox_StaticAnalysis.Visible = false;
             groupBox_RealtimeProtection.Visible = false;
