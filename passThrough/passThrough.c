@@ -184,21 +184,6 @@ CONST FLT_OPERATION_REGISTRATION Callbacks[] = {
       PtPreOperationPassThrough,
       PtPostOperationPassThrough },
 
-    { IRP_MJ_QUERY_EA,
-      0,
-      PtPreOperationPassThrough,
-      PtPostOperationPassThrough },
-
-    { IRP_MJ_SET_EA,
-      0,
-      PtPreOperationPassThrough,
-      PtPostOperationPassThrough },
-
-    { IRP_MJ_FLUSH_BUFFERS,
-      0,
-      PtPreOperationPassThrough,
-      PtPostOperationPassThrough },
-
     { IRP_MJ_QUERY_VOLUME_INFORMATION,
       0,
       PtPreOperationPassThrough,
@@ -222,8 +207,6 @@ CONST FLT_OPERATION_REGISTRATION Callbacks[] = {
     { IRP_MJ_OPERATION_END }
 };
 
-
-//
 //  This defines what we want to filter with FltMgr
 //
 
@@ -270,6 +253,7 @@ DriverEntry(
 
     PassThroughData.DriverObject = DriverObject;
 
+    DbgPrint("### PassThrough!FltRegisterFilter\n");
     status = FltRegisterFilter(DriverObject,
         &FilterRegistration,
         &PassThroughData.Filter);
@@ -277,16 +261,23 @@ DriverEntry(
     FLT_ASSERT(NT_SUCCESS(status));
     if (!NT_SUCCESS(status)) { FltUnregisterFilter(PassThroughData.Filter); }
 
+    DbgPrint("### PassThrough!FltBuildDefaultSecurityDescriptor\n");
     status = FltBuildDefaultSecurityDescriptor(&sd, FLT_PORT_ALL_ACCESS);
+    FLT_ASSERT(NT_SUCCESS(status));
 
     RtlInitUnicodeString(&uniString, PASSFLT_PORT_NAME);
 
+    DbgPrint("### PassThrough!InitializeObjectAttributes\n");
     InitializeObjectAttributes(&oa,
         &uniString,
         OBJ_KERNEL_HANDLE | OBJ_CASE_INSENSITIVE,
         NULL,
         sd);
 
+    PassThroughData.ServerPort = NULL;
+    PassThroughData.ClientPort = NULL;
+
+    DbgPrint("### PassThrough!FltCreateCommunicationPort\n");
     status = FltCreateCommunicationPort(PassThroughData.Filter,
         &PassThroughData.ServerPort,
         &oa,
@@ -295,14 +286,18 @@ DriverEntry(
         PassDisconnect,
         PassMessage,
         1);
+    FLT_ASSERT(NT_SUCCESS(status));
 
+    DbgPrint("### PassThrough!FltFreeSecurityDescriptor\n");
     FltFreeSecurityDescriptor(sd);
 
     if (!NT_SUCCESS(status)) {
         //leave;
     }
 
+    DbgPrint("### PassThrough!FltStartFiltering\n");
     status = FltStartFiltering(PassThroughData.Filter);
+    FLT_ASSERT(NT_SUCCESS(status));
 
     if (!NT_SUCCESS(status)) { FltUnregisterFilter(PassThroughData.Filter); }
 
@@ -312,9 +307,15 @@ DriverEntry(
 NTSTATUS PtUnload(_In_ FLT_FILTER_UNLOAD_FLAGS Flags) {
     UNREFERENCED_PARAMETER(Flags);
     PAGED_CODE();
-    PT_DBG_PRINT(PTDBG_TRACE_ROUTINES, ("PassThrough!PtUnload: Entered\n"));
-    FltUnregisterFilter(PassThroughData.Filter);
 
+    DbgPrint("### PassThrough!PtUnload: Entered\n");
+    
+    FltCloseCommunicationPort(PassThroughData.ServerPort);
+    DbgPrint("### PassThrough!FltCloseCommunicationPort\n");
+
+    FltUnregisterFilter(PassThroughData.Filter);
+    DbgPrint("### PassThrough!FltUnregisterFilter\n");
+    
     return STATUS_SUCCESS;
 }
 
@@ -424,7 +425,14 @@ PassDisconnect(
 {
     PAGED_CODE();
     UNREFERENCED_PARAMETER(ConnectionCookie);
-    FltCloseClientPort(PassThroughData.Filter, &PassThroughData.ClientPort);
+
+    DbgPrint("### PassThrough!PassDisconnect: Entered\n");
+
+    if (PassThroughData.ClientPort != NULL) {
+        DbgPrint("### PassThrough!FltCloseClientPort\n");
+        FltCloseClientPort(PassThroughData.Filter, &PassThroughData.ClientPort);
+        DbgPrint("### PassThrough!FltCloseClientPort PASSED\n");
+    }
 }
 
 NTSTATUS
