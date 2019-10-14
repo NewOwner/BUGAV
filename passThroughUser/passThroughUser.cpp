@@ -9,15 +9,14 @@
 
 #define PASSFLT_PORT_NAME                   L"\\PassFltPort"
 
-VOID DisplayError( _In_ DWORD Code);
+VOID DisplayError(_In_ DWORD Code);
 DWORD InterpretCommand();
 
 #pragma warning(push)
 #pragma warning(disable:4706) // assignment within conditional expression
 
 int _cdecl
-main( _In_ int argc, _In_reads_(argc) char* argv[])
-{
+main(_In_ int argc, _In_reads_(argc) char* argv[]) {
     HANDLE port = INVALID_HANDLE_VALUE;
     HRESULT hResult = S_OK;
 
@@ -31,13 +30,20 @@ main( _In_ int argc, _In_reads_(argc) char* argv[])
         NULL,
         &port);
 
-    if (IS_ERROR(hResult)) {
+    if (hResult != S_OK) {
         printf("Could not connect to filter: 0x%08x\n", hResult);
         DisplayError(hResult);
         goto Main_Exit;
     }
 
-    InterpretCommand();
+    {
+        printf("send msg\n");
+        PCHAR parm = (PCHAR)"AAABBBCCC";
+        CHAR out_buffer[10];
+        DWORD breturned = 0;
+        hResult = FilterSendMessage(port, parm, 10, out_buffer, 10, &breturned); 
+    }
+    //InterpretCommand();
 
 Main_Exit:
 
@@ -49,7 +55,7 @@ Main_Exit:
 
 #pragma warning(pop)
 
-DWORD InterpretCommand(){
+DWORD InterpretCommand() {
     LONG parmIndex;
     PCHAR parm;
     HRESULT hResult;
@@ -58,7 +64,7 @@ DWORD InterpretCommand(){
     DWORD bufferLength;
     PWCHAR instanceString;
     WCHAR instanceName[INSTANCE_NAME_MAX_CHARS + 1];
-    
+
     parm = (PCHAR)"AAABBBCCC";
 
     printf("    Attaching to %s... ", parm);
@@ -79,30 +85,30 @@ DWORD InterpretCommand(){
 
         goto InterpretCommand_Usage;
     }
-                hResult = FilterAttach(PASSFLT_PORT_NAME,
-                    (PWSTR)buffer,
-                    NULL, // instance name
-                    sizeof(instanceName),
-                    instanceName);
+    hResult = FilterAttach(PASSFLT_PORT_NAME,
+        (PWSTR)buffer,
+        NULL, // instance name
+        sizeof(instanceName),
+        instanceName);
 
-                if (SUCCEEDED(hResult)) {
-                    printf("    Instance name: %S\n", instanceName);
-                } else {
-                    printf("\n    Could not attach to device: 0x%08x\n", hResult);
-                    DisplayError(hResult);
-                    returnValue = SUCCESS;
-                }
+    if (SUCCEEDED(hResult)) {
+        printf("    Instance name: %S\n", instanceName);
+    } else {
+        printf("\n    Could not attach to device: 0x%08x\n", hResult);
+        DisplayError(hResult);
+        returnValue = SUCCESS;
+    }
 
-                //hResult = FilterDetach(MINISPY_NAME,
-                //    (PWSTR)buffer,
-                //    instanceString);
+    //hResult = FilterDetach(MINISPY_NAME,
+    //    (PWSTR)buffer,
+    //    instanceString);
 
-                //if (IS_ERROR(hResult)) {
-                //
-                //    printf("    Could not detach from device: 0x%08x\n", hResult);
-                //    DisplayError(hResult);
-                //    returnValue = SUCCESS;
-                //}
+    //if (IS_ERROR(hResult)) {
+    //
+    //    printf("    Could not detach from device: 0x%08x\n", hResult);
+    //    DisplayError(hResult);
+    //    returnValue = SUCCESS;
+    //}
 
 InterpretCommand_Exit:
     return returnValue;

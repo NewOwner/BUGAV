@@ -409,6 +409,8 @@ Return Value
     UNREFERENCED_PARAMETER(SizeOfContext);
     UNREFERENCED_PARAMETER(ConnectionCookie);
 
+    DbgPrint("### PassThrough!PassConnect: Entered\n");
+
     FLT_ASSERT(PassThroughData.ClientPort == NULL);
     PassThroughData.ClientPort = ClientPort;
     return STATUS_SUCCESS;
@@ -468,12 +470,17 @@ Return Value:
 --*/
 {
     NTSTATUS status = STATUS_SUCCESS;
-    PASSTHROUGH_COMMAND command;
+    //PASSTHROUGH_COMMAND command;
 
     PAGED_CODE();
 
     UNREFERENCED_PARAMETER(ConnectionCookie);
     UNREFERENCED_PARAMETER(ReturnOutputBufferLength);
+    UNREFERENCED_PARAMETER(OutputBufferSize);
+    UNREFERENCED_PARAMETER(OutputBuffer);
+    UNREFERENCED_PARAMETER(InputBufferSize);
+
+    DbgPrint("### PassThrough!PassMessage: Entered\n");
 
     //                      **** PLEASE READ ****
     //  The INPUT and OUTPUT buffers are raw user mode addresses.  The filter
@@ -488,27 +495,29 @@ Return Value:
     //  The minifilter MUST continue to use a try/except around any access to
     //  these buffers.
 
-    if ((InputBuffer != NULL) &&
-        (InputBufferSize >= (FIELD_OFFSET(COMMAND_MESSAGE, Command) +
-            sizeof(PASSTHROUGH_COMMAND)))) {
 
-            //  Probe and capture input message: the message is raw user mode
-            //  buffer, so need to protect with exception handler
-
-            command = ((PCOMMAND_MESSAGE)InputBuffer)->Command;
-
-        //  Return as many log records as can fit into the OutputBuffer
-
-        if ((OutputBuffer == NULL) || (OutputBufferSize == 0)) {
-
-            status = STATUS_INVALID_PARAMETER;
-        }
-
-        PassUpdateCfg();
-    }
-    else {
-        status = STATUS_INVALID_PARAMETER;
-    }
+    DbgPrint("### PassThrough!PassMessage: %s\n", (PCHAR)InputBuffer);
+    //if ((InputBuffer != NULL) &&
+    //    (InputBufferSize >= (FIELD_OFFSET(COMMAND_MESSAGE, Command) +
+    //        sizeof(PASSTHROUGH_COMMAND)))) {
+    //
+    //        //  Probe and capture input message: the message is raw user mode
+    //        //  buffer, so need to protect with exception handler
+    //
+    //        command = ((PCOMMAND_MESSAGE)InputBuffer)->Command;
+    //
+    //    //  Return as many log records as can fit into the OutputBuffer
+    //
+    //    if ((OutputBuffer == NULL) || (OutputBufferSize == 0)) {
+    //
+    //        status = STATUS_INVALID_PARAMETER;
+    //    }
+    //
+    //    PassUpdateCfg();
+    //}
+    //else {
+    //    status = STATUS_INVALID_PARAMETER;
+    //}
     return status;
 }
 
