@@ -3,39 +3,29 @@
   <ItemGroup>
     <Filter Include="Source Files">
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx;*</Extensions>
-      <UniqueIdentifier>{54536918-FB48-48CD-A187-79DC9C161CF3}</UniqueIdentifier>
+      <UniqueIdentifier>{70613DC7-CE18-48E4-A282-83BAD5F14DB8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files">
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-      <UniqueIdentifier>{AF50A734-04A5-492C-8E8B-971B0F275794}</UniqueIdentifier>
+      <UniqueIdentifier>{61600929-B133-4CE1-A15E-E4E6B15BAFDD}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resource Files">
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms;man;xml</Extensions>
-      <UniqueIdentifier>{5444E5B6-AE93-4AA4-AD28-A5F43FCEF60F}</UniqueIdentifier>
+      <UniqueIdentifier>{E7360814-7364-44AA-933C-DD4BFBF95E8D}</UniqueIdentifier>
     </Filter>
     <Filter Include="Driver Files">
       <Extensions>inf;inv;inx;mof;mc;</Extensions>
-      <UniqueIdentifier>{DA557823-C05E-48D3-AE3A-24D4FEC497E9}</UniqueIdentifier>
+      <UniqueIdentifier>{CF3AF6D6-43D2-4102-8996-8EF19621C095}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="passThrough.c">
+    <ClCompile Include="sioctl.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="passThrough.rc">
+    <ResourceCompile Include="sioctl.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Inf Include="*.inf">
-      <Filter>Driver Files</Filter>
-    </Inf>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="passThrough.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

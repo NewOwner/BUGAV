@@ -3,39 +3,32 @@
   <ItemGroup>
     <Filter Include="Source Files">
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx;*</Extensions>
-      <UniqueIdentifier>{54536918-FB48-48CD-A187-79DC9C161CF3}</UniqueIdentifier>
+      <UniqueIdentifier>{4243F39C-A64A-4B76-A036-79C53BA0206B}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files">
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-      <UniqueIdentifier>{AF50A734-04A5-492C-8E8B-971B0F275794}</UniqueIdentifier>
+      <UniqueIdentifier>{F7B67833-A22B-4006-A079-F0D96CEE134D}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resource Files">
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms;man;xml</Extensions>
-      <UniqueIdentifier>{5444E5B6-AE93-4AA4-AD28-A5F43FCEF60F}</UniqueIdentifier>
+      <UniqueIdentifier>{812A1243-8677-4D30-ADBD-FE3C692BE131}</UniqueIdentifier>
     </Filter>
     <Filter Include="Driver Files">
       <Extensions>inf;inv;inx;mof;mc;</Extensions>
-      <UniqueIdentifier>{DA557823-C05E-48D3-AE3A-24D4FEC497E9}</UniqueIdentifier>
+      <UniqueIdentifier>{35C73905-6A6E-445E-A3B9-343CC1C58CDE}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="passThrough.c">
+    <ClCompile Include="CdoInit.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CdoOperations.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="passThrough.rc">
+    <ResourceCompile Include="cdo.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Inf Include="*.inf">
-      <Filter>Driver Files</Filter>
-    </Inf>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="passThrough.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
