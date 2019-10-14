@@ -10,7 +10,6 @@
 #define PASSFLT_PORT_NAME                   L"\\PassFltPort"
 
 VOID DisplayError(_In_ DWORD Code);
-DWORD InterpretCommand();
 
 #pragma warning(push)
 #pragma warning(disable:4706) // assignment within conditional expression
@@ -38,12 +37,11 @@ main(_In_ int argc, _In_reads_(argc) char* argv[]) {
 
     {
         printf("send msg\n");
-        PCHAR parm = (PCHAR)"AAABBBCCC";
+        PCHAR parm = (PCHAR)"updfcfg";
         CHAR out_buffer[10];
         DWORD breturned = 0;
         hResult = FilterSendMessage(port, parm, 10, out_buffer, 10, &breturned); 
     }
-    //InterpretCommand();
 
 Main_Exit:
 
@@ -54,80 +52,6 @@ Main_Exit:
 }
 
 #pragma warning(pop)
-
-DWORD InterpretCommand() {
-    LONG parmIndex;
-    PCHAR parm;
-    HRESULT hResult;
-    DWORD returnValue = SUCCESS;
-    CHAR buffer[BUFFER_SIZE];
-    DWORD bufferLength;
-    PWCHAR instanceString;
-    WCHAR instanceName[INSTANCE_NAME_MAX_CHARS + 1];
-
-    parm = (PCHAR)"AAABBBCCC";
-
-    printf("    Attaching to %s... ", parm);
-
-    bufferLength = MultiByteToWideChar(CP_ACP,
-        MB_ERR_INVALID_CHARS,
-        parm,
-        -1,
-        (LPWSTR)buffer,
-        BUFFER_SIZE / sizeof(WCHAR));
-
-    if (bufferLength == 0) {
-
-        //
-        //  We do not expect the user to provide a parm that
-        //  causes buffer to overflow. 
-        //
-
-        goto InterpretCommand_Usage;
-    }
-    hResult = FilterAttach(PASSFLT_PORT_NAME,
-        (PWSTR)buffer,
-        NULL, // instance name
-        sizeof(instanceName),
-        instanceName);
-
-    if (SUCCEEDED(hResult)) {
-        printf("    Instance name: %S\n", instanceName);
-    } else {
-        printf("\n    Could not attach to device: 0x%08x\n", hResult);
-        DisplayError(hResult);
-        returnValue = SUCCESS;
-    }
-
-    //hResult = FilterDetach(MINISPY_NAME,
-    //    (PWSTR)buffer,
-    //    instanceString);
-
-    //if (IS_ERROR(hResult)) {
-    //
-    //    printf("    Could not detach from device: 0x%08x\n", hResult);
-    //    DisplayError(hResult);
-    //    returnValue = SUCCESS;
-    //}
-
-InterpretCommand_Exit:
-    return returnValue;
-
-InterpretCommand_Usage:
-    printf("Valid switches: [/a <drive>] [/d <drive>] [/l] [/s] [/f [<file name>]]\n"
-        "    [/a <drive>] starts monitoring <drive>\n"
-        "    [/d <drive> [<instance id>]] detaches filter <instance id> from <drive>\n"
-        "    [/l] lists all the drives the monitor is currently attached to\n"
-        "    [/s] turns on and off showing logging output on the screen\n"
-        "    [/f [<file name>]] turns on and off logging to the specified file\n"
-        "  If you are in command mode:\n"
-        "    [enter] will enter command mode\n"
-        "    [go|g] will exit command mode\n"
-        "    [exit] will terminate this program\n"
-    );
-    returnValue = USAGE_ERROR;
-    goto InterpretCommand_Exit;
-}
 
 VOID DisplayError(_In_ DWORD Code)
 /*++

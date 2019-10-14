@@ -266,10 +266,8 @@ DriverEntry(
 
     DbgPrint("############################### PassThrough!DriverEntry: Entered ###############################\n");
 
-    ///
     PassReadCfg();
-    PassDestroyProtectedFileCfg();
-    ///
+
     PassThroughData.DriverObject = DriverObject;
 
     DbgPrint("### PassThrough!FltRegisterFilter\n");
@@ -373,12 +371,12 @@ PtPreOperationPassThrough(
 
     NTSTATUS status;
 
-    PUNICODE_STRING f_name = &Data->Iopb->TargetFileObject->FileName;
-    if (f_name->Buffer != NULL) {
+    PPROTECTED_FILES flist_ptr = FltProtectedFiles;
+    while (flist_ptr != NULL) {
         PFLT_FILE_NAME_INFORMATION nameInfo = NULL;
         status = FltGetFileNameInformation(Data, FLT_FILE_NAME_NORMALIZED, &nameInfo);
         if (status == STATUS_SUCCESS) {
-            BOOLEAN comp_res = RtlEqualUnicodeString(&nameInfo->Name, &gcookie_str, TRUE);
+            BOOLEAN comp_res = RtlEqualUnicodeString(&nameInfo->Name, &flist_ptr->f_name, TRUE);
             if (comp_res == TRUE) {
 
                 DbgPrint("### Fname %wZ, volume %wZ\n", nameInfo->Name, nameInfo->Volume);
@@ -387,6 +385,7 @@ PtPreOperationPassThrough(
                 return FLT_PREOP_COMPLETE;
             }
         }
+        flist_ptr = flist_ptr->f_next;
     }
 
     return FLT_PREOP_SUCCESS_WITH_CALLBACK;
@@ -457,6 +456,8 @@ PassDisconnect(
     }
 }
 
+DECLARE_GLOBAL_CONST_UNICODE_STRING(cmdupd_str, L"updfcfg");
+
 NTSTATUS
 PassMessage(
     _In_ PVOID ConnectionCookie,
@@ -515,27 +516,17 @@ Return Value:
 
 
     DbgPrint("### PassThrough!PassMessage: %s\n", (PCHAR)InputBuffer);
-    //if ((InputBuffer != NULL) &&
-    //    (InputBufferSize >= (FIELD_OFFSET(COMMAND_MESSAGE, Command) +
-    //        sizeof(PASSTHROUGH_COMMAND)))) {
-    //
-    //        //  Probe and capture input message: the message is raw user mode
-    //        //  buffer, so need to protect with exception handler
-    //
-    //        command = ((PCOMMAND_MESSAGE)InputBuffer)->Command;
-    //
-    //    //  Return as many log records as can fit into the OutputBuffer
-    //
-    //    if ((OutputBuffer == NULL) || (OutputBufferSize == 0)) {
-    //
-    //        status = STATUS_INVALID_PARAMETER;
-    //    }
-    //
-    //    PassUpdateCfg();
-    //}
-    //else {
-    //    status = STATUS_INVALID_PARAMETER;
-    //}
+    ANSI_STRING AS;
+    UNICODE_STRING US;
+    RtlInitAnsiString(&AS, InputBuffer);
+    RtlAnsiStringToUnicodeString(&US, &AS, TRUE);
+
+    BOOLEAN comp_res = RtlEqualUnicodeString(&cmdupd_str, &US, TRUE);
+    if (comp_res == TRUE) {
+        DbgPrint("### UpdateConfig cmd\n");
+        PassUpdateCfg();
+    }
+
     return status;
 }
 
@@ -581,6 +572,8 @@ VOID PassReadCfg() {
 }
 
 VOID PassParseCfg(CHAR* cfg_buff) {
+    DbgPrint("### PassParseCfg\n");
+    if (cfg_buff[0] == '\0') { return; }
     CHAR     line[BUFF_SIZE];
     RtlZeroMemory(line, BUFF_SIZE);
     size_t bptr = 0;
@@ -598,7 +591,7 @@ VOID PassParseCfg(CHAR* cfg_buff) {
         }
     }
 
-    //PassDumpProtectedFileCfg();
+    PassDumpProtectedFileCfg();
 }
 
 VOID PassPushProtectedFileCfg(UNICODE_STRING newstr) {
@@ -636,6 +629,8 @@ VOID PassDestroyProtectedFileCfg() {
     DbgPrint("### PassDestroyProtectedFileCfg\n");
     PPROTECTED_FILES flist_ptr = FltProtectedFiles;
 
+    if (flist_ptr == NULL) { return; }
+
     while (flist_ptr->f_next != NULL) { flist_ptr = flist_ptr->f_next; }
 
     while (flist_ptr->f_prev != NULL) {
@@ -646,9 +641,9 @@ VOID PassDestroyProtectedFileCfg() {
     FltProtectedFiles = NULL;
 }
 
-
 VOID PassUpdateCfg() {
-
+    PassDestroyProtectedFileCfg();
+    PassReadCfg();
 }
 
 #pragma region kernel_other
