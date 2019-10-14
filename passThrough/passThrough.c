@@ -63,6 +63,9 @@ PassDisconnect(
 );
 
 VOID
+PassReadCfg();
+
+VOID
 PassUpdateCfg();
 
 NTSTATUS
@@ -251,6 +254,9 @@ DriverEntry(
 
     DbgPrint("############################### PassThrough!DriverEntry: Entered ###############################\n");
 
+    ///
+    PassReadCfg();
+    ///
     PassThroughData.DriverObject = DriverObject;
 
     DbgPrint("### PassThrough!FltRegisterFilter\n");
@@ -323,7 +329,7 @@ NTSTATUS PtUnload(_In_ FLT_FILTER_UNLOAD_FLAGS Flags) {
     MiniFilter callback routines.
 *************************************************************************/
 
-DECLARE_GLOBAL_CONST_UNICODE_STRING(gcookie_str, L"\\google_cookies.txt");
+DECLARE_GLOBAL_CONST_UNICODE_STRING(gcookie_str, L"\\Device\\HarddiskVolume2\\google_cookies.txt");
 
 FLT_PREOP_CALLBACK_STATUS
 PtPreOperationPassThrough(
@@ -356,17 +362,18 @@ PtPreOperationPassThrough(
 
     PUNICODE_STRING f_name = &Data->Iopb->TargetFileObject->FileName;
     if (f_name->Buffer != NULL) {
-        BOOLEAN comp_res = RtlEqualUnicodeString(f_name, &gcookie_str, TRUE);
+        PFLT_FILE_NAME_INFORMATION nameInfo = NULL;
+        status = FltGetFileNameInformation(Data, FLT_FILE_NAME_NORMALIZED, &nameInfo);
+        if (status == STATUS_SUCCESS) {
+            BOOLEAN comp_res = RtlEqualUnicodeString(&nameInfo->Name, &gcookie_str, TRUE);
+            if (comp_res == TRUE) {
 
-        if (comp_res == TRUE) {
-            PFLT_FILE_NAME_INFORMATION nameInfo = NULL;
-            status = FltGetFileNameInformation(Data, FLT_FILE_NAME_NORMALIZED, &nameInfo);
-            DbgPrint("### Fname %wZ, volume %wZ\n", f_name, nameInfo->Volume);
+                DbgPrint("### Fname %wZ, volume %wZ\n", nameInfo->Name, nameInfo->Volume);
 
-            Data->IoStatus.Status = STATUS_ACCESS_DENIED;
-            return FLT_PREOP_COMPLETE;
+                Data->IoStatus.Status = STATUS_ACCESS_DENIED;
+                return FLT_PREOP_COMPLETE;
+            }
         }
-
     }
 
     return FLT_PREOP_SUCCESS_WITH_CALLBACK;
@@ -451,8 +458,6 @@ PassMessage(
     with this minifilter.
 
     ConnectionCookie - unused
-    OperationCode - An identifier describing what type of message this
-        is.  These codes are defined by the MiniFilter.
     InputBuffer - A buffer containing input data, can be NULL if there
         is no input data.
     InputBufferSize - The size in bytes of the InputBuffer.
@@ -519,6 +524,46 @@ Return Value:
     //    status = STATUS_INVALID_PARAMETER;
     //}
     return status;
+}
+
+VOID PassReadCfg() {
+    UNICODE_STRING     uniName;
+    OBJECT_ATTRIBUTES  objAttr;
+
+    RtlInitUnicodeString(&uniName, L"\\DosDevices\\C:\\bugav.txt");  // or L"\\SystemRoot\\example.txt"
+    InitializeObjectAttributes(&objAttr, &uniName, OBJ_CASE_INSENSITIVE | OBJ_KERNEL_HANDLE, NULL, NULL);
+
+    HANDLE   handle;
+    NTSTATUS ntstatus;
+    IO_STATUS_BLOCK    ioStatusBlock;
+
+#define  BUFF_SIZE 30
+    CHAR     buffer[BUFF_SIZE];
+    RtlZeroMemory(buffer, 30);
+    //size_t  cb;
+
+    LARGE_INTEGER      byteOffset;
+
+    ntstatus = ZwCreateFile(&handle,
+        GENERIC_READ,
+        &objAttr, &ioStatusBlock,
+        NULL,
+        FILE_ATTRIBUTE_NORMAL,
+        0,
+        FILE_OPEN,
+        FILE_SYNCHRONOUS_IO_NONALERT,
+        NULL, 0);
+
+    if (NT_SUCCESS(ntstatus)) {
+        byteOffset.LowPart = byteOffset.HighPart = 0;
+        ntstatus = ZwReadFile(handle, NULL, NULL, NULL, &ioStatusBlock,
+            buffer, BUFF_SIZE, &byteOffset, NULL);
+        if (NT_SUCCESS(ntstatus)) {
+            buffer[BUFF_SIZE - 1] = '\0';
+            DbgPrint("%s\n", buffer);
+        }
+        ZwClose(handle);
+    }
 }
 
 VOID PassUpdateCfg() {
