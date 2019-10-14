@@ -15,6 +15,7 @@
 
 PASSTHROUGH_DATA PassThroughData;
 ULONG_PTR OperationStatusCtx = 1;
+PPROTECTED_FILES FltProtectedFiles = NULL;
 
 #define PTDBG_TRACE_ROUTINES            0x00000001
 #define PTDBG_TRACE_OPERATION_STATUS    0x00000002
@@ -64,6 +65,18 @@ PassDisconnect(
 
 VOID
 PassReadCfg();
+
+VOID
+PassParseCfg(CHAR* cfg_buff);
+
+VOID
+PassPushProtectedFileCfg(UNICODE_STRING newstr);
+
+VOID
+PassDumpProtectedFileCfg();
+
+VOID
+PassDestroyProtectedFileCfg();
 
 VOID
 PassUpdateCfg();
@@ -243,8 +256,7 @@ NTSTATUS
 DriverEntry(
     _In_ PDRIVER_OBJECT DriverObject,
     _In_ PUNICODE_STRING RegistryPath
-)
-{
+) {
     NTSTATUS status;
     PSECURITY_DESCRIPTOR sd;
     OBJECT_ATTRIBUTES oa;
@@ -256,6 +268,7 @@ DriverEntry(
 
     ///
     PassReadCfg();
+    PassDestroyProtectedFileCfg();
     ///
     PassThroughData.DriverObject = DriverObject;
 
@@ -315,13 +328,13 @@ NTSTATUS PtUnload(_In_ FLT_FILTER_UNLOAD_FLAGS Flags) {
     PAGED_CODE();
 
     DbgPrint("### PassThrough!PtUnload: Entered\n");
-    
+
     FltCloseCommunicationPort(PassThroughData.ServerPort);
     DbgPrint("### PassThrough!FltCloseCommunicationPort\n");
 
     FltUnregisterFilter(PassThroughData.Filter);
     DbgPrint("### PassThrough!FltUnregisterFilter\n");
-    
+
     return STATUS_SUCCESS;
 }
 
@@ -537,9 +550,9 @@ VOID PassReadCfg() {
     NTSTATUS ntstatus;
     IO_STATUS_BLOCK    ioStatusBlock;
 
-#define  BUFF_SIZE 30
+#define  BUFF_SIZE 512
     CHAR     buffer[BUFF_SIZE];
-    RtlZeroMemory(buffer, 30);
+    RtlZeroMemory(buffer, BUFF_SIZE);
     //size_t  cb;
 
     LARGE_INTEGER      byteOffset;
@@ -560,11 +573,79 @@ VOID PassReadCfg() {
             buffer, BUFF_SIZE, &byteOffset, NULL);
         if (NT_SUCCESS(ntstatus)) {
             buffer[BUFF_SIZE - 1] = '\0';
-            DbgPrint("%s\n", buffer);
+            PassParseCfg(buffer);
+
         }
         ZwClose(handle);
     }
 }
+
+VOID PassParseCfg(CHAR* cfg_buff) {
+    CHAR     line[BUFF_SIZE];
+    RtlZeroMemory(line, BUFF_SIZE);
+    size_t bptr = 0;
+    ANSI_STRING AS;
+    UNICODE_STRING US;
+    for (size_t i = 0; i < BUFF_SIZE; i++) {
+        if (cfg_buff[i] == '\n') {
+            size_t linesz = i - bptr - 1;
+            RtlCopyMemory(line, cfg_buff + bptr, linesz);
+
+            RtlInitAnsiString(&AS, line);
+            RtlAnsiStringToUnicodeString(&US, &AS, TRUE);
+            PassPushProtectedFileCfg(US);
+            bptr = i + 1;
+        }
+    }
+
+    //PassDumpProtectedFileCfg();
+}
+
+VOID PassPushProtectedFileCfg(UNICODE_STRING newstr) {
+    DbgPrint("### PassPushProtectedFileCfg\n");
+    PPROTECTED_FILES flist_ptr = FltProtectedFiles;
+    if (FltProtectedFiles == NULL) {
+        FltProtectedFiles = (PPROTECTED_FILES)ExAllocatePoolWithTag(NonPagedPool, sizeof(PROTECTED_FILES), '1liF');
+        if (FltProtectedFiles != NULL) {
+            FltProtectedFiles->f_next = NULL;
+            FltProtectedFiles->f_prev = NULL;
+            FltProtectedFiles->f_name = newstr;
+            return;
+        }
+    }
+    while (flist_ptr->f_next != NULL) { flist_ptr = flist_ptr->f_next; }
+    flist_ptr->f_next = (PPROTECTED_FILES)ExAllocatePoolWithTag(NonPagedPool, sizeof(PROTECTED_FILES), '1liF');
+    if (flist_ptr->f_next != NULL) {
+        flist_ptr->f_next->f_next = NULL;
+        flist_ptr->f_next->f_prev = flist_ptr;
+        flist_ptr->f_next->f_name = newstr;
+        return;
+    }
+}
+
+VOID PassDumpProtectedFileCfg() {
+    DbgPrint("### PassDumpProtectedFileCfg\n");
+    PPROTECTED_FILES flist_ptr = FltProtectedFiles;
+    while (flist_ptr != NULL) {
+        DbgPrint("===== %wZ\n", flist_ptr->f_name);
+        flist_ptr = flist_ptr->f_next;
+    }
+}
+
+VOID PassDestroyProtectedFileCfg() {
+    DbgPrint("### PassDestroyProtectedFileCfg\n");
+    PPROTECTED_FILES flist_ptr = FltProtectedFiles;
+
+    while (flist_ptr->f_next != NULL) { flist_ptr = flist_ptr->f_next; }
+
+    while (flist_ptr->f_prev != NULL) {
+        flist_ptr = flist_ptr->f_prev;
+        ExFreePoolWithTag(flist_ptr->f_next, '1liF');
+    }
+    ExFreePoolWithTag(flist_ptr, '1liF');
+    FltProtectedFiles = NULL;
+}
+
 
 VOID PassUpdateCfg() {
 
@@ -578,8 +659,7 @@ PtOperationStatusCallback(
     _In_ PFLT_IO_PARAMETER_BLOCK ParameterSnapshot,
     _In_ NTSTATUS OperationStatus,
     _In_ PVOID RequesterContext
-)
-{
+) {
     UNREFERENCED_PARAMETER(FltObjects);
 
     DbgPrint("############################### PassThrough!PtOperationStatusCallback: Entered ###############################\n");
@@ -599,8 +679,7 @@ PtPostOperationPassThrough(
     _In_ PCFLT_RELATED_OBJECTS FltObjects,
     _In_opt_ PVOID CompletionContext,
     _In_ FLT_POST_OPERATION_FLAGS Flags
-)
-{
+) {
     UNREFERENCED_PARAMETER(Data);
     UNREFERENCED_PARAMETER(FltObjects);
     UNREFERENCED_PARAMETER(CompletionContext);
@@ -615,8 +694,7 @@ PtPreOperationNoPostOperationPassThrough(
     _Inout_ PFLT_CALLBACK_DATA Data,
     _In_ PCFLT_RELATED_OBJECTS FltObjects,
     _Flt_CompletionContext_Outptr_ PVOID* CompletionContext
-)
-{
+) {
     UNREFERENCED_PARAMETER(Data);
     UNREFERENCED_PARAMETER(FltObjects);
     UNREFERENCED_PARAMETER(CompletionContext);

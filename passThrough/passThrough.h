@@ -23,6 +23,7 @@ typedef enum _PASSTHROUGH_COMMAND {
 typedef struct _PROTECTED_FILES {
     UNICODE_STRING f_name;
     struct _PROTECTED_FILES* f_next;
+    struct _PROTECTED_FILES* f_prev;
 } PROTECTED_FILES, *PPROTECTED_FILES;
 
 
