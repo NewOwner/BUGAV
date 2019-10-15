@@ -87,8 +87,6 @@ wmain(
     printf("Starting Callback samples...\n");
     printf("\n");
     printf("To get more detailed output from the sample, do either one of these steps:\n");
-    printf("\n");
-    printf("\tA. In kernel debugger: \n");
     printf("\tkd> ed nt!Kd_IHVDRIVER_Mask 0x8\n\n");
     printf("\tB. Run this script and reboot:\n");
     printf("\treg add \"HKLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Debug Print Filter\" /v IHVDRIVER /t REG_DWORD /d 0x8\n\n");
@@ -102,7 +100,7 @@ wmain(
         InfoPrint("Callback version is %u.%u", g_MajorVersion, g_MinorVersion);
     }
     
-    DoKernelModeSamples();
+    //DoKernelModeSamples();
     DoUserModeSamples();
 
     UtilUnloadDriver(g_Driver, NULL, DRIVER_NAME);
@@ -114,12 +112,8 @@ BOOL
 GetCallbackVersion(
     ) 
 /*++
-
-Routine Description:
-
     This routine asks the driver for the registry callback version and
     stores it in the global variables g_MajorVersion and g_MinorVersion.
-
 --*/
 {
 
@@ -152,11 +146,7 @@ VOID
 DoUserModeSamples(
     ) 
 /*++
-
-Routine Description:
-
     Creates the callback root test key and calls the usermode samples.
-
 --*/
 {
 
@@ -178,10 +168,10 @@ Routine Description:
     }
 
     PreNotificationBlockSample();
-    PreNotificationBypassSample();
-    PostNotificationOverrideSuccessSample();
-    PostNotificationOverrideErrorSample();
-    CaptureSample();
+    //PreNotificationBypassSample();
+    //PostNotificationOverrideSuccessSample();
+    //PostNotificationOverrideErrorSample();
+    //CaptureSample();
 
   Exit:
     
