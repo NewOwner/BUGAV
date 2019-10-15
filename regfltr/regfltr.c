@@ -1,34 +1,12 @@
 /*++
-Copyright (c) Microsoft Corporation.  All rights reserved.
-
-    THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
-    KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
-    IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
-    PURPOSE.
-
-Module Name:
-
-    regfltr.c
-
-Abstract: 
-
     Sample driver used to run the kernel mode registry callback samples.
-
-Environment:
-
-    Kernel mode only
-
 --*/
 
 #include "regfltr.h"
 
 
-//
 // The root key used in the samples
-//
 HANDLE g_RootKey;
-
-
 
 LPCWSTR 
 GetTransactionNotifyClassString (
@@ -43,8 +21,6 @@ GetNotifyClassString (
 VOID
 DeleteTestKeys(
     );
-
-
 
 NTSTATUS 
 Callback (

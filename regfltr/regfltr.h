@@ -251,29 +251,6 @@ CallbackPreNotificationBlock(
 BOOLEAN 
 PreNotificationBypassSample();
 
-BOOLEAN 
-PostNotificationOverrideSuccessSample();
-
-
-
-BOOLEAN 
-PostNotificationOverrideErrorSample();
-
-BOOLEAN
-TransactionEnlistSample();
-
-BOOLEAN
-SetObjectContextSample();
-
-BOOLEAN
-SetCallContextSample();
-
-BOOLEAN
-MultipleAltitudeBlockDuringPreSample();
-
-BOOLEAN
-MultipleAltitudeInternalInvocationSample();
-
 NTSTATUS
 CallbackMonitor(
     _In_ PCALLBACK_CONTEXT CallbackCtx,
@@ -287,12 +264,6 @@ CallbackCapture(
     _In_ REG_NOTIFY_CLASS NotifyClass,
     _Inout_ PVOID Argument2
     );
-
-VOID
-BugCheckSample();
-
-BOOLEAN 
-CreateOpenV1Sample();
 
 // Driver dispatch functions
 //
@@ -323,15 +294,6 @@ NTSTATUS
 CreateKTMResourceManager(
     _In_ PTM_RM_NOTIFICATION CallbackRoutine,
     _In_opt_ PVOID RMKey
-    );
-
-NTSTATUS
-EnlistInTransaction(
-    _Out_ PHANDLE EnlistmentHandle,
-    _In_ ACCESS_MASK DesiredAccess,
-    _In_ PVOID Transaction,
-    _In_ NOTIFICATION_MASK NotificationMask,
-    _In_opt_ PVOID EnlistmentKey
     );
 
 VOID
