@@ -251,72 +251,22 @@ CallbackPreNotificationBlock(
 BOOLEAN 
 PreNotificationBypassSample();
 
-NTSTATUS 
-CallbackPreNotificationBypass(
-    _In_ PCALLBACK_CONTEXT CallbackCtx,
-    _In_ REG_NOTIFY_CLASS NotifyClass,
-    _Inout_ PVOID Argument2
-    );
-
 BOOLEAN 
 PostNotificationOverrideSuccessSample();
 
-NTSTATUS 
-CallbackPostNotificationOverrideSuccess(
-    _In_ PCALLBACK_CONTEXT CallbackCtx,
-    _In_ REG_NOTIFY_CLASS NotifyClass,
-    _Inout_ PVOID Argument2
-    );
+
 
 BOOLEAN 
 PostNotificationOverrideErrorSample();
 
-NTSTATUS 
-CallbackPostNotificationOverrideError(
-    _In_ PCALLBACK_CONTEXT CallbackCtx,
-    _In_ REG_NOTIFY_CLASS NotifyClass,
-    _Inout_ PVOID Argument2
-    );
-
 BOOLEAN
 TransactionEnlistSample();
-
-NTSTATUS
-CallbackTransactionEnlist(
-    _In_ PCALLBACK_CONTEXT CallbackCtx,
-    _In_ REG_NOTIFY_CLASS NotifyClass,
-    _Inout_ PVOID Argument2
-    );
-
-BOOLEAN
-TransactionReplaySample();
-
-NTSTATUS
-CallbackTransactionReplay(
-    _In_ PCALLBACK_CONTEXT CallbackCtx,
-    _In_ REG_NOTIFY_CLASS NotifyClass,
-    _Inout_ PVOID Argument2
-    );
 
 BOOLEAN
 SetObjectContextSample();
 
-NTSTATUS
-CallbackSetObjectContext(
-    _In_ PCALLBACK_CONTEXT CallbackCtx,
-    _In_ REG_NOTIFY_CLASS NotifyClass,
-    _Inout_ PVOID Argument2
-    );
-
 BOOLEAN
 SetCallContextSample();
-
-NTSTATUS
-CallbackSetCallContext(
-    _In_ PCALLBACK_CONTEXT CallbackCtx,
-    _In_ REG_NOTIFY_CLASS NotifyClass,
-    _Inout_ PVOID Argument2
-    );
 
 BOOLEAN
 MultipleAltitudeBlockDuringPreSample();
@@ -332,13 +282,6 @@ CallbackMonitor(
     );
 
 NTSTATUS
-CallbackMultipleAltitude(
-    _In_ PCALLBACK_CONTEXT CallbackCtx,
-    _In_ REG_NOTIFY_CLASS NotifyClass,
-    _Inout_ PVOID Argument2
-    );
-
-NTSTATUS
 CallbackCapture(
     _In_ PCALLBACK_CONTEXT CallbackCtx,
     _In_ REG_NOTIFY_CLASS NotifyClass,
@@ -348,32 +291,11 @@ CallbackCapture(
 VOID
 BugCheckSample();
 
-NTSTATUS
-CallbackBugcheck(
-    _In_ PCALLBACK_CONTEXT CallbackCtx,
-    _In_ REG_NOTIFY_CLASS NotifyClass,
-    _Inout_ PVOID Argument2
-    );
-
 BOOLEAN 
 CreateOpenV1Sample();
 
-NTSTATUS
-CallbackCreateOpenV1(
-    _In_ PCALLBACK_CONTEXT CallbackCtx,
-    _In_ REG_NOTIFY_CLASS NotifyClass,
-    _Inout_ PVOID Argument2
-    );
-
-//
 // Driver dispatch functions
 //
-
-NTSTATUS
-DoCallbackSamples(
-    _In_ PDEVICE_OBJECT DeviceObject,
-    _In_ PIRP Irp
-    );
 
 NTSTATUS
 RegisterCallback(

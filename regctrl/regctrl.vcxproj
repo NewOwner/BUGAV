@@ -184,8 +184,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="capture.c" />
-    <ClCompile Include="post.c" />
     <ClCompile Include="pre.c" />
     <ClCompile Include="regctrl.c" />
     <ClCompile Include="util.c" />

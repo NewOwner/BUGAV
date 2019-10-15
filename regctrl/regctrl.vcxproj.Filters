@@ -15,12 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="capture.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="post.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="pre.c">
       <Filter>Source Files</Filter>
     </ClCompile>
