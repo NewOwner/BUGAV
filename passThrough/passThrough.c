@@ -58,28 +58,13 @@ PassConnect(
     _Flt_ConnectionCookie_Outptr_ PVOID* ConnectionCookie
 );
 
-VOID
-PassDisconnect(
-    _In_opt_ PVOID ConnectionCookie
-);
-
-VOID
-PassReadCfg();
-
-VOID
-PassParseCfg(CHAR* cfg_buff);
-
-VOID
-PassPushProtectedFileCfg(UNICODE_STRING newstr);
-
-VOID
-PassDumpProtectedFileCfg();
-
-VOID
-PassDestroyProtectedFileCfg();
-
-VOID
-PassUpdateCfg();
+VOID PassDisconnect(_In_opt_ PVOID ConnectionCookie);
+VOID PassReadCfg();
+VOID PassParseCfg(CHAR* cfg_buff);
+VOID PassPushProtectedFileCfg(UNICODE_STRING newstr);
+VOID PassDumpProtectedFileCfg();
+VOID PassDestroyProtectedFileCfg();
+VOID PassUpdateCfg();
 
 NTSTATUS
 PtInstanceSetup(
@@ -147,10 +132,7 @@ PtDoRequestOperationStatus(
     _In_ PFLT_CALLBACK_DATA Data
 );
 
-//
 //  Assign text sections for each routine.
-//
-
 #ifdef ALLOC_PRAGMA
 #pragma alloc_text(INIT, DriverEntry)
 #pragma alloc_text(PAGE, PtUnload)
@@ -160,10 +142,7 @@ PtDoRequestOperationStatus(
 #pragma alloc_text(PAGE, PtInstanceTeardownComplete)
 #endif
 
-//
 //  operation registration
-//
-
 CONST FLT_OPERATION_REGISTRATION Callbacks[] = {
     { IRP_MJ_CREATE,
       0,
@@ -224,8 +203,6 @@ CONST FLT_OPERATION_REGISTRATION Callbacks[] = {
 };
 
 //  This defines what we want to filter with FltMgr
-//
-
 CONST FLT_REGISTRATION FilterRegistration = {
 
     sizeof(FLT_REGISTRATION),         //  Size
@@ -349,21 +326,11 @@ PtPreOperationPassThrough(
     _Flt_CompletionContext_Outptr_ PVOID* CompletionContext
 )
 /*++
-
-    This routine is the main pre-operation dispatch routine for this
-    miniFilter. Since this is just a simple passThrough miniFilter it
-    does not do anything with the callbackData but rather return
-    FLT_PREOP_SUCCESS_WITH_CALLBACK thereby passing it down to the next
-    miniFilter in the chain.
-
     Data - Pointer to the filter callbackData that is passed to us.
-
     FltObjects - Pointer to the FLT_RELATED_OBJECTS data structure containing
         opaque handles to this filter, instance, its associated volume and
         file object.
-
-    CompletionContext - The context for the completion routine for this
-        operation.
+    CompletionContext - The context for the completion routine for this operation.
 --*/
 {
     UNREFERENCED_PARAMETER(FltObjects);
@@ -400,24 +367,9 @@ PassConnect(
     _Flt_ConnectionCookie_Outptr_ PVOID* ConnectionCookie
 )
 /*++
-
-Routine Description
-
-    This is called when user-mode connects to the server
-    port - to establish a connection
-
-Arguments
-
     ClientPort - This is the pointer to the client port that
         will be used to send messages from the filter.
-    ServerPortCookie - unused
-    ConnectionContext - unused
-    SizeofContext   - unused
-    ConnectionCookie - unused
-
-Return Value
-
-    STATUS_SUCCESS - to accept the connection
+    ServerPortCookie ConnectionContext SizeofContext  ConnectionCookie - unused
 --*/
 {
 
@@ -436,14 +388,7 @@ Return Value
 }
 
 
-VOID
-PassDisconnect(
-    _In_opt_ PVOID ConnectionCookie
-)
-/*++
-    This is called when the connection is torn-down. We use it to close our handle to the connection. ConnectionCookie - unused
---*/
-{
+VOID PassDisconnect(_In_opt_ PVOID ConnectionCookie){
     PAGED_CODE();
     UNREFERENCED_PARAMETER(ConnectionCookie);
 
@@ -467,29 +412,8 @@ PassMessage(
     _In_ ULONG OutputBufferSize,
     _Out_ PULONG ReturnOutputBufferLength
 )
-/*++
-    This is called whenever a user mode application wishes to communicate
-    with this minifilter.
-
-    ConnectionCookie - unused
-    InputBuffer - A buffer containing input data, can be NULL if there
-        is no input data.
-    InputBufferSize - The size in bytes of the InputBuffer.
-    OutputBuffer - A buffer provided by the application that originated
-        the communication in which to store data to be returned to this
-        application.
-    OutputBufferSize - The size in bytes of the OutputBuffer.
-    ReturnOutputBufferSize - The size in bytes of meaningful data
-        returned in the OutputBuffer.
-
-Return Value:
-
-    Returns the status of processing the message.
-
---*/
 {
     NTSTATUS status = STATUS_SUCCESS;
-    //PASSTHROUGH_COMMAND command;
 
     PAGED_CODE();
 
@@ -500,20 +424,6 @@ Return Value:
     UNREFERENCED_PARAMETER(InputBufferSize);
 
     DbgPrint("### PassThrough!PassMessage: Entered\n");
-
-    //                      **** PLEASE READ ****
-    //  The INPUT and OUTPUT buffers are raw user mode addresses.  The filter
-    //  manager has already done a ProbedForRead (on InputBuffer) and
-    //  ProbedForWrite (on OutputBuffer) which guarentees they are valid
-    //  addresses based on the access (user mode vs. kernel mode).  The
-    //  minifilter does not need to do their own probe.
-    //
-    //  The filter manager is NOT doing any alignment checking on the pointers.
-    //  The minifilter must do this themselves if they care (see below).
-    //
-    //  The minifilter MUST continue to use a try/except around any access to
-    //  these buffers.
-
 
     DbgPrint("### PassThrough!PassMessage: %s\n", (PCHAR)InputBuffer);
     ANSI_STRING AS;
@@ -794,9 +704,7 @@ PtInstanceTeardownComplete(
     _In_ PCFLT_RELATED_OBJECTS FltObjects,
     _In_ FLT_INSTANCE_TEARDOWN_FLAGS Flags
 )
-/*++
-    This routine is called at the end of instance teardown.
---*/
+/*++ This routine is called at the end of instance teardown. --*/
 {
     UNREFERENCED_PARAMETER(FltObjects);
     UNREFERENCED_PARAMETER(Flags);
