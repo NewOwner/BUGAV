@@ -40,6 +40,9 @@
     <ClCompile Include="Util.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Сfg.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="regfltr.rc">

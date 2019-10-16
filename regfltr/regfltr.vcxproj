@@ -175,6 +175,7 @@
     <ClCompile Include="regfltr.c" />
     <ClCompile Include="TxRUtil.c" />
     <ClCompile Include="Util.c" />
+    <ClCompile Include="Сfg.c" />
     <ResourceCompile Include="regfltr.rc" />
   </ItemGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

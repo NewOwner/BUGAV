@@ -238,19 +238,6 @@ CallbackPreNotificationBlock(
     _Inout_ PVOID Argument2
     );
 
-BOOLEAN 
-PreNotificationBlockSample();
-
-NTSTATUS 
-CallbackPreNotificationBlock(
-    _In_ PCALLBACK_CONTEXT CallbackCtx,
-    _In_ REG_NOTIFY_CLASS NotifyClass,
-    _Inout_ PVOID Argument2
-    );
-
-BOOLEAN 
-PreNotificationBypassSample();
-
 NTSTATUS
 CallbackMonitor(
     _In_ PCALLBACK_CONTEXT CallbackCtx,
@@ -285,6 +272,27 @@ GetCallbackVersion(
     _In_ PDEVICE_OBJECT DeviceObject,
     _In_ PIRP Irp
     );
+
+
+//
+// Config methods
+//
+
+VOID RegctrlReadCfg();
+VOID RegctrlParseCfg(CHAR* cfg_buff);
+VOID RegctrlPushProtectedFileCfg(UNICODE_STRING newstr);
+VOID RegctrlDumpProtectedFileCfg();
+VOID RegctrlDestroyProtectedFileCfg();
+VOID RegctrlUpdateCfg();
+
+typedef struct _PROTECTED_REGKEYS {
+    UNICODE_STRING k_name;
+    struct _PROTECTED_REGKEYS* k_next;
+    struct _PROTECTED_REGKEYS* k_prev;
+} PROTECTED_REGKEYS, * PPROTECTED_REGKEYS;
+
+extern PPROTECTED_REGKEYS RegctrlProtectedKeys;
+
 
 //
 // Transaction related routines

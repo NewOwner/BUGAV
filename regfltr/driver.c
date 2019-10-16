@@ -4,7 +4,7 @@
 
 #include "regfltr.h"
 
-
+PPROTECTED_REGKEYS RegctrlProtectedKeys = NULL;
 DRIVER_INITIALIZE DriverEntry;
 DRIVER_UNLOAD     DeviceUnload;
 
@@ -187,6 +187,8 @@ Arguments:
     ExInitializeFastMutex(&g_CallbackCtxListLock);
     g_NumCallbackCtxListEntries = 0;
 
+    RegctrlReadCfg();
+
     return STATUS_SUCCESS;
     
 }
@@ -260,6 +262,10 @@ DeviceControl (
 
     switch (Ioctl)
     {
+    case IOCTL_UPDATE_CONFIG:
+        RegctrlUpdateCfg();
+        break;
+
     case IOCTL_REGISTER_CALLBACK:
         Status = RegisterCallback(DeviceObject, Irp);
         break;

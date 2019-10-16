@@ -74,9 +74,6 @@ extern ULONG g_MinorVersion;
 VOID 
 PreNotificationBlockSample();
 
-VOID 
-PreNotificationBypassSample();
-
 VOID
 PostNotificationOverrideSuccessSample();
 
@@ -85,6 +82,13 @@ PostNotificationOverrideErrorSample();
 
 VOID
 CaptureSample();
+
+BOOL UpdateConfig();
+VOID RegisterCallback();
+VOID UnregisterCallback();
+
+VOID TestCallbacks();
+
 
 //
 // Utility routines to load and unload the driver
