@@ -71,7 +71,9 @@ Return Value:
 
     UNREFERENCED_PARAMETER(RegistryPath);
 
-    DEBUGP(DL_TRACE, "===>DriverEntry...\n");
+    DbgPrint("NDIS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+    DbgPrint("===>DriverEntry...\n");
+    DbgPrint("NDIS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 
     FilterDriverObject = DriverObject;
 
