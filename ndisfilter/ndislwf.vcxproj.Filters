@@ -3,35 +3,44 @@
   <ItemGroup>
     <Filter Include="Source Files">
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx;*</Extensions>
-      <UniqueIdentifier>{1B80B6A9-9758-4A4C-9A82-6279C8067839}</UniqueIdentifier>
+      <UniqueIdentifier>{E549C692-AB5D-4B19-A27F-39CB688D325C}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files">
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-      <UniqueIdentifier>{7A006FF6-BEBA-443D-A16F-25998D06D90F}</UniqueIdentifier>
+      <UniqueIdentifier>{86E411A4-7A15-4BA4-97E2-8CC8596C66E7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resource Files">
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms;man;xml</Extensions>
-      <UniqueIdentifier>{BEA2B102-C7C3-49EB-9C73-D144E30FCA6F}</UniqueIdentifier>
+      <UniqueIdentifier>{E39D3E0D-5966-4619-A8EB-D91989A3EF89}</UniqueIdentifier>
     </Filter>
     <Filter Include="Driver Files">
       <Extensions>inf;inv;inx;mof;mc;</Extensions>
-      <UniqueIdentifier>{48ECB429-EA49-41F1-A0CA-02764F0153E8}</UniqueIdentifier>
+      <UniqueIdentifier>{3CE8B5F7-6B57-4C41-93D5-1F9C5132D57D}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="change.c">
+    <ClCompile Include="device.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="context.c">
+    <ClCompile Include="filter.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="flt_dbg.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="precompsrc.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="change.rc">
+    <ResourceCompile Include="filter.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="*.h;*.hpp;*.hxx;*.hm;*.inl;*.xsd">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="*.h;*.hpp;*.hxx;*.hm;*.inl;*.xsd">
       <Filter>Header Files</Filter>
     </ClInclude>
