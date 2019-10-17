@@ -1,63 +1,90 @@
-#include <stdio.h>
+#include <Windows.h>
 #include <stdlib.h>
-#include <windows.h>
-#include <wchar.h>
-#include <netcfgx.h>
-#include <netcfgn.h>
-#include <setupapi.h>
-#include <devguid.h>
-#include <objbase.h>
+#include <stdio.h>
+#include <devioctl.h>
+#include <tchar.h>
 #include <strsafe.h>
 
-#define APP_NAME            L"ndisuser"
-#define LOCK_TIME_OUT     5000
+#define DRIVER_NAME             L"NdisLwf"
+#define DRIVER_NAME_WITH_EXT    L"NdisLwf.sys"
 
-// INSTALL
+#define NT_DEVICE_NAME          L"\\Device\\NdisLwf"
+#define DOS_DEVICES_LINK_NAME   L"\\DosDevices\\NdisLwf"
+#define WIN32_DEVICE_NAME       L"\\\\.\\NdisLwf"
 
-VOID InstallSelectedComponentType(_In_opt_ LPWSTR lpszInfFile);
 
-HRESULT InstallSpecifiedComponent(_In_ LPWSTR lpszInfFile,
-    _In_ LPWSTR lpszPnpID,
-    const GUID* pguidClass);
+ #define IOCTL_FILTER_RESTART_ALL               ( ((0x00000017)<<16)|((0)<<14)|((0)<<2)|(0) )
+ #define IOCTL_FILTER_RESTART_ONE_INSTANCE      ( ((0x00000017)<<16)|((0)<<14)|((1)<<2)|(0) )
+ #define IOCTL_FILTER_ENUMERATE_ALL_INSTANCES   ( ((0x00000017)<<16)|((0)<<14)|((2)<<2)|(0) )
 
-HRESULT HrInstallNetComponent(IN INetCfg* pnc,
-    IN LPCWSTR lpszComponentId,
-    IN const GUID* pguidClass,
-    IN LPCWSTR lpszInfFullPath);
+#define ARRAY_LENGTH(array)    (sizeof (array) / sizeof (array[0]))
 
-HRESULT HrInstallComponent(IN INetCfg* pnc,
-    IN LPCWSTR szComponentId,
-    IN const GUID* pguidClass);     // XXX
+#define InfoPrint(str, ...)                 \
+    printf(##str"\n",                       \
+            __VA_ARGS__)
 
-// UNINSTALL
+#define ErrorPrint(str, ...)                \
+    printf("ERROR: %u: "##str"\n",          \
+            __LINE__,                       \
+            __VA_ARGS__)
 
-VOID UninstallSelectedComponent(_In_ LPWSTR lpszInfId);
+// IOCTL
 
-HRESULT UninstallComponent(_In_ LPWSTR lpszInfId);
+VOID RestartAllInstances();
 
-HRESULT HrUninstallNetComponent(IN INetCfg* pnc, 
-    IN LPCWSTR szComponentId);      // XXX
+// DRIVER
+BOOL
+UtilLoadDriver(
+    _In_ LPTSTR szDriverNameNoExt,
+    _In_ LPTSTR szDriverNameWithExt,
+    _In_ LPTSTR szWin32DeviceName,
+    _Out_ HANDLE* pDriver
+);
+
+BOOL
+UtilUnloadDriver(
+    _In_ HANDLE hDriver,
+    _In_opt_ SC_HANDLE hSCM,
+    _In_ LPTSTR szDriverNameNoExt
+);
 
 // UTIL
+BOOL
+UtilCreateService(
+    _In_ SC_HANDLE hSCM,
+    _In_ LPTSTR szDriverName,
+    _In_ LPTSTR szDriverPath
+);
 
-HRESULT GetKeyValue(
-    HINF hInf,
-    _In_ LPCWSTR lpszSection,
-    _In_opt_ LPCWSTR lpszKey,
-    DWORD  dwIndex,
-    _Outptr_ LPWSTR* lppszValue);
+BOOL
+UtilStartService(
+    _In_ SC_HANDLE hSCM,
+    _In_ LPTSTR szDriverName
+);
 
-HRESULT GetPnpID(_In_ LPWSTR lpszInfFile,
-    _Outptr_ LPWSTR* lppszPnpID);
+BOOL
+UtilStopService(
+    _In_ SC_HANDLE hSCM,
+    _In_ LPTSTR szDriverName
+);
 
+BOOL
+UtilDeleteService(
+    _In_ SC_HANDLE hSCM,
+    _In_ LPTSTR szDriverName
+);
 
-// COM
+BOOL
+UtilOpenDevice(
+    _In_ LPTSTR szWin32DeviceName,
+    _Out_ HANDLE* phDevice);
 
-HRESULT HrGetINetCfg(IN BOOL fGetWriteLock,
-    IN LPCWSTR lpszAppName,
-    OUT INetCfg** ppnc,
-    _Outptr_opt_result_maybenull_ LPWSTR* lpszLockedBy);
+BOOL
+UtilGetServiceState(
+    _In_ SC_HANDLE hService,
+    _Out_ DWORD* State);
 
-HRESULT HrReleaseINetCfg(INetCfg* pnc, BOOL fHasWriteLock);
-
-VOID ReleaseRef(IN IUnknown* punk);
+BOOL
+UtilWaitForServiceState(
+    _In_ SC_HANDLE hService,
+    _In_ DWORD State);

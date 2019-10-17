@@ -15,16 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ndisuser.c">
+    <ClCompile Include="ndisuser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="component_install.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="component_uninstall.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="component.cpp">
+    <ClCompile Include="util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,6 +41,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ndisuser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="junk.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

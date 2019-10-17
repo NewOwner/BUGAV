@@ -186,10 +186,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="component.cpp" />
-    <ClCompile Include="component_install.cpp" />
-    <ClCompile Include="component_uninstall.cpp" />
-    <ClCompile Include="ndisuser.c" />
+    <ClCompile Include="ndisuser.cpp" />
+    <ClCompile Include="util.cpp" />
     <ResourceCompile Include="ndisuser.rc" />
   </ItemGroup>
   <ItemGroup>
@@ -202,6 +200,7 @@
     <None Exclude="@(None)" Include="*.def;*.bat;*.hpj;*.asmx" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="junk.h" />
     <ClInclude Exclude="@(ClInclude)" Include="ndisuser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -12,9 +12,7 @@
 // during initialization here.
 #pragma NDIS_INIT_FUNCTION(DriverEntry)
 
-//
 // Global variables
-//
 NDIS_HANDLE         FilterDriverHandle; // NDIS handle for filter driver
 NDIS_HANDLE         FilterDriverObject;
 NDIS_HANDLE         NdisFilterDeviceHandle = NULL;
@@ -39,7 +37,7 @@ NTSTATUS
 DriverEntry(
     PDRIVER_OBJECT      DriverObject,
     PUNICODE_STRING     RegistryPath
-    )
+)
 /*++
 
 Routine Description:
@@ -64,21 +62,19 @@ Return Value:
 {
     NDIS_STATUS Status;
     NDIS_FILTER_DRIVER_CHARACTERISTICS      FChars;
-    NDIS_STRING ServiceName  = RTL_CONSTANT_STRING(FILTER_SERVICE_NAME);
-    NDIS_STRING UniqueName   = RTL_CONSTANT_STRING(FILTER_UNIQUE_NAME);
+    NDIS_STRING ServiceName = RTL_CONSTANT_STRING(FILTER_SERVICE_NAME);
+    NDIS_STRING UniqueName = RTL_CONSTANT_STRING(FILTER_UNIQUE_NAME);
     NDIS_STRING FriendlyName = RTL_CONSTANT_STRING(FILTER_FRIENDLY_NAME);
     BOOLEAN bFalse = FALSE;
 
     UNREFERENCED_PARAMETER(RegistryPath);
 
-    DbgPrint("NDIS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-    DbgPrint("===>DriverEntry...\n");
-    DbgPrint("NDIS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+    DbgPrint("NDIS \t!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+    DbgPrint("NDIS \t===>DriverEntry...\n");
 
     FilterDriverObject = DriverObject;
 
-    do
-    {
+    do {
         NdisZeroMemory(&FChars, sizeof(NDIS_FILTER_DRIVER_CHARACTERISTICS));
         FChars.Header.Type = NDIS_OBJECT_TYPE_FILTER_DRIVER_CHARACTERISTICS;
         FChars.Header.Size = sizeof(NDIS_FILTER_DRIVER_CHARACTERISTICS);
@@ -135,31 +131,28 @@ Return Value:
         InitializeListHead(&FilterModuleList);
 
         Status = NdisFRegisterFilterDriver(DriverObject,
-                                           (NDIS_HANDLE)FilterDriverObject,
-                                           &FChars,
-                                           &FilterDriverHandle);
-        if (Status != NDIS_STATUS_SUCCESS)
-        {
-            DEBUGP(DL_WARN, "Register filter driver failed.\n");
+            (NDIS_HANDLE)FilterDriverObject,
+            &FChars,
+            &FilterDriverHandle);
+        if (Status != NDIS_STATUS_SUCCESS) {
+            DbgPrint("NDIS \tRegister filter driver failed.\n");
             break;
         }
 
         Status = FilterRegisterDevice();
 
-        if (Status != NDIS_STATUS_SUCCESS)
-        {
+        if (Status != NDIS_STATUS_SUCCESS) {
             NdisFDeregisterFilterDriver(FilterDriverHandle);
             FILTER_FREE_LOCK(&FilterListLock);
-            DEBUGP(DL_WARN, "Register device for the filter driver failed.\n");
+            DbgPrint("NDIS \tRegister device for the filter driver failed.\n");
             break;
         }
 
 
-    }
-    while(bFalse);
+    } while (bFalse);
 
 
-    DEBUGP(DL_TRACE, "<===DriverEntry, Status = %8x\n", Status);
+    DbgPrint("NDIS \t<===DriverEntry, Status = %8x\n", Status);
     return Status;
 
 }
@@ -169,7 +162,7 @@ NDIS_STATUS
 FilterRegisterOptions(
     NDIS_HANDLE  NdisFilterDriverHandle,
     NDIS_HANDLE  FilterDriverContext
-    )
+)
 /*++
 
 Routine Description:
@@ -193,18 +186,17 @@ Return Value:
 
 --*/
 {
-    DEBUGP(DL_TRACE, "===>FilterRegisterOptions\n");
+    DbgPrint("NDIS \t===>FilterRegisterOptions\n");
 
     ASSERT(NdisFilterDriverHandle == FilterDriverHandle);
     ASSERT(FilterDriverContext == (NDIS_HANDLE)FilterDriverObject);
 
     if ((NdisFilterDriverHandle != (NDIS_HANDLE)FilterDriverHandle) ||
-        (FilterDriverContext != (NDIS_HANDLE)FilterDriverObject))
-    {
+        (FilterDriverContext != (NDIS_HANDLE)FilterDriverObject)) {
         return NDIS_STATUS_INVALID_PARAMETER;
     }
 
-    DEBUGP(DL_TRACE, "<===FilterRegisterOptions\n");
+    DbgPrint("NDIS \t<===FilterRegisterOptions\n");
 
     return NDIS_STATUS_SUCCESS;
 }
@@ -216,7 +208,7 @@ FilterAttach(
     NDIS_HANDLE                     NdisFilterHandle,
     NDIS_HANDLE                     FilterDriverContext,
     PNDIS_FILTER_ATTACH_PARAMETERS  AttachParameters
-    )
+)
 /*++
 
 Routine Description:
@@ -242,7 +234,7 @@ Return Value:
     NDIS_STATUS_FAILURE: FilterAttach could not set up this instance of this filter and it has called
                          NdisWriteErrorLogEntry with parameters specifying the reason for failure.
 
-N.B.:  FILTER can use NdisRegisterDeviceEx to create a device, so the upper 
+N.B.:  FILTER can use NdisRegisterDeviceEx to create a device, so the upper
     layer can send Irps to the filter.
 
 --*/
@@ -253,13 +245,11 @@ N.B.:  FILTER can use NdisRegisterDeviceEx to create a device, so the upper
     ULONG                   Size;
     BOOLEAN               bFalse = FALSE;
 
-    DEBUGP(DL_TRACE, "===>FilterAttach: NdisFilterHandle %p\n", NdisFilterHandle);
+    DbgPrint("NDIS \t===>FilterAttach: NdisFilterHandle %p\n", NdisFilterHandle);
 
-    do
-    {
+    do {
         ASSERT(FilterDriverContext == (NDIS_HANDLE)FilterDriverObject);
-        if (FilterDriverContext != (NDIS_HANDLE)FilterDriverObject)
-        {
+        if (FilterDriverContext != (NDIS_HANDLE)FilterDriverObject) {
             Status = NDIS_STATUS_INVALID_PARAMETER;
             break;
         }
@@ -273,24 +263,22 @@ N.B.:  FILTER can use NdisRegisterDeviceEx to create a device, so the upper
         // Your setup/install code should not bind the filter to unsupported
         // media types.
         if ((AttachParameters->MiniportMediaType != NdisMedium802_3)
-                && (AttachParameters->MiniportMediaType != NdisMediumWan)
-                && (AttachParameters->MiniportMediaType != NdisMediumWirelessWan))
-        {
-           DEBUGP(DL_ERROR, "Unsupported media type.\n");
+            && (AttachParameters->MiniportMediaType != NdisMediumWan)
+            && (AttachParameters->MiniportMediaType != NdisMediumWirelessWan)) {
+            DbgPrint("NDIS \tUnsupported media type.\n");
 
-           Status = NDIS_STATUS_INVALID_PARAMETER;
-           break;
+            Status = NDIS_STATUS_INVALID_PARAMETER;
+            break;
         }
 
         Size = sizeof(MS_FILTER) +
-               AttachParameters->FilterModuleGuidName->Length +
-               AttachParameters->BaseMiniportInstanceName->Length +
-               AttachParameters->BaseMiniportName->Length;
+            AttachParameters->FilterModuleGuidName->Length +
+            AttachParameters->BaseMiniportInstanceName->Length +
+            AttachParameters->BaseMiniportName->Length;
 
         pFilter = (PMS_FILTER)FILTER_ALLOC_MEM(NdisFilterHandle, Size);
-        if (pFilter == NULL)
-        {
-            DEBUGP(DL_WARN, "Failed to allocate context structure.\n");
+        if (pFilter == NULL) {
+            DbgPrint("NDIS \tFailed to allocate context structure.\n");
             Status = NDIS_STATUS_RESOURCES;
             break;
         }
@@ -300,24 +288,24 @@ N.B.:  FILTER can use NdisRegisterDeviceEx to create a device, so the upper
         pFilter->FilterModuleName.Length = pFilter->FilterModuleName.MaximumLength = AttachParameters->FilterModuleGuidName->Length;
         pFilter->FilterModuleName.Buffer = (PWSTR)((PUCHAR)pFilter + sizeof(MS_FILTER));
         NdisMoveMemory(pFilter->FilterModuleName.Buffer,
-                        AttachParameters->FilterModuleGuidName->Buffer,
-                        pFilter->FilterModuleName.Length);
+            AttachParameters->FilterModuleGuidName->Buffer,
+            pFilter->FilterModuleName.Length);
 
 
 
         pFilter->MiniportFriendlyName.Length = pFilter->MiniportFriendlyName.MaximumLength = AttachParameters->BaseMiniportInstanceName->Length;
         pFilter->MiniportFriendlyName.Buffer = (PWSTR)((PUCHAR)pFilter->FilterModuleName.Buffer + pFilter->FilterModuleName.Length);
         NdisMoveMemory(pFilter->MiniportFriendlyName.Buffer,
-                        AttachParameters->BaseMiniportInstanceName->Buffer,
-                        pFilter->MiniportFriendlyName.Length);
+            AttachParameters->BaseMiniportInstanceName->Buffer,
+            pFilter->MiniportFriendlyName.Length);
 
 
         pFilter->MiniportName.Length = pFilter->MiniportName.MaximumLength = AttachParameters->BaseMiniportName->Length;
         pFilter->MiniportName.Buffer = (PWSTR)((PUCHAR)pFilter->MiniportFriendlyName.Buffer +
-                                                   pFilter->MiniportFriendlyName.Length);
+            pFilter->MiniportFriendlyName.Length);
         NdisMoveMemory(pFilter->MiniportName.Buffer,
-                        AttachParameters->BaseMiniportName->Buffer,
-                        pFilter->MiniportName.Length);
+            AttachParameters->BaseMiniportName->Buffer,
+            pFilter->MiniportName.Length);
 
         pFilter->MiniportIfIndex = AttachParameters->BaseMiniportIfIndex;
         //
@@ -338,11 +326,10 @@ N.B.:  FILTER can use NdisRegisterDeviceEx to create a device, so the upper
 
         NDIS_DECLARE_FILTER_MODULE_CONTEXT(MS_FILTER);
         Status = NdisFSetAttributes(NdisFilterHandle,
-                                    pFilter,
-                                    &FilterAttributes);
-        if (Status != NDIS_STATUS_SUCCESS)
-        {
-            DEBUGP(DL_WARN, "Failed to set attributes.\n");
+            pFilter,
+            &FilterAttributes);
+        if (Status != NDIS_STATUS_SUCCESS) {
+            DbgPrint("NDIS \tFailed to set attributes.\n");
             break;
         }
 
@@ -353,18 +340,15 @@ N.B.:  FILTER can use NdisRegisterDeviceEx to create a device, so the upper
         InsertHeadList(&FilterModuleList, &pFilter->FilterModuleLink);
         FILTER_RELEASE_LOCK(&FilterListLock, bFalse);
 
-    }
-    while (bFalse);
+    } while (bFalse);
 
-    if (Status != NDIS_STATUS_SUCCESS)
-    {
-        if (pFilter != NULL)
-        {
+    if (Status != NDIS_STATUS_SUCCESS) {
+        if (pFilter != NULL) {
             FILTER_FREE_MEM(pFilter);
         }
     }
 
-    DEBUGP(DL_TRACE, "<===FilterAttach:    Status %x\n", Status);
+    DbgPrint("NDIS \t<===FilterAttach:    Status %x\n", Status);
     return Status;
 }
 
@@ -373,7 +357,7 @@ NDIS_STATUS
 FilterPause(
     NDIS_HANDLE                     FilterModuleContext,
     PNDIS_FILTER_PAUSE_PARAMETERS   PauseParameters
-    )
+)
 /*++
 
 Routine Description:
@@ -393,10 +377,10 @@ Return Value:
     NDIS_STATUS_SUCCESS if filter pauses successfully, NDIS_STATUS_PENDING
     if not.  No other return value is allowed (pause must succeed, eventually).
 
-N.B.: When the filter is in Pausing state, it can still process OID requests, 
+N.B.: When the filter is in Pausing state, it can still process OID requests,
     complete sending, and returning packets to NDIS, and also indicate status.
-    After this function completes, the filter must not attempt to send or 
-    receive packets, but it may still process OID requests and status 
+    After this function completes, the filter must not attempt to send or
+    receive packets, but it may still process OID requests and status
     indications.
 
 --*/
@@ -407,7 +391,7 @@ N.B.: When the filter is in Pausing state, it can still process OID requests,
 
     UNREFERENCED_PARAMETER(PauseParameters);
 
-    DEBUGP(DL_TRACE, "===>NDISLWF FilterPause: FilterInstance %p\n", FilterModuleContext);
+    DbgPrint("NDIS \t===>NDISLWF FilterPause: FilterInstance %p\n", FilterModuleContext);
 
     //
     // Set the flag that the filter is going to pause
@@ -433,7 +417,7 @@ N.B.: When the filter is in Pausing state, it can still process OID requests,
 
     pFilter->State = FilterPaused;
 
-    DEBUGP(DL_TRACE, "<===FilterPause:  Status %x\n", Status);
+    DbgPrint("NDIS \t<===FilterPause:  Status %x\n", Status);
     return Status;
 }
 
@@ -442,7 +426,7 @@ NDIS_STATUS
 FilterRestart(
     NDIS_HANDLE                     FilterModuleContext,
     PNDIS_FILTER_RESTART_PARAMETERS RestartParameters
-    )
+)
 /*++
 
 Routine Description:
@@ -471,7 +455,7 @@ Return Value:
     PNDIS_RESTART_ATTRIBUTES         NdisRestartAttributes;
     NDIS_CONFIGURATION_OBJECT        ConfigObject;
 
-    DEBUGP(DL_TRACE, "===>FilterRestart:   FilterModuleContext %p\n", FilterModuleContext);
+    DbgPrint("NDIS \t===>FilterRestart:   FilterModuleContext %p\n", FilterModuleContext);
 
     FILTER_ASSERT(pFilter->State == FilterPaused);
 
@@ -482,8 +466,7 @@ Return Value:
     ConfigObject.Flags = 0;
 
     Status = NdisOpenConfigurationEx(&ConfigObject, &ConfigurationHandle);
-    if (Status != NDIS_STATUS_SUCCESS)
-    {
+    if (Status != NDIS_STATUS_SUCCESS) {
         //
         // Filter driver can choose to fail the restart if it cannot open the configuration
         //
@@ -497,12 +480,12 @@ Return Value:
 
         DEBUGP(DL_WARN, "FilterRestart: Cannot open configuration.\n");
         NdisWriteEventLogEntry(FilterDriverObject,
-                                EVENT_NDIS_DRIVER_FAILURE,
-                                0,
-                                1,
-                                &ErrorString,
-                                sizeof(Status),
-                                &Status);
+            EVENT_NDIS_DRIVER_FAILURE,
+            0,
+            1,
+            &ErrorString,
+            sizeof(Status),
+            &Status);
 #endif
 
     }
@@ -514,8 +497,7 @@ Return Value:
     // ConfigurationHandle.
     //
 
-    if (Status == NDIS_STATUS_SUCCESS)
-    {
+    if (Status == NDIS_STATUS_SUCCESS) {
         NdisCloseConfiguration(ConfigurationHandle);
     }
 
@@ -527,8 +509,7 @@ Return Value:
     // Otherwise, if NdisRestartAttributes is NULL, the filter should not try to 
     // modify/add attributes.
     //
-    if (NdisRestartAttributes != NULL)
-    {
+    if (NdisRestartAttributes != NULL) {
         PNDIS_RESTART_ATTRIBUTES   NextAttributes;
 
         ASSERT(NdisRestartAttributes->Oid == OID_GEN_MINIPORT_RESTART_ATTRIBUTES);
@@ -547,8 +528,7 @@ Return Value:
         //
         NextAttributes = NdisRestartAttributes->Next;
 
-        while (NextAttributes != NULL)
-        {
+        while (NextAttributes != NULL) {
             //
             // If somehow the filter needs to change a attributes which requires more space then
             // the current attributes:
@@ -587,17 +567,13 @@ Return Value:
     Status = NDIS_STATUS_SUCCESS;
 
 
-    //
     // Ensure the state is Paused if restart failed.
-    //
-
-    if (Status != NDIS_STATUS_SUCCESS)
-    {
+    if (Status != NDIS_STATUS_SUCCESS) {
         pFilter->State = FilterPaused;
     }
 
 
-    DEBUGP(DL_TRACE, "<===FilterRestart:  FilterModuleContext %p, Status %x\n", FilterModuleContext, Status);
+    DbgPrint("NDIS \t<===FilterRestart:  FilterModuleContext %p, Status %x\n", FilterModuleContext, Status);
     return Status;
 }
 
@@ -606,7 +582,7 @@ _Use_decl_annotations_
 VOID
 FilterDetach(
     NDIS_HANDLE     FilterModuleContext
-    )
+)
 /*++
 
 Routine Description:
@@ -630,24 +606,17 @@ NOTE: Called at PASSIVE_LEVEL and the filter is in paused state
     BOOLEAN                      bFalse = FALSE;
 
 
-    DEBUGP(DL_TRACE, "===>FilterDetach:    FilterInstance %p\n", FilterModuleContext);
+    DbgPrint("NDIS \t===>FilterDetach:    FilterInstance %p\n", FilterModuleContext);
 
 
-    //
     // Filter must be in paused state
-    //
     FILTER_ASSERT(pFilter->State == FilterPaused);
 
 
-    //
     // Detach must not fail, so do not put any code here that can possibly fail.
-    //
 
-    //
     // Free filter instance name if allocated.
-    //
-    if (pFilter->FilterName.Buffer != NULL)
-    {
+    if (pFilter->FilterName.Buffer != NULL) {
         FILTER_FREE_MEM(pFilter->FilterName.Buffer);
     }
 
@@ -656,12 +625,10 @@ NOTE: Called at PASSIVE_LEVEL and the filter is in paused state
     RemoveEntryList(&pFilter->FilterModuleLink);
     FILTER_RELEASE_LOCK(&FilterListLock, bFalse);
 
-
-    //
     // Free the memory allocated
     FILTER_FREE_MEM(pFilter);
 
-    DEBUGP(DL_TRACE, "<===FilterDetach Successfully\n");
+    DbgPrint("NDIS \t<===FilterDetach Successfully\n");
     return;
 }
 
@@ -669,7 +636,7 @@ _Use_decl_annotations_
 VOID
 FilterUnload(
     PDRIVER_OBJECT      DriverObject
-    )
+)
 /*++
 
 Routine Description:
@@ -694,11 +661,9 @@ Return Value:
 
     UNREFERENCED_PARAMETER(DriverObject);
 
-    DEBUGP(DL_TRACE, "===>FilterUnload\n");
+    DbgPrint("NDIS \t===>FilterUnload\n");
 
-    //
     // Should free the filter context list
-    //
     FilterDeregisterDevice();
     NdisFDeregisterFilterDriver(FilterDriverHandle);
 
@@ -712,7 +677,7 @@ Return Value:
 
     FILTER_FREE_LOCK(&FilterListLock);
 
-    DEBUGP(DL_TRACE, "<===FilterUnload\n");
+    DbgPrint("NDIS \t<===FilterUnload\n");
 
     return;
 
@@ -723,7 +688,7 @@ NDIS_STATUS
 FilterOidRequest(
     NDIS_HANDLE         FilterModuleContext,
     PNDIS_OID_REQUEST   Request
-    )
+)
 /*++
 
 Routine Description:
@@ -749,13 +714,13 @@ NOTE: Called at <= DISPATCH_LEVEL  (unlike a miniport's MiniportOidRequest)
 {
     PMS_FILTER              pFilter = (PMS_FILTER)FilterModuleContext;
     NDIS_STATUS             Status;
-    PNDIS_OID_REQUEST       ClonedRequest=NULL;
+    PNDIS_OID_REQUEST       ClonedRequest = NULL;
     BOOLEAN                 bSubmitted = FALSE;
     PFILTER_REQUEST_CONTEXT Context;
     BOOLEAN                 bFalse = FALSE;
 
 
-    DEBUGP(DL_TRACE, "===>FilterOidRequest: Request %p.\n", Request);
+    //DbgPrint("NDIS \t===>FilterOidRequest: Request %p.\n", Request);
 
     //
     // Most of the time, a filter will clone the OID request and pass down
@@ -773,15 +738,13 @@ NOTE: Called at <= DISPATCH_LEVEL  (unlike a miniport's MiniportOidRequest)
     // routine that does nothing but clone all requests, as in the sample here.
     //
 
-    do
-    {
+    do {
         Status = NdisAllocateCloneOidRequest(pFilter->FilterHandle,
-                                            Request,
-                                            FILTER_TAG,
-                                            &ClonedRequest);
-        if (Status != NDIS_STATUS_SUCCESS)
-        {
-            DEBUGP(DL_WARN, "FilerOidRequest: Cannot Clone Request\n");
+            Request,
+            FILTER_TAG,
+            &ClonedRequest);
+        if (Status != NDIS_STATUS_SUCCESS) {
+            DbgPrint("NDIS \tFilerOidRequest: Cannot Clone Request\n");
             break;
         }
 
@@ -790,9 +753,7 @@ NOTE: Called at <= DISPATCH_LEVEL  (unlike a miniport's MiniportOidRequest)
 
         bSubmitted = TRUE;
 
-        //
         // Use same request ID
-        //
         ClonedRequest->RequestId = Request->RequestId;
 
         pFilter->PendingOidRequest = ClonedRequest;
@@ -800,8 +761,7 @@ NOTE: Called at <= DISPATCH_LEVEL  (unlike a miniport's MiniportOidRequest)
 
         Status = NdisFOidRequest(pFilter->FilterHandle, ClonedRequest);
 
-        if (Status != NDIS_STATUS_PENDING)
-        {
+        if (Status != NDIS_STATUS_PENDING) {
 
 
             FilterOidRequestComplete(pFilter, ClonedRequest, Status);
@@ -809,33 +769,31 @@ NOTE: Called at <= DISPATCH_LEVEL  (unlike a miniport's MiniportOidRequest)
         }
 
 
-    }while (bFalse);
+    } while (bFalse);
 
-    if (bSubmitted == FALSE)
-    {
-        switch(Request->RequestType)
-        {
-            case NdisRequestMethod:
-                Request->DATA.METHOD_INFORMATION.BytesRead = 0;
-                Request->DATA.METHOD_INFORMATION.BytesNeeded = 0;
-                Request->DATA.METHOD_INFORMATION.BytesWritten = 0;
-                break;
+    if (bSubmitted == FALSE) {
+        switch (Request->RequestType) {
+        case NdisRequestMethod:
+            Request->DATA.METHOD_INFORMATION.BytesRead = 0;
+            Request->DATA.METHOD_INFORMATION.BytesNeeded = 0;
+            Request->DATA.METHOD_INFORMATION.BytesWritten = 0;
+            break;
 
-            case NdisRequestSetInformation:
-                Request->DATA.SET_INFORMATION.BytesRead = 0;
-                Request->DATA.SET_INFORMATION.BytesNeeded = 0;
-                break;
+        case NdisRequestSetInformation:
+            Request->DATA.SET_INFORMATION.BytesRead = 0;
+            Request->DATA.SET_INFORMATION.BytesNeeded = 0;
+            break;
 
-            case NdisRequestQueryInformation:
-            case NdisRequestQueryStatistics:
-            default:
-                Request->DATA.QUERY_INFORMATION.BytesWritten = 0;
-                Request->DATA.QUERY_INFORMATION.BytesNeeded = 0;
-                break;
+        case NdisRequestQueryInformation:
+        case NdisRequestQueryStatistics:
+        default:
+            Request->DATA.QUERY_INFORMATION.BytesWritten = 0;
+            Request->DATA.QUERY_INFORMATION.BytesNeeded = 0;
+            break;
         }
 
     }
-    DEBUGP(DL_TRACE, "<===FilterOidRequest: Status %8x.\n", Status);
+    //DbgPrint("NDIS \t<===FilterOidRequest: Status %8x.\n", Status);
 
     return Status;
 
@@ -846,7 +804,7 @@ VOID
 FilterCancelOidRequest(
     NDIS_HANDLE             FilterModuleContext,
     PVOID                   RequestId
-    )
+)
 /*++
 
 Routine Description:
@@ -856,8 +814,8 @@ Routine Description:
     If your filter driver does not intercept and hold onto any OID requests,
     then you do not need to implement this routine.  You may simply omit it.
     Furthermore, if the filter only holds onto OID requests so it can pass
-    down a clone (the most common case) the filter does not need to implement 
-    this routine; NDIS will then automatically request that the lower-level 
+    down a clone (the most common case) the filter does not need to implement
+    this routine; NDIS will then automatically request that the lower-level
     filter/miniport cancel your cloned OID.
 
     Most filters do not need to implement this routine.
@@ -879,25 +837,19 @@ Arguments:
 
     Request = pFilter->PendingOidRequest;
 
-    if (Request != NULL)
-    {
+    if (Request != NULL) {
         Context = (PFILTER_REQUEST_CONTEXT)(&Request->SourceReserved[0]);
 
         OriginalRequest = (*Context);
     }
 
-    if ((OriginalRequest != NULL) && (OriginalRequest->RequestId == RequestId))
-    {
+    if ((OriginalRequest != NULL) && (OriginalRequest->RequestId == RequestId)) {
         FILTER_RELEASE_LOCK(&pFilter->Lock, bFalse);
 
         NdisFCancelOidRequest(pFilter->FilterHandle, RequestId);
-    }
-    else
-    {
+    } else {
         FILTER_RELEASE_LOCK(&pFilter->Lock, bFalse);
     }
-
-
 }
 
 _Use_decl_annotations_
@@ -906,7 +858,7 @@ FilterOidRequestComplete(
     NDIS_HANDLE         FilterModuleContext,
     PNDIS_OID_REQUEST   Request,
     NDIS_STATUS         Status
-    )
+)
 /*++
 
 Routine Description:
@@ -935,16 +887,13 @@ Arguments:
     PFILTER_REQUEST_CONTEXT             Context;
     BOOLEAN                             bFalse = FALSE;
 
-    DEBUGP(DL_TRACE, "===>FilterOidRequestComplete, Request %p.\n", Request);
+    //DbgPrint("NDIS \t===>FilterOidRequestComplete, Request %p.\n", Request);
 
     Context = (PFILTER_REQUEST_CONTEXT)(&Request->SourceReserved[0]);
     OriginalRequest = (*Context);
 
-    //
     // This is an internal request
-    //
-    if (OriginalRequest == NULL)
-    {
+    if (OriginalRequest == NULL) {
         filterInternalRequestComplete(pFilter, Request, Status);
         return;
     }
@@ -957,40 +906,34 @@ Arguments:
 
     FILTER_RELEASE_LOCK(&pFilter->Lock, bFalse);
 
-
-    //
     // Copy the information from the returned request to the original request
-    //
-    switch(Request->RequestType)
-    {
-        case NdisRequestMethod:
-            OriginalRequest->DATA.METHOD_INFORMATION.OutputBufferLength =  Request->DATA.METHOD_INFORMATION.OutputBufferLength;
-            OriginalRequest->DATA.METHOD_INFORMATION.BytesRead = Request->DATA.METHOD_INFORMATION.BytesRead;
-            OriginalRequest->DATA.METHOD_INFORMATION.BytesNeeded = Request->DATA.METHOD_INFORMATION.BytesNeeded;
-            OriginalRequest->DATA.METHOD_INFORMATION.BytesWritten = Request->DATA.METHOD_INFORMATION.BytesWritten;
-            break;
+    switch (Request->RequestType) {
+    case NdisRequestMethod:
+        OriginalRequest->DATA.METHOD_INFORMATION.OutputBufferLength = Request->DATA.METHOD_INFORMATION.OutputBufferLength;
+        OriginalRequest->DATA.METHOD_INFORMATION.BytesRead = Request->DATA.METHOD_INFORMATION.BytesRead;
+        OriginalRequest->DATA.METHOD_INFORMATION.BytesNeeded = Request->DATA.METHOD_INFORMATION.BytesNeeded;
+        OriginalRequest->DATA.METHOD_INFORMATION.BytesWritten = Request->DATA.METHOD_INFORMATION.BytesWritten;
+        break;
 
-        case NdisRequestSetInformation:
-            OriginalRequest->DATA.SET_INFORMATION.BytesRead = Request->DATA.SET_INFORMATION.BytesRead;
-            OriginalRequest->DATA.SET_INFORMATION.BytesNeeded = Request->DATA.SET_INFORMATION.BytesNeeded;
-            break;
+    case NdisRequestSetInformation:
+        OriginalRequest->DATA.SET_INFORMATION.BytesRead = Request->DATA.SET_INFORMATION.BytesRead;
+        OriginalRequest->DATA.SET_INFORMATION.BytesNeeded = Request->DATA.SET_INFORMATION.BytesNeeded;
+        break;
 
-        case NdisRequestQueryInformation:
-        case NdisRequestQueryStatistics:
-        default:
-            OriginalRequest->DATA.QUERY_INFORMATION.BytesWritten = Request->DATA.QUERY_INFORMATION.BytesWritten;
-            OriginalRequest->DATA.QUERY_INFORMATION.BytesNeeded = Request->DATA.QUERY_INFORMATION.BytesNeeded;
-            break;
+    case NdisRequestQueryInformation:
+    case NdisRequestQueryStatistics:
+    default:
+        OriginalRequest->DATA.QUERY_INFORMATION.BytesWritten = Request->DATA.QUERY_INFORMATION.BytesWritten;
+        OriginalRequest->DATA.QUERY_INFORMATION.BytesNeeded = Request->DATA.QUERY_INFORMATION.BytesNeeded;
+        break;
     }
 
 
     (*Context) = NULL;
 
     NdisFreeCloneOidRequest(pFilter->FilterHandle, Request);
-
     NdisFOidRequestComplete(pFilter->FilterHandle, OriginalRequest, Status);
-
-    DEBUGP(DL_TRACE, "<===FilterOidRequestComplete.\n");
+    //DbgPrint("NDIS \t<===FilterOidRequestComplete.\n");
 }
 
 
@@ -999,7 +942,7 @@ VOID
 FilterStatus(
     NDIS_HANDLE             FilterModuleContext,
     PNDIS_STATUS_INDICATION StatusIndication
-    )
+)
 /*++
 
 Routine Description:
@@ -1013,7 +956,7 @@ Arguments:
 
 NOTE: called at <= DISPATCH_LEVEL
 
-  FILTER driver may call NdisFIndicateStatus to generate a status indication to 
+  FILTER driver may call NdisFIndicateStatus to generate a status indication to
   all higher layer modules.
 
 --*/
@@ -1023,7 +966,7 @@ NOTE: called at <= DISPATCH_LEVEL
     BOOLEAN                  bFalse = FALSE;
 #endif
 
-    DEBUGP(DL_TRACE, "===>FilterStatus, IndicateStatus = %8x.\n", StatusIndication->StatusCode);
+    DbgPrint("NDIS \t===>FilterStatus, IndicateStatus = %8x.\n", StatusIndication->StatusCode);
 
 
     //
@@ -1050,7 +993,7 @@ NOTE: called at <= DISPATCH_LEVEL
     FILTER_RELEASE_LOCK(&pFilter->Lock, bFalse);
 #endif // DBG
 
-    DEBUGP(DL_TRACE, "<===FilterStatus.\n");
+    DbgPrint("NDIS \t<===FilterStatus.\n");
 
 }
 
@@ -1059,7 +1002,7 @@ VOID
 FilterDevicePnPEventNotify(
     NDIS_HANDLE             FilterModuleContext,
     PNET_DEVICE_PNP_EVENT   NetDevicePnPEvent
-    )
+)
 /*++
 
 Routine Description:
@@ -1081,9 +1024,8 @@ NOTE: called at PASSIVE_LEVEL
     BOOLEAN                bFalse = FALSE;
 #endif
 
-    DEBUGP(DL_TRACE, "===>FilterDevicePnPEventNotify: NetPnPEvent = %p.\n", NetDevicePnPEvent);
+    DbgPrint("NDIS \t===>FilterDevicePnPEventNotify: NetPnPEvent = %p.\n", NetDevicePnPEvent);
 
-    //
     // The filter may do processing on the event here, including intercepting
     // and dropping it entirely.  However, the sample does nothing with Device
     // PNP events, except pass them down to the next lower* layer.  It is more
@@ -1093,31 +1035,29 @@ NOTE: called at PASSIVE_LEVEL
     // * Trivia: Device PNP events percolate DOWN the stack, instead of upwards
     // like status indications and Net PNP events.  So the next layer is the
     // LOWER layer.
-    //
 
-    switch (DevicePnPEvent)
-    {
+    switch (DevicePnPEvent) {
 
-        case NdisDevicePnPEventQueryRemoved:
-        case NdisDevicePnPEventRemoved:
-        case NdisDevicePnPEventSurpriseRemoved:
-        case NdisDevicePnPEventQueryStopped:
-        case NdisDevicePnPEventStopped:
-        case NdisDevicePnPEventPowerProfileChanged:
-        case NdisDevicePnPEventFilterListChanged:
+    case NdisDevicePnPEventQueryRemoved:
+    case NdisDevicePnPEventRemoved:
+    case NdisDevicePnPEventSurpriseRemoved:
+    case NdisDevicePnPEventQueryStopped:
+    case NdisDevicePnPEventStopped:
+    case NdisDevicePnPEventPowerProfileChanged:
+    case NdisDevicePnPEventFilterListChanged:
 
-            break;
+        break;
 
-        default:
-            DEBUGP(DL_ERROR, "FilterDevicePnPEventNotify: Invalid event.\n");
-            FILTER_ASSERT(bFalse);
+    default:
+        DbgPrint("NDIS \tFilterDevicePnPEventNotify: Invalid event.\n");
+        FILTER_ASSERT(bFalse);
 
-            break;
+        break;
     }
 
     NdisFDevicePnPEventNotify(pFilter->FilterHandle, NetDevicePnPEvent);
 
-    DEBUGP(DL_TRACE, "<===FilterDevicePnPEventNotify\n");
+    DbgPrint("NDIS \t<===FilterDevicePnPEventNotify\n");
 
 }
 
@@ -1126,7 +1066,7 @@ NDIS_STATUS
 FilterNetPnPEvent(
     NDIS_HANDLE              FilterModuleContext,
     PNET_PNP_EVENT_NOTIFICATION NetPnPEventNotification
-    )
+)
 /*++
 
 Routine Description:
@@ -1164,17 +1104,17 @@ FilterSendNetBufferListsComplete(
     NDIS_HANDLE         FilterModuleContext,
     PNET_BUFFER_LIST    NetBufferLists,
     ULONG               SendCompleteFlags
-    )
+)
 /*++
 
 Routine Description:
 
     Send complete handler
 
-    This routine is invoked whenever the lower layer is finished processing 
+    This routine is invoked whenever the lower layer is finished processing
     sent NET_BUFFER_LISTs.  If the filter does not need to be involved in the
     send path, you should remove this routine and the FilterSendNetBufferLists
-    routine.  NDIS will pass along send packets on behalf of your filter more 
+    routine.  NDIS will pass along send packets on behalf of your filter more
     efficiently than the filter can.
 
 Arguments:
@@ -1194,28 +1134,22 @@ Return Value:
     BOOLEAN            DispatchLevel;
     PNET_BUFFER_LIST   CurrNbl;
 
-    DEBUGP(DL_TRACE, "===>SendNBLComplete, NetBufferList: %p.\n", NetBufferLists);
+    DbgPrint("NDIS \t===>SendNBLComplete, NetBufferList: %p.\n", NetBufferLists);
 
 
-    //
     // If your filter injected any send packets into the datapath to be sent,
     // you must identify their NBLs here and remove them from the chain.  Do not
     // attempt to send-complete your NBLs up to the higher layer.
-    //
 
-    //
     // If your filter has modified any NBLs (or NBs, MDLs, etc) in your
     // FilterSendNetBufferLists handler, you must undo the modifications here.
     // In general, NBLs must be returned in the same condition in which you had
     // you received them.  (Exceptions: the NBLs can be re-ordered on the linked
     // list, and the scratch fields are don't-care).
-    //
 
-    if (pFilter->TrackSends)
-    {
+    if (pFilter->TrackSends) {
         CurrNbl = NetBufferLists;
-        while (CurrNbl)
-        {
+        while (CurrNbl) {
             NumOfSendCompletes++;
             CurrNbl = NET_BUFFER_LIST_NEXT_NBL(CurrNbl);
 
@@ -1232,7 +1166,7 @@ Return Value:
 
     NdisFSendNetBufferListsComplete(pFilter->FilterHandle, NetBufferLists, SendCompleteFlags);
 
-    DEBUGP(DL_TRACE, "<===SendNBLComplete.\n");
+    DbgPrint("NDIS \t<===SendNBLComplete.\n");
 }
 
 // PACKETS XXXXXXXXXXXXXXXXX
@@ -1243,7 +1177,7 @@ FilterSendNetBufferLists(
     PNET_BUFFER_LIST    NetBufferLists,
     NDIS_PORT_NUMBER    PortNumber,
     ULONG               SendFlags
-    )
+)
 /*++
 
 Routine Description:
@@ -1252,7 +1186,7 @@ Routine Description:
     This function is an optional function for filter drivers. If provided, NDIS
     will call this function to transmit a linked list of NetBuffers, described by a
     NetBufferList, over the network. If this handler is NULL, NDIS will skip calling
-    this filter when sending a NetBufferList and will call the next lower 
+    this filter when sending a NetBufferList and will call the next lower
     driver in the stack.  A filter that doesn't provide a FilerSendNetBufferList
     handler can not originate a send on its own.
 
@@ -1270,12 +1204,11 @@ Arguments:
     BOOLEAN             DispatchLevel;
     BOOLEAN             bFalse = FALSE;
 
-    DEBUGP(DL_TRACE, "===>SendNetBufferList: NBL = %p.\n", NetBufferLists);
+    DbgPrint("NDIS \t===>SendNetBufferList: NBL = %p.\n", NetBufferLists);
 
-    do
-    {
+    do {
 
-       DispatchLevel = NDIS_TEST_SEND_AT_DISPATCH_LEVEL(SendFlags);
+        DispatchLevel = NDIS_TEST_SEND_AT_DISPATCH_LEVEL(SendFlags);
 #if DBG
         //
         // we should never get packets to send if we are not in running state
@@ -1285,30 +1218,26 @@ Arguments:
         //
         // If the filter is not in running state, fail the send
         //
-        if (pFilter->State != FilterRunning)
-        {
+        if (pFilter->State != FilterRunning) {
             FILTER_RELEASE_LOCK(&pFilter->Lock, DispatchLevel);
 
             CurrNbl = NetBufferLists;
-            while (CurrNbl)
-            {
+            while (CurrNbl) {
                 NET_BUFFER_LIST_STATUS(CurrNbl) = NDIS_STATUS_PAUSED;
                 CurrNbl = NET_BUFFER_LIST_NEXT_NBL(CurrNbl);
             }
             NdisFSendNetBufferListsComplete(pFilter->FilterHandle,
-                        NetBufferLists,
-                        DispatchLevel ? NDIS_SEND_COMPLETE_FLAGS_DISPATCH_LEVEL : 0);
+                NetBufferLists,
+                DispatchLevel ? NDIS_SEND_COMPLETE_FLAGS_DISPATCH_LEVEL : 0);
             break;
 
         }
         FILTER_RELEASE_LOCK(&pFilter->Lock, DispatchLevel);
 #endif
-        if (pFilter->TrackSends)
-        {
+        if (pFilter->TrackSends) {
             FILTER_ACQUIRE_LOCK(&pFilter->Lock, DispatchLevel);
             CurrNbl = NetBufferLists;
-            while (CurrNbl)
-            {
+            while (CurrNbl) {
                 pFilter->OutstandingSends++;
                 FILTER_LOG_SEND_REF(1, pFilter, CurrNbl, pFilter->OutstandingSends);
 
@@ -1316,7 +1245,7 @@ Arguments:
             }
             FILTER_RELEASE_LOCK(&pFilter->Lock, DispatchLevel);
         }
-        
+
         //
         // If necessary, queue the NetBufferLists in a local structure for later
         // processing.  However, do not queue them for "too long", or else the
@@ -1324,14 +1253,13 @@ Arguments:
         // NBL for an unbounded amount of time, then allocate memory, perform a
         // deep copy, and complete the original NBL.
         //
-        
+
         NdisFSendNetBufferLists(pFilter->FilterHandle, NetBufferLists, PortNumber, SendFlags);
 
 
-    }
-    while (bFalse);
+    } while (bFalse);
 
-    DEBUGP(DL_TRACE, "<===SendNetBufferList. \n");
+    DbgPrint("NDIS \t<===SendNetBufferList. \n");
 }
 
 _Use_decl_annotations_
@@ -1340,7 +1268,7 @@ FilterReturnNetBufferLists(
     NDIS_HANDLE         FilterModuleContext,
     PNET_BUFFER_LIST    NetBufferLists,
     ULONG               ReturnFlags
-    )
+)
 /*++
 
 Routine Description:
@@ -1357,8 +1285,8 @@ Routine Description:
 Arguments:
 
     FilterInstanceContext       - our filter context area
-    NetBufferLists              - a linked list of NetBufferLists that this 
-                                  filter driver indicated in a previous call to 
+    NetBufferLists              - a linked list of NetBufferLists that this
+                                  filter driver indicated in a previous call to
                                   NdisFIndicateReceiveNetBufferLists
     ReturnFlags                 - flags specifying if the caller is at DISPATCH_LEVEL
 
@@ -1388,23 +1316,20 @@ Arguments:
     // list, and the scratch fields are don't-care).
     //
 
-    if (pFilter->TrackReceives)
-    {
-        while (CurrNbl)
-        {
-            NumOfNetBufferLists ++;
+    if (pFilter->TrackReceives) {
+        while (CurrNbl) {
+            NumOfNetBufferLists++;
             CurrNbl = NET_BUFFER_LIST_NEXT_NBL(CurrNbl);
         }
     }
 
-    
+
     // Return the received NBLs.  If you removed any NBLs from the chain, make
     // sure the chain isn't empty (i.e., NetBufferLists!=NULL).
 
     NdisFReturnNetBufferLists(pFilter->FilterHandle, NetBufferLists, ReturnFlags);
 
-    if (pFilter->TrackReceives)
-    {
+    if (pFilter->TrackReceives) {
         DispatchLevel = NDIS_TEST_RETURN_AT_DISPATCH_LEVEL(ReturnFlags);
         FILTER_ACQUIRE_LOCK(&pFilter->Lock, DispatchLevel);
 
@@ -1429,7 +1354,7 @@ FilterReceiveNetBufferLists(
     NDIS_PORT_NUMBER    PortNumber,
     ULONG               NumberOfNetBufferLists,
     ULONG               ReceiveFlags
-    )
+)
 /*++
 
 Routine Description:
@@ -1441,7 +1366,7 @@ Routine Description:
     filter when processing a receive indication and will call the next higher
     driver in the stack. A filter that doesn't provide a
     FilterReceiveNetBufferLists handler cannot provide a
-    FilterReturnNetBufferLists handler and cannot a initiate an original receive 
+    FilterReturnNetBufferLists handler and cannot a initiate an original receive
     indication on its own.
 
 Arguments:
@@ -1452,7 +1377,7 @@ Arguments:
     ReceiveFlags             -
 
 N.B.: It is important to check the ReceiveFlags in NDIS_TEST_RECEIVE_CANNOT_PEND.
-    This controls whether the receive indication is an synchronous or 
+    This controls whether the receive indication is an synchronous or
     asynchronous function call.
 
 --*/
@@ -1466,23 +1391,19 @@ N.B.: It is important to check the ReceiveFlags in NDIS_TEST_RECEIVE_CANNOT_PEND
     ULONG               ReturnFlags;
 #endif
 
-    DEBUGP(DL_TRACE, "===>ReceiveNetBufferList: NetBufferLists = %p.\n", NetBufferLists);
-    do
-    {
+    DbgPrint("NDIS \t===>ReceiveNetBufferList: NetBufferLists = %p.\n", NetBufferLists);
+    do {
 
         DispatchLevel = NDIS_TEST_RECEIVE_AT_DISPATCH_LEVEL(ReceiveFlags);
 #if DBG
         FILTER_ACQUIRE_LOCK(&pFilter->Lock, DispatchLevel);
 
-        if (pFilter->State != FilterRunning)
-        {
+        if (pFilter->State != FilterRunning) {
             FILTER_RELEASE_LOCK(&pFilter->Lock, DispatchLevel);
 
-            if (NDIS_TEST_RECEIVE_CAN_PEND(ReceiveFlags))
-            {
+            if (NDIS_TEST_RECEIVE_CAN_PEND(ReceiveFlags)) {
                 ReturnFlags = 0;
-                if (NDIS_TEST_RECEIVE_AT_DISPATCH_LEVEL(ReceiveFlags))
-                {
+                if (NDIS_TEST_RECEIVE_AT_DISPATCH_LEVEL(ReceiveFlags)) {
                     NDIS_SET_RETURN_FLAG(ReturnFlags, NDIS_RETURN_FLAGS_DISPATCH_LEVEL);
                 }
 
@@ -1533,8 +1454,7 @@ N.B.: It is important to check the ReceiveFlags in NDIS_TEST_RECEIVE_CANNOT_PEND
         // deep copy, and return the original NBL.
         //
 
-        if (pFilter->TrackReceives)
-        {
+        if (pFilter->TrackReceives) {
             FILTER_ACQUIRE_LOCK(&pFilter->Lock, DispatchLevel);
             pFilter->OutstandingRcvs += NumberOfNetBufferLists;
             Ref = pFilter->OutstandingRcvs;
@@ -1544,16 +1464,15 @@ N.B.: It is important to check the ReceiveFlags in NDIS_TEST_RECEIVE_CANNOT_PEND
         }
 
         NdisFIndicateReceiveNetBufferLists(
-                   pFilter->FilterHandle,
-                   NetBufferLists,
-                   PortNumber,
-                   NumberOfNetBufferLists,
-                   ReceiveFlags);
+            pFilter->FilterHandle,
+            NetBufferLists,
+            PortNumber,
+            NumberOfNetBufferLists,
+            ReceiveFlags);
 
 
         if (NDIS_TEST_RECEIVE_CANNOT_PEND(ReceiveFlags) &&
-            pFilter->TrackReceives)
-        {
+            pFilter->TrackReceives) {
             FILTER_ACQUIRE_LOCK(&pFilter->Lock, DispatchLevel);
             pFilter->OutstandingRcvs -= NumberOfNetBufferLists;
             Ref = pFilter->OutstandingRcvs;
@@ -1563,7 +1482,7 @@ N.B.: It is important to check the ReceiveFlags in NDIS_TEST_RECEIVE_CANNOT_PEND
 
     } while (bFalse);
 
-    DEBUGP(DL_TRACE, "<===ReceiveNetBufferList: Flags = %8x.\n", ReceiveFlags);
+    DbgPrint("NDIS \t<===ReceiveNetBufferList: Flags = %8x.\n", ReceiveFlags);
 
 }
 
@@ -1573,7 +1492,7 @@ VOID
 FilterCancelSendNetBufferLists(
     NDIS_HANDLE             FilterModuleContext,
     PVOID                   CancelId
-    )
+)
 /*++
 
 Routine Description:
@@ -1581,7 +1500,7 @@ Routine Description:
     This function cancels any NET_BUFFER_LISTs pended in the filter and then
     calls the NdisFCancelSendNetBufferLists to propagate the cancel operation.
 
-    If your driver does not queue any send NBLs, you may omit this routine.  
+    If your driver does not queue any send NBLs, you may omit this routine.
     NDIS will propagate the cancelation on your behalf more efficiently.
 
 Arguments:
@@ -1605,7 +1524,7 @@ _Use_decl_annotations_
 NDIS_STATUS
 FilterSetModuleOptions(
     NDIS_HANDLE             FilterModuleContext
-    )
+)
 /*++
 
 Routine Description:
@@ -1624,77 +1543,75 @@ Return Value:
 
 --*/
 {
-   PMS_FILTER                               pFilter = (PMS_FILTER)FilterModuleContext;
-   NDIS_FILTER_PARTIAL_CHARACTERISTICS      OptionalHandlers;
-   NDIS_STATUS                              Status = NDIS_STATUS_SUCCESS;
-   BOOLEAN                                  bFalse = FALSE;
+    PMS_FILTER                               pFilter = (PMS_FILTER)FilterModuleContext;
+    NDIS_FILTER_PARTIAL_CHARACTERISTICS      OptionalHandlers;
+    NDIS_STATUS                              Status = NDIS_STATUS_SUCCESS;
+    BOOLEAN                                  bFalse = FALSE;
 
-   //
-   // Demonstrate how to change send/receive handlers at runtime.
-   //
-   if (bFalse)
-   {
-       UINT      i;
+    //
+    // Demonstrate how to change send/receive handlers at runtime.
+    //
+    if (bFalse) {
+        UINT      i;
 
 
-       pFilter->CallsRestart++;
+        pFilter->CallsRestart++;
 
-       i = pFilter->CallsRestart % 8;
+        i = pFilter->CallsRestart % 8;
 
-       pFilter->TrackReceives = TRUE;
-       pFilter->TrackSends = TRUE;
+        pFilter->TrackReceives = TRUE;
+        pFilter->TrackSends = TRUE;
 
-       NdisMoveMemory(&OptionalHandlers, &DefaultChars, sizeof(OptionalHandlers));
-       OptionalHandlers.Header.Type = NDIS_OBJECT_TYPE_FILTER_PARTIAL_CHARACTERISTICS;
-       OptionalHandlers.Header.Size = sizeof(OptionalHandlers);
-       switch (i)
-       {
+        NdisMoveMemory(&OptionalHandlers, &DefaultChars, sizeof(OptionalHandlers));
+        OptionalHandlers.Header.Type = NDIS_OBJECT_TYPE_FILTER_PARTIAL_CHARACTERISTICS;
+        OptionalHandlers.Header.Size = sizeof(OptionalHandlers);
+        switch (i) {
 
-            case 0:
-                OptionalHandlers.ReceiveNetBufferListsHandler = NULL;
-                pFilter->TrackReceives = FALSE;
-                break;
+        case 0:
+            OptionalHandlers.ReceiveNetBufferListsHandler = NULL;
+            pFilter->TrackReceives = FALSE;
+            break;
 
-            case 1:
+        case 1:
 
-                OptionalHandlers.ReturnNetBufferListsHandler = NULL;
-                pFilter->TrackReceives = FALSE;
-                break;
+            OptionalHandlers.ReturnNetBufferListsHandler = NULL;
+            pFilter->TrackReceives = FALSE;
+            break;
 
-            case 2:
-                OptionalHandlers.SendNetBufferListsHandler = NULL;
-                pFilter->TrackSends = FALSE;
-                break;
+        case 2:
+            OptionalHandlers.SendNetBufferListsHandler = NULL;
+            pFilter->TrackSends = FALSE;
+            break;
 
-            case 3:
-                OptionalHandlers.SendNetBufferListsCompleteHandler = NULL;
-                pFilter->TrackSends = FALSE;
-                break;
+        case 3:
+            OptionalHandlers.SendNetBufferListsCompleteHandler = NULL;
+            pFilter->TrackSends = FALSE;
+            break;
 
-            case 4:
-                OptionalHandlers.ReceiveNetBufferListsHandler = NULL;
-                OptionalHandlers.ReturnNetBufferListsHandler = NULL;
-                break;
+        case 4:
+            OptionalHandlers.ReceiveNetBufferListsHandler = NULL;
+            OptionalHandlers.ReturnNetBufferListsHandler = NULL;
+            break;
 
-            case 5:
-                OptionalHandlers.SendNetBufferListsHandler = NULL;
-                OptionalHandlers.SendNetBufferListsCompleteHandler = NULL;
-                break;
+        case 5:
+            OptionalHandlers.SendNetBufferListsHandler = NULL;
+            OptionalHandlers.SendNetBufferListsCompleteHandler = NULL;
+            break;
 
-            case 6:
+        case 6:
 
-                OptionalHandlers.ReceiveNetBufferListsHandler = NULL;
-                OptionalHandlers.ReturnNetBufferListsHandler = NULL;
-                OptionalHandlers.SendNetBufferListsHandler = NULL;
-                OptionalHandlers.SendNetBufferListsCompleteHandler = NULL;
-                break;
+            OptionalHandlers.ReceiveNetBufferListsHandler = NULL;
+            OptionalHandlers.ReturnNetBufferListsHandler = NULL;
+            OptionalHandlers.SendNetBufferListsHandler = NULL;
+            OptionalHandlers.SendNetBufferListsCompleteHandler = NULL;
+            break;
 
-            case 7:
-                break;
-       }
-       Status = NdisSetOptionalHandlers(pFilter->FilterHandle, (PNDIS_DRIVER_OPTIONAL_HANDLERS)&OptionalHandlers );
-   }
-   return Status;
+        case 7:
+            break;
+        }
+        Status = NdisSetOptionalHandlers(pFilter->FilterHandle, (PNDIS_DRIVER_OPTIONAL_HANDLERS)&OptionalHandlers);
+    }
+    return Status;
 }
 
 
@@ -1706,12 +1623,12 @@ filterDoInternalRequest(
     _In_ NDIS_REQUEST_TYPE            RequestType,
     _In_ NDIS_OID                     Oid,
     _Inout_updates_bytes_to_(InformationBufferLength, *pBytesProcessed)
-         PVOID                        InformationBuffer,
+    PVOID                        InformationBuffer,
     _In_ ULONG                        InformationBufferLength,
     _In_opt_ ULONG                    OutputBufferLength,
     _In_ ULONG                        MethodId,
     _Out_ PULONG                      pBytesProcessed
-    )
+)
 /*++
 
 Routine Description:
@@ -1757,69 +1674,63 @@ Return Value:
     NdisRequest->Header.Size = sizeof(NDIS_OID_REQUEST);
     NdisRequest->RequestType = RequestType;
 
-    switch (RequestType)
-    {
-        case NdisRequestQueryInformation:
-             NdisRequest->DATA.QUERY_INFORMATION.Oid = Oid;
-             NdisRequest->DATA.QUERY_INFORMATION.InformationBuffer =
-                                    InformationBuffer;
-             NdisRequest->DATA.QUERY_INFORMATION.InformationBufferLength =
-                                    InformationBufferLength;
-            break;
+    switch (RequestType) {
+    case NdisRequestQueryInformation:
+        NdisRequest->DATA.QUERY_INFORMATION.Oid = Oid;
+        NdisRequest->DATA.QUERY_INFORMATION.InformationBuffer =
+            InformationBuffer;
+        NdisRequest->DATA.QUERY_INFORMATION.InformationBufferLength =
+            InformationBufferLength;
+        break;
 
-        case NdisRequestSetInformation:
-             NdisRequest->DATA.SET_INFORMATION.Oid = Oid;
-             NdisRequest->DATA.SET_INFORMATION.InformationBuffer =
-                                    InformationBuffer;
-             NdisRequest->DATA.SET_INFORMATION.InformationBufferLength =
-                                    InformationBufferLength;
-            break;
+    case NdisRequestSetInformation:
+        NdisRequest->DATA.SET_INFORMATION.Oid = Oid;
+        NdisRequest->DATA.SET_INFORMATION.InformationBuffer =
+            InformationBuffer;
+        NdisRequest->DATA.SET_INFORMATION.InformationBufferLength =
+            InformationBufferLength;
+        break;
 
-        case NdisRequestMethod:
-             NdisRequest->DATA.METHOD_INFORMATION.Oid = Oid;
-             NdisRequest->DATA.METHOD_INFORMATION.MethodId = MethodId;
-             NdisRequest->DATA.METHOD_INFORMATION.InformationBuffer =
-                                    InformationBuffer;
-             NdisRequest->DATA.METHOD_INFORMATION.InputBufferLength =
-                                    InformationBufferLength;
-             NdisRequest->DATA.METHOD_INFORMATION.OutputBufferLength = OutputBufferLength;
-             break;
-
+    case NdisRequestMethod:
+        NdisRequest->DATA.METHOD_INFORMATION.Oid = Oid;
+        NdisRequest->DATA.METHOD_INFORMATION.MethodId = MethodId;
+        NdisRequest->DATA.METHOD_INFORMATION.InformationBuffer =
+            InformationBuffer;
+        NdisRequest->DATA.METHOD_INFORMATION.InputBufferLength =
+            InformationBufferLength;
+        NdisRequest->DATA.METHOD_INFORMATION.OutputBufferLength = OutputBufferLength;
+        break;
 
 
-        default:
-            FILTER_ASSERT(bFalse);
-            break;
+
+    default:
+        FILTER_ASSERT(bFalse);
+        break;
     }
 
     NdisRequest->RequestId = (PVOID)FILTER_REQUEST_ID;
 
     Status = NdisFOidRequest(FilterModuleContext->FilterHandle,
-                            NdisRequest);
+        NdisRequest);
 
 
-    if (Status == NDIS_STATUS_PENDING)
-    {
+    if (Status == NDIS_STATUS_PENDING) {
 
         NdisWaitEvent(&FilterRequest.ReqEvent, 0);
         Status = FilterRequest.Status;
     }
 
 
-    if (Status == NDIS_STATUS_SUCCESS)
-    {
-        if (RequestType == NdisRequestSetInformation)
-        {
+    if (Status == NDIS_STATUS_SUCCESS) {
+        if (RequestType == NdisRequestSetInformation) {
             *pBytesProcessed = NdisRequest->DATA.SET_INFORMATION.BytesRead;
         }
 
-        if (RequestType == NdisRequestQueryInformation)
-        {
+        if (RequestType == NdisRequestQueryInformation) {
             *pBytesProcessed = NdisRequest->DATA.QUERY_INFORMATION.BytesWritten;
         }
 
-        if (RequestType == NdisRequestMethod)
-        {
+        if (RequestType == NdisRequestMethod) {
             *pBytesProcessed = NdisRequest->DATA.METHOD_INFORMATION.BytesWritten;
         }
 
@@ -1827,18 +1738,13 @@ Return Value:
         // The driver below should set the correct value to BytesWritten
         // or BytesRead. But now, we just truncate the value to InformationBufferLength
         //
-        if (RequestType == NdisRequestMethod)
-        {
-            if (*pBytesProcessed > OutputBufferLength)
-            {
+        if (RequestType == NdisRequestMethod) {
+            if (*pBytesProcessed > OutputBufferLength) {
                 *pBytesProcessed = OutputBufferLength;
             }
-        }
-        else
-        {
+        } else {
 
-            if (*pBytesProcessed > InformationBufferLength)
-            {
+            if (*pBytesProcessed > InformationBufferLength) {
                 *pBytesProcessed = InformationBufferLength;
             }
         }
@@ -1853,7 +1759,7 @@ filterInternalRequestComplete(
     _In_ NDIS_HANDLE                  FilterModuleContext,
     _In_ PNDIS_OID_REQUEST            NdisRequest,
     _In_ NDIS_STATUS                  Status
-    )
+)
 /*++
 
 Routine Description:
