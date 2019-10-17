@@ -186,10 +186,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="component.cpp" />
     <ClCompile Include="component_install.cpp" />
     <ClCompile Include="component_uninstall.cpp" />
     <ClCompile Include="ndisuser.c" />
-    <ClCompile Include="netcfg.cpp" />
     <ResourceCompile Include="ndisuser.rc" />
   </ItemGroup>
   <ItemGroup>

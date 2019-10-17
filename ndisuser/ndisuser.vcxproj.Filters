@@ -18,13 +18,13 @@
     <ClCompile Include="ndisuser.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="netcfg.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="component_install.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="component_uninstall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="component.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
