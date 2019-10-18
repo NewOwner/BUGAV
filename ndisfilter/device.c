@@ -154,25 +154,30 @@ FilterDeviceIoControl(
     switch (IrpSp->Parameters.DeviceIoControl.IoControlCode) {
 
     case IOCTL_FILTER_RESTART_ALL:
+        DbgPrint("NDIS \tFilterDeviceIoControl!IOCTL_FILTER_RESTART_ALL\n");
         break;
 
     case IOCTL_FILTER_RESTART_ONE_INSTANCE:
+        DbgPrint("NDIS \tFilterDeviceIoControl!IOCTL_FILTER_RESTART_ONE_INSTANCE\n");
         InputBuffer = OutputBuffer = (PUCHAR)Irp->AssociatedIrp.SystemBuffer;
         InputBufferLength = IrpSp->Parameters.DeviceIoControl.InputBufferLength;
+
+        DbgPrint("NDIS \tFilterDeviceIoControl!filterFindFilterModule Search for %wZ\n", (LPCWSTR)InputBuffer);
 
         pFilter = filterFindFilterModule(InputBuffer, InputBufferLength);
 
         if (pFilter == NULL) {
-
+            DbgPrint("NDIS \tFilterDeviceIoControl!filterFindFilterModule Can`t find %wZ\n", (LPCWSTR)InputBuffer);
             break;
         }
 
-        NdisFRestartFilter(pFilter->FilterHandle);
-
+        if (NDIS_STATUS_SUCCESS != NdisFRestartFilter(pFilter->FilterHandle)) {
+            DbgPrint("NDIS \tFilterDeviceIoControl!NdisFRestartFilter Failed\n");
+        }
         break;
 
     case IOCTL_FILTER_ENUMERATE_ALL_INSTANCES:
-
+        DbgPrint("NDIS \tFilterDeviceIoControl!IOCTL_FILTER_RESTART_ONE_INSTANCE\n");
         InputBuffer = OutputBuffer = (PUCHAR)Irp->AssociatedIrp.SystemBuffer;
         InputBufferLength = IrpSp->Parameters.DeviceIoControl.InputBufferLength;
         OutputBufferLength = IrpSp->Parameters.DeviceIoControl.OutputBufferLength;
@@ -204,13 +209,13 @@ FilterDeviceIoControl(
 
         FILTER_RELEASE_LOCK(&FilterListLock, bFalse);
         if (InfoLength <= OutputBufferLength) {
-
+            DbgPrint("NDIS \tFilterDeviceIoControl!NDIS_STATUS_SUCCESS\n");
             Status = NDIS_STATUS_SUCCESS;
         } else {
+            DbgPrint("NDIS \tFilterDeviceIoControl!STATUS_BUFFER_TOO_SMALL\n");
             Status = STATUS_BUFFER_TOO_SMALL;
         }
         break;
-
 
     default:
         break;

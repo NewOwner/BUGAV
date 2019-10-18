@@ -17,7 +17,15 @@
  #define IOCTL_FILTER_RESTART_ONE_INSTANCE      ( ((0x00000017)<<16)|((0)<<14)|((1)<<2)|(0) )
  #define IOCTL_FILTER_ENUMERATE_ALL_INSTANCES   ( ((0x00000017)<<16)|((0)<<14)|((2)<<2)|(0) )
 
+#define BUF_LEN 512
 #define ARRAY_LENGTH(array)    (sizeof (array) / sizeof (array[0]))
+
+#pragma pack(push, 1)
+typedef struct _FLTUNICODE_STRING {
+    USHORT Length;
+    LPWSTR Buffer;
+} FLTUNICODE_STRING, *PFLTUNICODE_STRING;
+#pragma pack(pop)
 
 #define InfoPrint(str, ...)                 \
     printf(##str"\n",                       \
@@ -29,8 +37,9 @@
             __VA_ARGS__)
 
 // IOCTL
-
 VOID RestartAllInstances();
+VOID RestartOneInstance();
+VOID EnumerateAllInstances();
 
 // DRIVER
 BOOL
