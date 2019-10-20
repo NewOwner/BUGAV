@@ -123,9 +123,10 @@ Return Value:
 
         FilterDriverHandle = NULL;
 
-        //
+        // Read Net Rules
+        ndisReadCfg();
+
         // Initialize spin locks
-        //
         FILTER_INIT_LOCK(&FilterListLock);
 
         InitializeListHead(&FilterModuleList);

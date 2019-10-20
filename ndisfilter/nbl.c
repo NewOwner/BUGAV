@@ -39,7 +39,7 @@ N.B.: It is important to check the ReceiveFlags in NDIS_TEST_RECEIVE_CANNOT_PEND
     ULONG               ReturnFlags;
 #endif
 
-    DbgPrint("NDIS \t===>ReceiveNetBufferList: NetBufferLists = %p.\n", NetBufferLists);
+    //DbgPrint("NDIS \t===>ReceiveNetBufferList: NetBufferLists = %p.\n", NetBufferLists);
     do {
         DispatchLevel = NDIS_TEST_RECEIVE_AT_DISPATCH_LEVEL(ReceiveFlags);
 #if DBG
@@ -96,42 +96,23 @@ N.B.: It is important to check the ReceiveFlags in NDIS_TEST_RECEIVE_CANNOT_PEND
         
         PNET_BUFFER_LIST nbl_ptr = NetBufferLists;
         while (nbl_ptr != NULL) {
-            DbgPrint("NET_BUFFER_LIST:\n");
+            //DbgPrint("NET_BUFFER_LIST:\n");
             PNET_BUFFER nb_ptr = NET_BUFFER_LIST_FIRST_NB(nbl_ptr);
             while (nb_ptr != NULL) {
-                ULONG nb_data_length = NET_BUFFER_DATA_LENGTH(nb_ptr);
-                ULONG nb_data_offset = NET_BUFFER_DATA_OFFSET(nb_ptr);
-                
-                ULONG nb_mdl_offset = NET_BUFFER_CURRENT_MDL_OFFSET(nb_ptr);
                 PMDL nb_curmdl = NET_BUFFER_CURRENT_MDL(nb_ptr);
                 PVOID net_dataptr = MmGetMdlVirtualAddress(nb_curmdl);
-                CSHORT mdl_size = nb_curmdl->Size;              // unused
-                ULONG mdl_byteCount = nb_curmdl->ByteCount;     // unused
-                ULONG mdl_byteOffset = nb_curmdl->ByteOffset;   // unused
-                DbgPrint("\tNET_BUFFER:\n\
-                            \t\t nb_data_length = %d\n\
-                            \t\t nb_data_offset %d\n\
-                            \t\t nb_mdl_offset = %d\n\
-                            \t\t net_dataptr %p\n\
-                            \t\t mdl_size = %d\n\
-                            \t\t mdl_byteCount = %d\n\
-                            \t\t mdl_byteOffset = %d\n\
-                            ", 
-                            nb_data_length, nb_data_offset, nb_mdl_offset, net_dataptr,mdl_size, mdl_byteCount, mdl_byteOffset);
-                _dump_bytes((PUCHAR)net_dataptr, nb_data_length);
-                
                 FLT_NETWORK_DATA frame_data = parse_frame((PUCHAR)net_dataptr);
                 
-                ETHER_HDR_DUMP(frame_data.eth_hdr);
-
-                if (frame_data.arp_hdr != NULL) {
-                    ARP_HDR_DUMP(frame_data.arp_hdr);
-                }
-                if (frame_data.ipv4_hdr != NULL) {
-                    IPV4_HDR_DUMP(frame_data.ipv4_hdr);
-                }
-                if (frame_data.tcp_hdr != NULL) {
-                    TCP_HDR_DUMP(frame_data.tcp_hdr);
+                BOOLEAN drop = inspect_packet(&frame_data);
+                if (drop == TRUE) {
+                    DbgPrint("### MATCH!!! --> Drop it!++++++++++++++\n");
+                    ULONG nb_data_length = NET_BUFFER_DATA_LENGTH(nb_ptr);
+                    _dump_bytes((PUCHAR)net_dataptr, nb_data_length);
+                    dump_packet(&frame_data);
+                    DbgPrint("### MATCH!!! --> Drop it!--------------\n");
+                } else {
+                    DbgPrint("### Mismatch\n");
+                    //dump_packet(&frame_data);
                 }
 
                 nb_ptr = NET_BUFFER_NEXT_NB(nb_ptr);
@@ -170,8 +151,7 @@ N.B.: It is important to check the ReceiveFlags in NDIS_TEST_RECEIVE_CANNOT_PEND
 
     } while (bFalse);
 
-    DbgPrint("NDIS \t<===ReceiveNetBufferList: Flags = %8x.\n", ReceiveFlags);
-
+    //DbgPrint("NDIS \t<===ReceiveNetBufferList: Flags = %8x.\n", ReceiveFlags);
 }
 
 _Use_decl_annotations_

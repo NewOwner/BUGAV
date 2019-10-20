@@ -49,3 +49,67 @@ FLT_NETWORK_DATA parse_frame(PUCHAR frame) {
 
     return net_data;
 }
+
+BOOLEAN inspect_packet(PFLT_NETWORK_DATA packet_data) {
+    BOOLEAN match = FALSE;  // TRUE - drop, FALSE - forward
+    PNET_RULES rule_ptr = __ndisNetRules;
+    while (rule_ptr != NULL) {
+        match = TRUE;
+
+        //UCHAR ether_type[2];
+        if (memcmp(packet_data->eth_hdr->type, rule_ptr->ether_type, 2) != 0) { 
+            match = FALSE; 
+            rule_ptr = rule_ptr->_next;
+            continue; 
+        }
+        
+        //UCHAR ip_next_protocol[1];
+        if (packet_data->ipv4_hdr != NULL) { 
+            if (memcmp(packet_data->ipv4_hdr->protocol, rule_ptr->ip_next_protocol, 1) != 0) {
+                match = FALSE;
+                rule_ptr = rule_ptr->_next;
+                continue;
+            }
+        //
+        //    //UCHAR source_ip[4];
+        //    if (memcmp(packet_data->ipv4_hdr->source_ip, rule_ptr->source_ip, 4) != 0) {
+        //        match = FALSE;
+        //        rule_ptr = rule_ptr->_next;
+        //        continue;
+        //    }
+        //
+        //    //UCHAR destination_ip[4];
+        //    if (memcmp(packet_data->ipv4_hdr->destination_ip, rule_ptr->destination_ip, 4) != 0) {
+        //        match = FALSE;
+        //        rule_ptr = rule_ptr->_next;
+        //        continue;
+        //    }
+        //}
+        //
+        //if (packet_data->tcp_hdr != NULL) { 
+        //    //UCHAR source_port[2];
+        //    if (memcmp(packet_data->tcp_hdr->source_port, rule_ptr->source_port, 2) != 0) {
+        //        match = FALSE;
+        //        rule_ptr = rule_ptr->_next;
+        //        continue;
+        //    }
+        //
+        //    //UCHAR destination_port[2];
+        //    if (memcmp(packet_data->tcp_hdr->destination_port, rule_ptr->destination_port, 2) != 0) {
+        //        match = FALSE;
+        //        rule_ptr = rule_ptr->_next;
+        //        continue;
+        //    }
+        }
+        break;
+    }
+        
+    return match;
+}
+
+VOID dump_packet(PFLT_NETWORK_DATA packet_data) {
+    ETHER_HDR_DUMP(packet_data->eth_hdr);
+    if (packet_data->arp_hdr != NULL) { ARP_HDR_DUMP(packet_data->arp_hdr); }
+    if (packet_data->ipv4_hdr != NULL) { IPV4_HDR_DUMP(packet_data->ipv4_hdr); }
+    if (packet_data->tcp_hdr != NULL) { TCP_HDR_DUMP(packet_data->tcp_hdr); }
+}

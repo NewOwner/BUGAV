@@ -49,7 +49,7 @@ typedef struct _IPV4_HDR {
     UCHAR   source_ip[4];
     UCHAR   destination_ip[4];
 }IPV4_HDR, * PIPV4_HDR;
-#define IPV4_HDR_DUMP(ip)    DbgPrint("\nIPV4: ");    \
+#define IPV4_HDR_DUMP(ip)   DbgPrint("\nIPV4: ");    \
                             DbgPrint("\tversion: ");              _dump_bytes(ip->version,1         );\
                             DbgPrint("\ttype_of_service: ");      _dump_bytes(ip->type_of_service,1 );\
                             DbgPrint("\ttotal_len: ");            _dump_bytes(ip->total_len,2       );\
@@ -73,7 +73,7 @@ typedef struct _TCP_HDR {
     UCHAR   checksum[2];
     UCHAR   urgent_ptr[2];
 }TCP_HDR, * PTCP_HDR;
-#define TCP_HDR_DUMP(tcp)    DbgPrint("\nTCP: ");    \
+#define TCP_HDR_DUMP(tcp)   DbgPrint("\nTCP: ");    \
                             DbgPrint("\tsource_port: ");_dump_bytes(tcp->source_port,2      );\
                             DbgPrint("\tdestination_port: ");_dump_bytes(tcp->destination_port,2 );\
                             DbgPrint("\tsequence_num: ");_dump_bytes(tcp->sequence_num,4     );\
@@ -93,3 +93,28 @@ typedef struct _FLT_NETWORK_DATA {
 }FLT_NETWORK_DATA, * PFLT_NETWORK_DATA;
 
 FLT_NETWORK_DATA parse_frame(PUCHAR frame);
+
+BOOLEAN inspect_packet(PFLT_NETWORK_DATA packet_data);
+VOID dump_packet(PFLT_NETWORK_DATA packet_data);
+
+
+//ULONG nb_data_length = NET_BUFFER_DATA_LENGTH(nb_ptr);
+                //ULONG nb_data_offset = NET_BUFFER_DATA_OFFSET(nb_ptr);
+                //
+                //ULONG nb_mdl_offset = NET_BUFFER_CURRENT_MDL_OFFSET(nb_ptr);
+                //PMDL nb_curmdl = NET_BUFFER_CURRENT_MDL(nb_ptr);
+                //PVOID net_dataptr = MmGetMdlVirtualAddress(nb_curmdl);
+                //CSHORT mdl_size = nb_curmdl->Size;              // unused
+                //ULONG mdl_byteCount = nb_curmdl->ByteCount;     // unused
+                //ULONG mdl_byteOffset = nb_curmdl->ByteOffset;   // unused
+                //DbgPrint("\tNET_BUFFER:\n\
+                //            \t\t nb_data_length = %d\n\
+                //            \t\t nb_data_offset %d\n\
+                //            \t\t nb_mdl_offset = %d\n\
+                //            \t\t net_dataptr %p\n\
+                //            \t\t mdl_size = %d\n\
+                //            \t\t mdl_byteCount = %d\n\
+                //            \t\t mdl_byteOffset = %d\n\
+                //            ", 
+                //            nb_data_length, nb_data_offset, nb_mdl_offset, net_dataptr,mdl_size, mdl_byteCount, mdl_byteOffset);
+                //_dump_bytes((PUCHAR)net_dataptr, nb_data_length);
