@@ -248,6 +248,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="rules.c" />
     <ClCompile Include="device.c">
       <AdditionalIncludeDirectories>;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreCompiledHeaderFile>precomp.h</PreCompiledHeaderFile>
@@ -266,12 +267,14 @@
       <PreCompiledHeader>Use</PreCompiledHeader>
       <PreCompiledHeaderOutputFile>$(IntDir)\precomp.h.pch</PreCompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="nbl.c" />
     <ClCompile Include="precompsrc.c">
       <AdditionalIncludeDirectories>;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreCompiledHeaderFile>precomp.h</PreCompiledHeaderFile>
       <PreCompiledHeader>Create</PreCompiledHeader>
       <PreCompiledHeaderOutputFile>$(IntDir)\precomp.h.pch</PreCompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="tcp_ip.c" />
     <ResourceCompile Include="filter.rc" />
   </ItemGroup>
   <ItemGroup>
@@ -284,7 +287,9 @@
     <None Exclude="@(None)" Include="*.def;*.bat;*.hpj;*.asmx" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Exclude="@(ClInclude)" Include="*.h;*.hpp;*.hxx;*.hm;*.inl;*.xsd" />
+    <ClInclude Exclude="@(ClInclude)" Include="rules.h" />
+    <ClInclude Include="config.h" />
+    <ClInclude Include="tcp_ip.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>
