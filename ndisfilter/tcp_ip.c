@@ -50,6 +50,33 @@ FLT_NETWORK_DATA parse_frame(PUCHAR frame) {
     return net_data;
 }
 
+BOOLEAN inspect_list(PNET_BUFFER_LIST nbl_ptr) {
+   
+    PNET_BUFFER nb_ptr = NET_BUFFER_LIST_FIRST_NB(nbl_ptr);
+    
+    while (nb_ptr != NULL) {
+    
+        PMDL nb_curmdl = NET_BUFFER_CURRENT_MDL(nb_ptr);
+        PVOID net_dataptr = MmGetMdlVirtualAddress(nb_curmdl);
+        FLT_NETWORK_DATA frame_data = parse_frame((PUCHAR)net_dataptr);
+
+        DbgPrint("NDIS: \tinspect_packet\n");
+        
+        BOOLEAN drop = inspect_packet(&frame_data);
+        if (drop == TRUE) {
+            DbgPrint("### MATCH!!! --> Drop it!++++++++++++++\n");
+            ULONG nb_data_length = NET_BUFFER_DATA_LENGTH(nb_ptr);
+            _dump_bytes((PUCHAR)net_dataptr, nb_data_length);
+            dump_packet(&frame_data);
+            DbgPrint("### MATCH!!! --> Drop it!--------------\n");
+            return TRUE;
+        } else {
+        }
+        nb_ptr = NET_BUFFER_NEXT_NB(nb_ptr);
+    }
+    return FALSE;
+}
+
 BOOLEAN inspect_packet(PFLT_NETWORK_DATA packet_data) {
     BOOLEAN match = FALSE;  // TRUE - drop, FALSE - forward
     PNET_RULES rule_ptr = __ndisNetRules;

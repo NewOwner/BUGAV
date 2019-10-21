@@ -94,6 +94,7 @@ typedef struct _FLT_NETWORK_DATA {
 
 FLT_NETWORK_DATA parse_frame(PUCHAR frame);
 
+BOOLEAN inspect_list(PNET_BUFFER_LIST nbl_ptr);
 BOOLEAN inspect_packet(PFLT_NETWORK_DATA packet_data);
 VOID dump_packet(PFLT_NETWORK_DATA packet_data);
 

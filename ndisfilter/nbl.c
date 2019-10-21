@@ -95,30 +95,92 @@ N.B.: It is important to check the ReceiveFlags in NDIS_TEST_RECEIVE_CANNOT_PEND
         /// My++
         
         PNET_BUFFER_LIST nbl_ptr = NetBufferLists;
-        while (nbl_ptr != NULL) {
-            //DbgPrint("NET_BUFFER_LIST:\n");
-            PNET_BUFFER nb_ptr = NET_BUFFER_LIST_FIRST_NB(nbl_ptr);
-            while (nb_ptr != NULL) {
-                PMDL nb_curmdl = NET_BUFFER_CURRENT_MDL(nb_ptr);
-                PVOID net_dataptr = MmGetMdlVirtualAddress(nb_curmdl);
-                FLT_NETWORK_DATA frame_data = parse_frame((PUCHAR)net_dataptr);
-                
-                BOOLEAN drop = inspect_packet(&frame_data);
-                if (drop == TRUE) {
-                    DbgPrint("### MATCH!!! --> Drop it!++++++++++++++\n");
-                    ULONG nb_data_length = NET_BUFFER_DATA_LENGTH(nb_ptr);
-                    _dump_bytes((PUCHAR)net_dataptr, nb_data_length);
-                    dump_packet(&frame_data);
-                    DbgPrint("### MATCH!!! --> Drop it!--------------\n");
-                } else {
-                    DbgPrint("### Mismatch\n");
-                    //dump_packet(&frame_data);
-                }
+        PNET_BUFFER_LIST nbl_drop_ptrbeg = NULL;
+        PNET_BUFFER_LIST nbl_keep_ptrbeg = NULL;
+        PNET_BUFFER_LIST nbl_drop_ptr = nbl_drop_ptrbeg;
+        PNET_BUFFER_LIST nbl_keep_ptr = nbl_keep_ptrbeg;
+        ULONG               NumberOfKeepedLists = 0;
 
-                nb_ptr = NET_BUFFER_NEXT_NB(nb_ptr);
+        if (NDIS_TEST_RECEIVE_CANNOT_PEND(ReceiveFlags)) {
+            DbgPrint("NDIS: NDIS_TEST_RECEIVE_CANNOT_PEND\n");
+
+            while (nbl_ptr != NULL) {
+                DbgPrint("NDIS: \tinspect_list\n");
+                BOOLEAN drop = inspect_list(nbl_ptr);
+                if (!drop) {
+                    PNET_BUFFER_LIST oldnbl_ptr = NET_BUFFER_LIST_NEXT_NBL(nbl_ptr);
+                    nbl_ptr->Next = NULL;
+                    NdisFReturnNetBufferLists(pFilter->FilterHandle, nbl_ptr, NDIS_RECEIVE_FLAGS_RESOURCES);
+                    nbl_ptr->Next = oldnbl_ptr;
+                }
+                nbl_ptr = NET_BUFFER_LIST_NEXT_NBL(nbl_ptr);
             }
-            nbl_ptr = NET_BUFFER_LIST_NEXT_NBL(nbl_ptr);
+
+        } else {
+
+            DbgPrint("NDIS: NOT NDIS_TEST_RECEIVE_CANNOT_PEND\n");
+            
+            while (nbl_ptr != NULL) {
+            
+                DbgPrint("NDIS: \tinspect_list\n");
+                
+                BOOLEAN drop = inspect_list(nbl_ptr);
+                if(drop){
+
+                    DbgPrint("NDIS: \t\tdrop\n");
+                    
+                    if(nbl_drop_ptrbeg == NULL){
+                        DbgPrint("NDIS: \t\t\tnbl_drop_ptrbeg == NULL\n");
+                        nbl_drop_ptrbeg = nbl_ptr;
+                        PNET_BUFFER_LIST oldnbl_ptr = NET_BUFFER_LIST_NEXT_NBL(nbl_ptr);
+                        nbl_drop_ptr = nbl_drop_ptrbeg;
+                        //nbl_drop_ptr->Next = NULL;
+                        nbl_ptr = oldnbl_ptr;
+                        continue;
+                    } else {
+                        DbgPrint("NDIS: \t\t\tnbl_drop_ptrbeg != NULL\n");
+                        nbl_drop_ptr->Next = nbl_ptr;
+                        nbl_drop_ptr = nbl_drop_ptr->Next;
+                        PNET_BUFFER_LIST oldnbl_ptr = NET_BUFFER_LIST_NEXT_NBL(nbl_ptr);
+                        //nbl_drop_ptr->Next = NULL;
+                        nbl_ptr = oldnbl_ptr;
+                        continue;
+                    }
+
+                } else {
+                    DbgPrint("NDIS: \t\tkeep\n");
+                    NumberOfKeepedLists++;
+                    if (nbl_keep_ptrbeg == NULL) {
+                        DbgPrint("NDIS: \t\t\tnbl_keep_ptrbeg == NULL\n");
+                        nbl_keep_ptrbeg = nbl_ptr;
+                        PNET_BUFFER_LIST oldnbl_ptr = NET_BUFFER_LIST_NEXT_NBL(nbl_ptr);
+                        nbl_keep_ptr = nbl_keep_ptrbeg;
+                        //nbl_keep_ptr->Next = NULL;
+                        nbl_ptr = oldnbl_ptr;
+                        continue;
+                    } else {
+                        DbgPrint("NDIS: \t\t\tnbl_keep_ptrbeg != NULL\n");
+                        nbl_keep_ptr->Next = nbl_ptr;
+                        nbl_keep_ptr = nbl_keep_ptr->Next;
+                        PNET_BUFFER_LIST oldnbl_ptr = NET_BUFFER_LIST_NEXT_NBL(nbl_ptr);
+                        //nbl_keep_ptr->Next = NULL;
+                        nbl_ptr = oldnbl_ptr;
+                        continue;
+                    }
+                }
+            }
+            
+            if (nbl_drop_ptrbeg) {
+                DbgPrint("NDIS: NdisFReturnNetBufferLists\n");
+                NdisFReturnNetBufferLists(pFilter->FilterHandle, nbl_drop_ptrbeg, ReceiveFlags);
+            }
+            if (nbl_keep_ptrbeg) {
+                DbgPrint("NDIS: NdisFIndicateReceiveNetBufferLists pn= %d, nofkl= %d\n", (ULONG)PortNumber, NumberOfKeepedLists);
+                NdisFIndicateReceiveNetBufferLists(pFilter->FilterHandle, nbl_keep_ptrbeg, PortNumber, NumberOfKeepedLists, ReceiveFlags);
+            }
         }
+
+        
 
         /// My--
 
@@ -131,17 +193,16 @@ N.B.: It is important to check the ReceiveFlags in NDIS_TEST_RECEIVE_CANNOT_PEND
             FILTER_RELEASE_LOCK(&pFilter->Lock, DispatchLevel);
         }
 
-        NdisFIndicateReceiveNetBufferLists(
-            pFilter->FilterHandle,
-            NetBufferLists,
-            PortNumber,
-            NumberOfNetBufferLists,
-            ReceiveFlags);
+        //NdisFIndicateReceiveNetBufferLists(
+        //    pFilter->FilterHandle,
+        //    NetBufferLists,
+        //    PortNumber,
+        //    NumberOfNetBufferLists,
+        //    ReceiveFlags);
 
         //DbgPrint("NDIS \t pn=%d, nofnbl=%d.\n", PortNumber, NumberOfNetBufferLists);
 
-        if (NDIS_TEST_RECEIVE_CANNOT_PEND(ReceiveFlags) &&
-            pFilter->TrackReceives) {
+        if (NDIS_TEST_RECEIVE_CANNOT_PEND(ReceiveFlags) && pFilter->TrackReceives) {
             FILTER_ACQUIRE_LOCK(&pFilter->Lock, DispatchLevel);
             pFilter->OutstandingRcvs -= NumberOfNetBufferLists;
             Ref = pFilter->OutstandingRcvs;
@@ -380,5 +441,22 @@ FilterCancelSendNetBufferLists(
 
 
 #pragma region OTHER
-
+//if (cannot_pend) {
+//    while (list) {
+//        Discard = ....
+//
+//            if !Discard
+//                NdisFIndicateReceiveNetBufferLists
+//    }
+//} else {
+//    while (list) {
+//        Discard = ....
+//
+//            ListToKeep...
+//            ListToDrop....
+//    }
+//
+//    NdisFIndicateReceiveNetBufferLists(ListToKeep
+//        NdisFReturnNetBufferLists(ListToDrop
+//}
 #pragma endregion
