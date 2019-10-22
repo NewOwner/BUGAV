@@ -83,8 +83,7 @@ namespace BUGAV {
         }
 
         private void Filter_Button_AddRegKey_Click(object sender, EventArgs e) {
-            WrapRegCtrl regwrap = new WrapRegCtrl();
-            regwrap.ManagedMethod();
+            FilterCtrlWrapper ctrl_wrap = new FilterCtrlWrapper();
         }
     }
 }
