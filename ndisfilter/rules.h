@@ -14,7 +14,7 @@ typedef struct _NET_RULES {
     struct _NET_RULES* _prev;
 } NET_RULES, * PNET_RULES;
 
-extern PNET_RULES __ndisNetRules;
+extern PNET_RULES          __ndisNetRules;
 
 VOID ndisReadCfg();
 VOID ndisParseCfg(PUCHAR cfg_buff);

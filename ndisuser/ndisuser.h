@@ -13,9 +13,10 @@
 #define WIN32_DEVICE_NAME       L"\\\\.\\NdisLwf"
 
 
- #define IOCTL_FILTER_RESTART_ALL               ( ((0x00000017)<<16)|((0)<<14)|((0)<<2)|(0) )
- #define IOCTL_FILTER_RESTART_ONE_INSTANCE      ( ((0x00000017)<<16)|((0)<<14)|((1)<<2)|(0) )
- #define IOCTL_FILTER_ENUMERATE_ALL_INSTANCES   ( ((0x00000017)<<16)|((0)<<14)|((2)<<2)|(0) )
+#define IOCTL_FILTER_RESTART_ALL               ( ((0x00000017)<<16)|((0)<<14)|((0)<<2)|(0) )
+#define IOCTL_FILTER_RESTART_ONE_INSTANCE      ( ((0x00000017)<<16)|((0)<<14)|((1)<<2)|(0) )
+#define IOCTL_FILTER_ENUMERATE_ALL_INSTANCES   ( ((0x00000017)<<16)|((0)<<14)|((2)<<2)|(0) )
+#define IOCTL_FILTER_UPDATE_CONFIG             ( ((0x00000017)<<16)|((0)<<14)|((14)<<2)|(0) )
 
 #define BUF_LEN 512
 #define ARRAY_LENGTH(array)    (sizeof (array) / sizeof (array[0]))

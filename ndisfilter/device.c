@@ -217,6 +217,12 @@ FilterDeviceIoControl(
         }
         break;
 
+    case IOCTL_FILTER_UPDATE_CONFIG:
+        DbgPrint("NDIS \tFilterDeviceIoControl!IOCTL_FILTER_UPDATE_CONFIG\n");
+        ndisUpdateNetRules();
+
+        break;
+
     default:
         break;
     }

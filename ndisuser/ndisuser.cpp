@@ -3,6 +3,8 @@
 
 HANDLE g_Driver;
 
+VOID UpdateConfig();
+
 VOID __cdecl
 wmain(
     _In_ ULONG argc,
@@ -24,8 +26,27 @@ wmain(
     g_Driver = hDriver;
 
     //RestartAllInstances();
-    RestartOneInstance();
+    //RestartOneInstance();
     //EnumerateAllInstances();
+    UpdateConfig();
+}
+
+VOID UpdateConfig() {
+    BOOL Result;
+    DWORD BytesReturned;
+
+    Result = DeviceIoControl(g_Driver,
+        IOCTL_FILTER_UPDATE_CONFIG,
+        NULL,
+        0,
+        NULL,
+        0,
+        &BytesReturned,
+        NULL);
+
+    if (Result != TRUE) {
+        ErrorPrint("RestartAllInstances failed. Error %d", GetLastError());
+    }
 }
 
 VOID RestartAllInstances() {

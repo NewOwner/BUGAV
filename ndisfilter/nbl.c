@@ -180,8 +180,6 @@ N.B.: It is important to check the ReceiveFlags in NDIS_TEST_RECEIVE_CANNOT_PEND
             }
         }
 
-        
-
         /// My--
 
         if (pFilter->TrackReceives) {
