@@ -588,7 +588,6 @@ Exit:
 
 
 BOOL
-
 UtilOpenDevice(
     _In_ LPTSTR szWin32DeviceName,
     _Out_ HANDLE* phDevice

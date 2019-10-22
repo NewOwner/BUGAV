@@ -44,52 +44,52 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.darkLabel1 = new DarkUI.Controls.DarkLabel();
             this.groupBox_Filter = new System.Windows.Forms.GroupBox();
+            this.Filter_checkedListBox_RegKeys = new System.Windows.Forms.CheckedListBox();
+            this.Filter_Button_DeleteRegKey = new DarkUI.Controls.DarkButton();
+            this.Filter_TextBox_RegKey = new DarkUI.Controls.DarkTextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.Filter_Button_DeleteFile = new DarkUI.Controls.DarkButton();
+            this.darkLabel4 = new DarkUI.Controls.DarkLabel();
+            this.Filter_checkedListBox_Files = new System.Windows.Forms.CheckedListBox();
             this.Filter_Button_AddRegKey = new DarkUI.Controls.DarkButton();
             this.Filter_Button_AddFile = new DarkUI.Controls.DarkButton();
             this.groupBox_StaticAnalysis = new System.Windows.Forms.GroupBox();
-            this.groupBox_RealtimeProtection = new System.Windows.Forms.GroupBox();
-            this.groupBox_CloudScan = new System.Windows.Forms.GroupBox();
-            this.groupBox_NetworkProtection = new System.Windows.Forms.GroupBox();
-            this.Filter_checkedListBox_Files = new System.Windows.Forms.CheckedListBox();
-            this.darkLabel4 = new DarkUI.Controls.DarkLabel();
-            this.Filter_Button_DeleteFile = new DarkUI.Controls.DarkButton();
-            this.label1 = new System.Windows.Forms.Label();
-            this.Filter_TextBox_RegKey = new DarkUI.Controls.DarkTextBox();
-            this.Filter_Button_DeleteRegKey = new DarkUI.Controls.DarkButton();
-            this.Filter_checkedListBox_RegKeys = new System.Windows.Forms.CheckedListBox();
-            this.SA_checkedListBox_Files = new System.Windows.Forms.CheckedListBox();
-            this.darkLabel5 = new DarkUI.Controls.DarkLabel();
-            this.SA_Button_AddFile = new DarkUI.Controls.DarkButton();
-            this.SA_Button_DeleteFile = new DarkUI.Controls.DarkButton();
-            this.SA_checkedListBox_Directories = new System.Windows.Forms.CheckedListBox();
-            this.darkLabel6 = new DarkUI.Controls.DarkLabel();
-            this.SA_Button_AddDir = new DarkUI.Controls.DarkButton();
-            this.SA_Button_DeleteDir = new DarkUI.Controls.DarkButton();
-            this.SA_Button_ScanFiles = new DarkUI.Controls.DarkButton();
-            this.SA_Button_ScanDirs = new DarkUI.Controls.DarkButton();
-            this.RP_Button_Enable = new DarkUI.Controls.DarkButton();
-            this.darkTextBox1 = new DarkUI.Controls.DarkTextBox();
-            this.RP_Button_Clear = new DarkUI.Controls.DarkButton();
-            this.darkLabel7 = new DarkUI.Controls.DarkLabel();
-            this.CS_Label_FileInfo = new DarkUI.Controls.DarkLabel();
-            this.CS_checkedListBox_Files = new System.Windows.Forms.CheckedListBox();
-            this.darkLabel9 = new DarkUI.Controls.DarkLabel();
-            this.CS_Button_AddFile = new DarkUI.Controls.DarkButton();
-            this.CS_Button_DeleteFile = new DarkUI.Controls.DarkButton();
-            this.CS_Button_StartScan = new DarkUI.Controls.DarkButton();
-            this.CS_Button_Clear = new DarkUI.Controls.DarkButton();
-            this.darkTextBox2 = new DarkUI.Controls.DarkTextBox();
-            this.darkTextBox3 = new DarkUI.Controls.DarkTextBox();
             this.darkLabel8 = new DarkUI.Controls.DarkLabel();
-            this.NP_checkedListBox_Interfaces = new System.Windows.Forms.CheckedListBox();
-            this.darkLabel10 = new DarkUI.Controls.DarkLabel();
-            this.darkLabel11 = new DarkUI.Controls.DarkLabel();
-            this.darkLabel12 = new DarkUI.Controls.DarkLabel();
-            this.NP_checkedListBox_Rules = new System.Windows.Forms.CheckedListBox();
-            this.NP_TextBox_Events = new DarkUI.Controls.DarkTextBox();
-            this.NP_Button_AddRule = new DarkUI.Controls.DarkButton();
-            this.NP_Button_DeleteRule = new DarkUI.Controls.DarkButton();
+            this.darkTextBox3 = new DarkUI.Controls.DarkTextBox();
+            this.SA_Button_ScanDirs = new DarkUI.Controls.DarkButton();
+            this.SA_Button_ScanFiles = new DarkUI.Controls.DarkButton();
+            this.SA_Button_DeleteDir = new DarkUI.Controls.DarkButton();
+            this.SA_Button_AddDir = new DarkUI.Controls.DarkButton();
+            this.darkLabel6 = new DarkUI.Controls.DarkLabel();
+            this.SA_checkedListBox_Directories = new System.Windows.Forms.CheckedListBox();
+            this.SA_Button_DeleteFile = new DarkUI.Controls.DarkButton();
+            this.SA_Button_AddFile = new DarkUI.Controls.DarkButton();
+            this.darkLabel5 = new DarkUI.Controls.DarkLabel();
+            this.SA_checkedListBox_Files = new System.Windows.Forms.CheckedListBox();
+            this.groupBox_RealtimeProtection = new System.Windows.Forms.GroupBox();
+            this.darkLabel7 = new DarkUI.Controls.DarkLabel();
+            this.RP_Button_Clear = new DarkUI.Controls.DarkButton();
+            this.darkTextBox1 = new DarkUI.Controls.DarkTextBox();
+            this.RP_Button_Enable = new DarkUI.Controls.DarkButton();
+            this.groupBox_CloudScan = new System.Windows.Forms.GroupBox();
+            this.darkTextBox2 = new DarkUI.Controls.DarkTextBox();
+            this.CS_Button_Clear = new DarkUI.Controls.DarkButton();
+            this.CS_Button_StartScan = new DarkUI.Controls.DarkButton();
+            this.CS_Button_DeleteFile = new DarkUI.Controls.DarkButton();
+            this.CS_Button_AddFile = new DarkUI.Controls.DarkButton();
+            this.darkLabel9 = new DarkUI.Controls.DarkLabel();
+            this.CS_checkedListBox_Files = new System.Windows.Forms.CheckedListBox();
+            this.CS_Label_FileInfo = new DarkUI.Controls.DarkLabel();
+            this.groupBox_NetworkProtection = new System.Windows.Forms.GroupBox();
             this.NP_Button_ClearEvents = new DarkUI.Controls.DarkButton();
+            this.NP_Button_DeleteRule = new DarkUI.Controls.DarkButton();
+            this.NP_Button_AddRule = new DarkUI.Controls.DarkButton();
+            this.NP_TextBox_Events = new DarkUI.Controls.DarkTextBox();
+            this.NP_checkedListBox_Rules = new System.Windows.Forms.CheckedListBox();
+            this.darkLabel12 = new DarkUI.Controls.DarkLabel();
+            this.darkLabel11 = new DarkUI.Controls.DarkLabel();
+            this.darkLabel10 = new DarkUI.Controls.DarkLabel();
+            this.NP_checkedListBox_Interfaces = new System.Windows.Forms.CheckedListBox();
             this.menuStrip1.SuspendLayout();
             this.groupBox_Info.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -242,13 +242,80 @@
             this.groupBox_Filter.Controls.Add(this.Filter_Button_AddRegKey);
             this.groupBox_Filter.Controls.Add(this.Filter_Button_AddFile);
             this.groupBox_Filter.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.groupBox_Filter.Location = new System.Drawing.Point(239, 913);
+            this.groupBox_Filter.Location = new System.Drawing.Point(23, 43);
             this.groupBox_Filter.Name = "groupBox_Filter";
-            this.groupBox_Filter.Size = new System.Drawing.Size(223, 139);
+            this.groupBox_Filter.Size = new System.Drawing.Size(530, 331);
             this.groupBox_Filter.TabIndex = 3;
             this.groupBox_Filter.TabStop = false;
             this.groupBox_Filter.Text = "Filter";
             this.groupBox_Filter.Visible = false;
+            // 
+            // Filter_checkedListBox_RegKeys
+            // 
+            this.Filter_checkedListBox_RegKeys.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.Filter_checkedListBox_RegKeys.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.Filter_checkedListBox_RegKeys.FormattingEnabled = true;
+            this.Filter_checkedListBox_RegKeys.Location = new System.Drawing.Point(235, 100);
+            this.Filter_checkedListBox_RegKeys.Name = "Filter_checkedListBox_RegKeys";
+            this.Filter_checkedListBox_RegKeys.Size = new System.Drawing.Size(233, 199);
+            this.Filter_checkedListBox_RegKeys.TabIndex = 8;
+            // 
+            // Filter_Button_DeleteRegKey
+            // 
+            this.Filter_Button_DeleteRegKey.Location = new System.Drawing.Point(393, 44);
+            this.Filter_Button_DeleteRegKey.Name = "Filter_Button_DeleteRegKey";
+            this.Filter_Button_DeleteRegKey.Padding = new System.Windows.Forms.Padding(5);
+            this.Filter_Button_DeleteRegKey.Size = new System.Drawing.Size(75, 23);
+            this.Filter_Button_DeleteRegKey.TabIndex = 7;
+            this.Filter_Button_DeleteRegKey.Text = "Delete";
+            // 
+            // Filter_TextBox_RegKey
+            // 
+            this.Filter_TextBox_RegKey.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
+            this.Filter_TextBox_RegKey.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Filter_TextBox_RegKey.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.Filter_TextBox_RegKey.Location = new System.Drawing.Point(235, 73);
+            this.Filter_TextBox_RegKey.Name = "Filter_TextBox_RegKey";
+            this.Filter_TextBox_RegKey.Size = new System.Drawing.Size(233, 20);
+            this.Filter_TextBox_RegKey.TabIndex = 6;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(232, 49);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(71, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Registry Keys";
+            // 
+            // Filter_Button_DeleteFile
+            // 
+            this.Filter_Button_DeleteFile.Location = new System.Drawing.Point(132, 41);
+            this.Filter_Button_DeleteFile.Name = "Filter_Button_DeleteFile";
+            this.Filter_Button_DeleteFile.Padding = new System.Windows.Forms.Padding(5);
+            this.Filter_Button_DeleteFile.Size = new System.Drawing.Size(75, 23);
+            this.Filter_Button_DeleteFile.TabIndex = 4;
+            this.Filter_Button_DeleteFile.Text = "Delete";
+            // 
+            // darkLabel4
+            // 
+            this.darkLabel4.AutoSize = true;
+            this.darkLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.darkLabel4.Location = new System.Drawing.Point(26, 46);
+            this.darkLabel4.Name = "darkLabel4";
+            this.darkLabel4.Size = new System.Drawing.Size(28, 13);
+            this.darkLabel4.TabIndex = 3;
+            this.darkLabel4.Text = "Files";
+            // 
+            // Filter_checkedListBox_Files
+            // 
+            this.Filter_checkedListBox_Files.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.Filter_checkedListBox_Files.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.Filter_checkedListBox_Files.FormattingEnabled = true;
+            this.Filter_checkedListBox_Files.Location = new System.Drawing.Point(26, 70);
+            this.Filter_checkedListBox_Files.Name = "Filter_checkedListBox_Files";
+            this.Filter_checkedListBox_Files.Size = new System.Drawing.Size(181, 229);
+            this.Filter_checkedListBox_Files.TabIndex = 2;
             // 
             // Filter_Button_AddRegKey
             // 
@@ -293,6 +360,121 @@
             this.groupBox_StaticAnalysis.Text = "StaticAnalysis";
             this.groupBox_StaticAnalysis.Visible = false;
             // 
+            // darkLabel8
+            // 
+            this.darkLabel8.AutoSize = true;
+            this.darkLabel8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.darkLabel8.Location = new System.Drawing.Point(40, 338);
+            this.darkLabel8.Name = "darkLabel8";
+            this.darkLabel8.Size = new System.Drawing.Size(25, 13);
+            this.darkLabel8.TabIndex = 11;
+            this.darkLabel8.Text = "Info";
+            // 
+            // darkTextBox3
+            // 
+            this.darkTextBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
+            this.darkTextBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.darkTextBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.darkTextBox3.Location = new System.Drawing.Point(39, 357);
+            this.darkTextBox3.Multiline = true;
+            this.darkTextBox3.Name = "darkTextBox3";
+            this.darkTextBox3.Size = new System.Drawing.Size(423, 101);
+            this.darkTextBox3.TabIndex = 10;
+            // 
+            // SA_Button_ScanDirs
+            // 
+            this.SA_Button_ScanDirs.Location = new System.Drawing.Point(320, 257);
+            this.SA_Button_ScanDirs.Name = "SA_Button_ScanDirs";
+            this.SA_Button_ScanDirs.Padding = new System.Windows.Forms.Padding(5);
+            this.SA_Button_ScanDirs.Size = new System.Drawing.Size(75, 23);
+            this.SA_Button_ScanDirs.TabIndex = 9;
+            this.SA_Button_ScanDirs.Text = "Scan";
+            // 
+            // SA_Button_ScanFiles
+            // 
+            this.SA_Button_ScanFiles.Location = new System.Drawing.Point(40, 258);
+            this.SA_Button_ScanFiles.Name = "SA_Button_ScanFiles";
+            this.SA_Button_ScanFiles.Padding = new System.Windows.Forms.Padding(5);
+            this.SA_Button_ScanFiles.Size = new System.Drawing.Size(75, 23);
+            this.SA_Button_ScanFiles.TabIndex = 8;
+            this.SA_Button_ScanFiles.Text = "Scan";
+            // 
+            // SA_Button_DeleteDir
+            // 
+            this.SA_Button_DeleteDir.Location = new System.Drawing.Point(494, 51);
+            this.SA_Button_DeleteDir.Name = "SA_Button_DeleteDir";
+            this.SA_Button_DeleteDir.Padding = new System.Windows.Forms.Padding(5);
+            this.SA_Button_DeleteDir.Size = new System.Drawing.Size(75, 23);
+            this.SA_Button_DeleteDir.TabIndex = 7;
+            this.SA_Button_DeleteDir.Text = "Delete";
+            // 
+            // SA_Button_AddDir
+            // 
+            this.SA_Button_AddDir.Location = new System.Drawing.Point(409, 51);
+            this.SA_Button_AddDir.Name = "SA_Button_AddDir";
+            this.SA_Button_AddDir.Padding = new System.Windows.Forms.Padding(5);
+            this.SA_Button_AddDir.Size = new System.Drawing.Size(75, 23);
+            this.SA_Button_AddDir.TabIndex = 6;
+            this.SA_Button_AddDir.Text = "Add";
+            // 
+            // darkLabel6
+            // 
+            this.darkLabel6.AutoSize = true;
+            this.darkLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.darkLabel6.Location = new System.Drawing.Point(321, 56);
+            this.darkLabel6.Name = "darkLabel6";
+            this.darkLabel6.Size = new System.Drawing.Size(82, 13);
+            this.darkLabel6.TabIndex = 5;
+            this.darkLabel6.Text = "Select Directory";
+            // 
+            // SA_checkedListBox_Directories
+            // 
+            this.SA_checkedListBox_Directories.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.SA_checkedListBox_Directories.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.SA_checkedListBox_Directories.FormattingEnabled = true;
+            this.SA_checkedListBox_Directories.Location = new System.Drawing.Point(320, 82);
+            this.SA_checkedListBox_Directories.Name = "SA_checkedListBox_Directories";
+            this.SA_checkedListBox_Directories.Size = new System.Drawing.Size(249, 169);
+            this.SA_checkedListBox_Directories.TabIndex = 4;
+            // 
+            // SA_Button_DeleteFile
+            // 
+            this.SA_Button_DeleteFile.Location = new System.Drawing.Point(189, 51);
+            this.SA_Button_DeleteFile.Name = "SA_Button_DeleteFile";
+            this.SA_Button_DeleteFile.Padding = new System.Windows.Forms.Padding(5);
+            this.SA_Button_DeleteFile.Size = new System.Drawing.Size(75, 23);
+            this.SA_Button_DeleteFile.TabIndex = 3;
+            this.SA_Button_DeleteFile.Text = "Delete";
+            // 
+            // SA_Button_AddFile
+            // 
+            this.SA_Button_AddFile.Location = new System.Drawing.Point(99, 51);
+            this.SA_Button_AddFile.Name = "SA_Button_AddFile";
+            this.SA_Button_AddFile.Padding = new System.Windows.Forms.Padding(5);
+            this.SA_Button_AddFile.Size = new System.Drawing.Size(75, 23);
+            this.SA_Button_AddFile.TabIndex = 2;
+            this.SA_Button_AddFile.Text = "Add";
+            // 
+            // darkLabel5
+            // 
+            this.darkLabel5.AutoSize = true;
+            this.darkLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.darkLabel5.Location = new System.Drawing.Point(37, 56);
+            this.darkLabel5.Name = "darkLabel5";
+            this.darkLabel5.Size = new System.Drawing.Size(56, 13);
+            this.darkLabel5.TabIndex = 1;
+            this.darkLabel5.Text = "Select File";
+            // 
+            // SA_checkedListBox_Files
+            // 
+            this.SA_checkedListBox_Files.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.SA_checkedListBox_Files.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.SA_checkedListBox_Files.FormattingEnabled = true;
+            this.SA_checkedListBox_Files.Location = new System.Drawing.Point(39, 82);
+            this.SA_checkedListBox_Files.Name = "SA_checkedListBox_Files";
+            this.SA_checkedListBox_Files.Size = new System.Drawing.Size(225, 169);
+            this.SA_checkedListBox_Files.TabIndex = 0;
+            // 
             // groupBox_RealtimeProtection
             // 
             this.groupBox_RealtimeProtection.Controls.Add(this.darkLabel7);
@@ -307,6 +489,45 @@
             this.groupBox_RealtimeProtection.TabStop = false;
             this.groupBox_RealtimeProtection.Text = "RealtimeProtection";
             this.groupBox_RealtimeProtection.Visible = false;
+            // 
+            // darkLabel7
+            // 
+            this.darkLabel7.AutoSize = true;
+            this.darkLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.darkLabel7.Location = new System.Drawing.Point(96, 213);
+            this.darkLabel7.Name = "darkLabel7";
+            this.darkLabel7.Size = new System.Drawing.Size(40, 13);
+            this.darkLabel7.TabIndex = 3;
+            this.darkLabel7.Text = "Events";
+            // 
+            // RP_Button_Clear
+            // 
+            this.RP_Button_Clear.Location = new System.Drawing.Point(18, 62);
+            this.RP_Button_Clear.Name = "RP_Button_Clear";
+            this.RP_Button_Clear.Padding = new System.Windows.Forms.Padding(5);
+            this.RP_Button_Clear.Size = new System.Drawing.Size(75, 23);
+            this.RP_Button_Clear.TabIndex = 2;
+            this.RP_Button_Clear.Text = "Clear";
+            // 
+            // darkTextBox1
+            // 
+            this.darkTextBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
+            this.darkTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.darkTextBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.darkTextBox1.Location = new System.Drawing.Point(99, 33);
+            this.darkTextBox1.Multiline = true;
+            this.darkTextBox1.Name = "darkTextBox1";
+            this.darkTextBox1.Size = new System.Drawing.Size(253, 177);
+            this.darkTextBox1.TabIndex = 1;
+            // 
+            // RP_Button_Enable
+            // 
+            this.RP_Button_Enable.Location = new System.Drawing.Point(18, 33);
+            this.RP_Button_Enable.Name = "RP_Button_Enable";
+            this.RP_Button_Enable.Padding = new System.Windows.Forms.Padding(5);
+            this.RP_Button_Enable.Size = new System.Drawing.Size(75, 23);
+            this.RP_Button_Enable.TabIndex = 0;
+            this.RP_Button_Enable.Text = "Enable";
             // 
             // groupBox_CloudScan
             // 
@@ -326,6 +547,83 @@
             this.groupBox_CloudScan.TabStop = false;
             this.groupBox_CloudScan.Text = "CloudScan";
             this.groupBox_CloudScan.Visible = false;
+            // 
+            // darkTextBox2
+            // 
+            this.darkTextBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
+            this.darkTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.darkTextBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.darkTextBox2.Location = new System.Drawing.Point(390, 56);
+            this.darkTextBox2.Multiline = true;
+            this.darkTextBox2.Name = "darkTextBox2";
+            this.darkTextBox2.Size = new System.Drawing.Size(219, 154);
+            this.darkTextBox2.TabIndex = 7;
+            // 
+            // CS_Button_Clear
+            // 
+            this.CS_Button_Clear.Location = new System.Drawing.Point(126, 224);
+            this.CS_Button_Clear.Name = "CS_Button_Clear";
+            this.CS_Button_Clear.Padding = new System.Windows.Forms.Padding(5);
+            this.CS_Button_Clear.Size = new System.Drawing.Size(75, 23);
+            this.CS_Button_Clear.TabIndex = 6;
+            this.CS_Button_Clear.Text = "Clear";
+            // 
+            // CS_Button_StartScan
+            // 
+            this.CS_Button_StartScan.Location = new System.Drawing.Point(45, 224);
+            this.CS_Button_StartScan.Name = "CS_Button_StartScan";
+            this.CS_Button_StartScan.Padding = new System.Windows.Forms.Padding(5);
+            this.CS_Button_StartScan.Size = new System.Drawing.Size(75, 23);
+            this.CS_Button_StartScan.TabIndex = 5;
+            this.CS_Button_StartScan.Text = "Cloud Scan";
+            // 
+            // CS_Button_DeleteFile
+            // 
+            this.CS_Button_DeleteFile.Location = new System.Drawing.Point(191, 26);
+            this.CS_Button_DeleteFile.Name = "CS_Button_DeleteFile";
+            this.CS_Button_DeleteFile.Padding = new System.Windows.Forms.Padding(5);
+            this.CS_Button_DeleteFile.Size = new System.Drawing.Size(75, 23);
+            this.CS_Button_DeleteFile.TabIndex = 4;
+            this.CS_Button_DeleteFile.Text = "Delete";
+            // 
+            // CS_Button_AddFile
+            // 
+            this.CS_Button_AddFile.Location = new System.Drawing.Point(110, 26);
+            this.CS_Button_AddFile.Name = "CS_Button_AddFile";
+            this.CS_Button_AddFile.Padding = new System.Windows.Forms.Padding(5);
+            this.CS_Button_AddFile.Size = new System.Drawing.Size(75, 23);
+            this.CS_Button_AddFile.TabIndex = 3;
+            this.CS_Button_AddFile.Text = "Add";
+            // 
+            // darkLabel9
+            // 
+            this.darkLabel9.AutoSize = true;
+            this.darkLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.darkLabel9.Location = new System.Drawing.Point(44, 31);
+            this.darkLabel9.Name = "darkLabel9";
+            this.darkLabel9.Size = new System.Drawing.Size(59, 13);
+            this.darkLabel9.TabIndex = 2;
+            this.darkLabel9.Text = "Sesect File";
+            // 
+            // CS_checkedListBox_Files
+            // 
+            this.CS_checkedListBox_Files.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.CS_checkedListBox_Files.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.CS_checkedListBox_Files.FormattingEnabled = true;
+            this.CS_checkedListBox_Files.Location = new System.Drawing.Point(45, 56);
+            this.CS_checkedListBox_Files.Name = "CS_checkedListBox_Files";
+            this.CS_checkedListBox_Files.Size = new System.Drawing.Size(314, 154);
+            this.CS_checkedListBox_Files.TabIndex = 1;
+            // 
+            // CS_Label_FileInfo
+            // 
+            this.CS_Label_FileInfo.AutoSize = true;
+            this.CS_Label_FileInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.CS_Label_FileInfo.Location = new System.Drawing.Point(387, 31);
+            this.CS_Label_FileInfo.Name = "CS_Label_FileInfo";
+            this.CS_Label_FileInfo.Size = new System.Drawing.Size(44, 13);
+            this.CS_Label_FileInfo.TabIndex = 0;
+            this.CS_Label_FileInfo.Text = "File Info";
             // 
             // groupBox_NetworkProtection
             // 
@@ -347,349 +645,32 @@
             this.groupBox_NetworkProtection.Text = "NetworkProtection";
             this.groupBox_NetworkProtection.Visible = false;
             // 
-            // Filter_checkedListBox_Files
-            // 
-            this.Filter_checkedListBox_Files.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.Filter_checkedListBox_Files.ForeColor = System.Drawing.SystemColors.ScrollBar;
-            this.Filter_checkedListBox_Files.FormattingEnabled = true;
-            this.Filter_checkedListBox_Files.Location = new System.Drawing.Point(26, 70);
-            this.Filter_checkedListBox_Files.Name = "Filter_checkedListBox_Files";
-            this.Filter_checkedListBox_Files.Size = new System.Drawing.Size(181, 229);
-            this.Filter_checkedListBox_Files.TabIndex = 2;
-            // 
-            // darkLabel4
-            // 
-            this.darkLabel4.AutoSize = true;
-            this.darkLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.darkLabel4.Location = new System.Drawing.Point(26, 46);
-            this.darkLabel4.Name = "darkLabel4";
-            this.darkLabel4.Size = new System.Drawing.Size(28, 13);
-            this.darkLabel4.TabIndex = 3;
-            this.darkLabel4.Text = "Files";
-            // 
-            // Filter_Button_DeleteFile
-            // 
-            this.Filter_Button_DeleteFile.Location = new System.Drawing.Point(132, 41);
-            this.Filter_Button_DeleteFile.Name = "Filter_Button_DeleteFile";
-            this.Filter_Button_DeleteFile.Padding = new System.Windows.Forms.Padding(5);
-            this.Filter_Button_DeleteFile.Size = new System.Drawing.Size(75, 23);
-            this.Filter_Button_DeleteFile.TabIndex = 4;
-            this.Filter_Button_DeleteFile.Text = "Delete";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(232, 49);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(71, 13);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Registry Keys";
-            // 
-            // Filter_TextBox_RegKey
-            // 
-            this.Filter_TextBox_RegKey.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
-            this.Filter_TextBox_RegKey.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Filter_TextBox_RegKey.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.Filter_TextBox_RegKey.Location = new System.Drawing.Point(235, 73);
-            this.Filter_TextBox_RegKey.Name = "Filter_TextBox_RegKey";
-            this.Filter_TextBox_RegKey.Size = new System.Drawing.Size(233, 20);
-            this.Filter_TextBox_RegKey.TabIndex = 6;
-            // 
-            // Filter_Button_DeleteRegKey
-            // 
-            this.Filter_Button_DeleteRegKey.Location = new System.Drawing.Point(393, 44);
-            this.Filter_Button_DeleteRegKey.Name = "Filter_Button_DeleteRegKey";
-            this.Filter_Button_DeleteRegKey.Padding = new System.Windows.Forms.Padding(5);
-            this.Filter_Button_DeleteRegKey.Size = new System.Drawing.Size(75, 23);
-            this.Filter_Button_DeleteRegKey.TabIndex = 7;
-            this.Filter_Button_DeleteRegKey.Text = "Delete";
-            // 
-            // Filter_checkedListBox_RegKeys
-            // 
-            this.Filter_checkedListBox_RegKeys.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.Filter_checkedListBox_RegKeys.ForeColor = System.Drawing.SystemColors.ScrollBar;
-            this.Filter_checkedListBox_RegKeys.FormattingEnabled = true;
-            this.Filter_checkedListBox_RegKeys.Location = new System.Drawing.Point(235, 100);
-            this.Filter_checkedListBox_RegKeys.Name = "Filter_checkedListBox_RegKeys";
-            this.Filter_checkedListBox_RegKeys.Size = new System.Drawing.Size(233, 199);
-            this.Filter_checkedListBox_RegKeys.TabIndex = 8;
-            // 
-            // SA_checkedListBox_Files
-            // 
-            this.SA_checkedListBox_Files.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.SA_checkedListBox_Files.ForeColor = System.Drawing.SystemColors.ScrollBar;
-            this.SA_checkedListBox_Files.FormattingEnabled = true;
-            this.SA_checkedListBox_Files.Location = new System.Drawing.Point(39, 82);
-            this.SA_checkedListBox_Files.Name = "SA_checkedListBox_Files";
-            this.SA_checkedListBox_Files.Size = new System.Drawing.Size(225, 169);
-            this.SA_checkedListBox_Files.TabIndex = 0;
-            // 
-            // darkLabel5
-            // 
-            this.darkLabel5.AutoSize = true;
-            this.darkLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.darkLabel5.Location = new System.Drawing.Point(37, 56);
-            this.darkLabel5.Name = "darkLabel5";
-            this.darkLabel5.Size = new System.Drawing.Size(56, 13);
-            this.darkLabel5.TabIndex = 1;
-            this.darkLabel5.Text = "Select File";
-            // 
-            // SA_Button_AddFile
-            // 
-            this.SA_Button_AddFile.Location = new System.Drawing.Point(99, 51);
-            this.SA_Button_AddFile.Name = "SA_Button_AddFile";
-            this.SA_Button_AddFile.Padding = new System.Windows.Forms.Padding(5);
-            this.SA_Button_AddFile.Size = new System.Drawing.Size(75, 23);
-            this.SA_Button_AddFile.TabIndex = 2;
-            this.SA_Button_AddFile.Text = "Add";
-            // 
-            // SA_Button_DeleteFile
-            // 
-            this.SA_Button_DeleteFile.Location = new System.Drawing.Point(189, 51);
-            this.SA_Button_DeleteFile.Name = "SA_Button_DeleteFile";
-            this.SA_Button_DeleteFile.Padding = new System.Windows.Forms.Padding(5);
-            this.SA_Button_DeleteFile.Size = new System.Drawing.Size(75, 23);
-            this.SA_Button_DeleteFile.TabIndex = 3;
-            this.SA_Button_DeleteFile.Text = "Delete";
-            // 
-            // SA_checkedListBox_Directories
-            // 
-            this.SA_checkedListBox_Directories.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.SA_checkedListBox_Directories.ForeColor = System.Drawing.SystemColors.ScrollBar;
-            this.SA_checkedListBox_Directories.FormattingEnabled = true;
-            this.SA_checkedListBox_Directories.Location = new System.Drawing.Point(320, 82);
-            this.SA_checkedListBox_Directories.Name = "SA_checkedListBox_Directories";
-            this.SA_checkedListBox_Directories.Size = new System.Drawing.Size(249, 169);
-            this.SA_checkedListBox_Directories.TabIndex = 4;
-            // 
-            // darkLabel6
-            // 
-            this.darkLabel6.AutoSize = true;
-            this.darkLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.darkLabel6.Location = new System.Drawing.Point(321, 56);
-            this.darkLabel6.Name = "darkLabel6";
-            this.darkLabel6.Size = new System.Drawing.Size(82, 13);
-            this.darkLabel6.TabIndex = 5;
-            this.darkLabel6.Text = "Select Directory";
-            // 
-            // SA_Button_AddDir
-            // 
-            this.SA_Button_AddDir.Location = new System.Drawing.Point(409, 51);
-            this.SA_Button_AddDir.Name = "SA_Button_AddDir";
-            this.SA_Button_AddDir.Padding = new System.Windows.Forms.Padding(5);
-            this.SA_Button_AddDir.Size = new System.Drawing.Size(75, 23);
-            this.SA_Button_AddDir.TabIndex = 6;
-            this.SA_Button_AddDir.Text = "Add";
-            // 
-            // SA_Button_DeleteDir
-            // 
-            this.SA_Button_DeleteDir.Location = new System.Drawing.Point(494, 51);
-            this.SA_Button_DeleteDir.Name = "SA_Button_DeleteDir";
-            this.SA_Button_DeleteDir.Padding = new System.Windows.Forms.Padding(5);
-            this.SA_Button_DeleteDir.Size = new System.Drawing.Size(75, 23);
-            this.SA_Button_DeleteDir.TabIndex = 7;
-            this.SA_Button_DeleteDir.Text = "Delete";
-            // 
-            // SA_Button_ScanFiles
-            // 
-            this.SA_Button_ScanFiles.Location = new System.Drawing.Point(40, 258);
-            this.SA_Button_ScanFiles.Name = "SA_Button_ScanFiles";
-            this.SA_Button_ScanFiles.Padding = new System.Windows.Forms.Padding(5);
-            this.SA_Button_ScanFiles.Size = new System.Drawing.Size(75, 23);
-            this.SA_Button_ScanFiles.TabIndex = 8;
-            this.SA_Button_ScanFiles.Text = "Scan";
-            // 
-            // SA_Button_ScanDirs
-            // 
-            this.SA_Button_ScanDirs.Location = new System.Drawing.Point(320, 257);
-            this.SA_Button_ScanDirs.Name = "SA_Button_ScanDirs";
-            this.SA_Button_ScanDirs.Padding = new System.Windows.Forms.Padding(5);
-            this.SA_Button_ScanDirs.Size = new System.Drawing.Size(75, 23);
-            this.SA_Button_ScanDirs.TabIndex = 9;
-            this.SA_Button_ScanDirs.Text = "Scan";
-            // 
-            // RP_Button_Enable
-            // 
-            this.RP_Button_Enable.Location = new System.Drawing.Point(18, 33);
-            this.RP_Button_Enable.Name = "RP_Button_Enable";
-            this.RP_Button_Enable.Padding = new System.Windows.Forms.Padding(5);
-            this.RP_Button_Enable.Size = new System.Drawing.Size(75, 23);
-            this.RP_Button_Enable.TabIndex = 0;
-            this.RP_Button_Enable.Text = "Enable";
-            // 
-            // darkTextBox1
-            // 
-            this.darkTextBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
-            this.darkTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.darkTextBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.darkTextBox1.Location = new System.Drawing.Point(99, 33);
-            this.darkTextBox1.Multiline = true;
-            this.darkTextBox1.Name = "darkTextBox1";
-            this.darkTextBox1.Size = new System.Drawing.Size(253, 177);
-            this.darkTextBox1.TabIndex = 1;
-            // 
-            // RP_Button_Clear
-            // 
-            this.RP_Button_Clear.Location = new System.Drawing.Point(18, 62);
-            this.RP_Button_Clear.Name = "RP_Button_Clear";
-            this.RP_Button_Clear.Padding = new System.Windows.Forms.Padding(5);
-            this.RP_Button_Clear.Size = new System.Drawing.Size(75, 23);
-            this.RP_Button_Clear.TabIndex = 2;
-            this.RP_Button_Clear.Text = "Clear";
-            // 
-            // darkLabel7
-            // 
-            this.darkLabel7.AutoSize = true;
-            this.darkLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.darkLabel7.Location = new System.Drawing.Point(96, 213);
-            this.darkLabel7.Name = "darkLabel7";
-            this.darkLabel7.Size = new System.Drawing.Size(40, 13);
-            this.darkLabel7.TabIndex = 3;
-            this.darkLabel7.Text = "Events";
-            // 
-            // CS_Label_FileInfo
-            // 
-            this.CS_Label_FileInfo.AutoSize = true;
-            this.CS_Label_FileInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.CS_Label_FileInfo.Location = new System.Drawing.Point(387, 31);
-            this.CS_Label_FileInfo.Name = "CS_Label_FileInfo";
-            this.CS_Label_FileInfo.Size = new System.Drawing.Size(44, 13);
-            this.CS_Label_FileInfo.TabIndex = 0;
-            this.CS_Label_FileInfo.Text = "File Info";
-            // 
-            // CS_checkedListBox_Files
-            // 
-            this.CS_checkedListBox_Files.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.CS_checkedListBox_Files.ForeColor = System.Drawing.SystemColors.ScrollBar;
-            this.CS_checkedListBox_Files.FormattingEnabled = true;
-            this.CS_checkedListBox_Files.Location = new System.Drawing.Point(45, 56);
-            this.CS_checkedListBox_Files.Name = "CS_checkedListBox_Files";
-            this.CS_checkedListBox_Files.Size = new System.Drawing.Size(314, 154);
-            this.CS_checkedListBox_Files.TabIndex = 1;
-            // 
-            // darkLabel9
-            // 
-            this.darkLabel9.AutoSize = true;
-            this.darkLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.darkLabel9.Location = new System.Drawing.Point(44, 31);
-            this.darkLabel9.Name = "darkLabel9";
-            this.darkLabel9.Size = new System.Drawing.Size(59, 13);
-            this.darkLabel9.TabIndex = 2;
-            this.darkLabel9.Text = "Sesect File";
-            // 
-            // CS_Button_AddFile
-            // 
-            this.CS_Button_AddFile.Location = new System.Drawing.Point(110, 26);
-            this.CS_Button_AddFile.Name = "CS_Button_AddFile";
-            this.CS_Button_AddFile.Padding = new System.Windows.Forms.Padding(5);
-            this.CS_Button_AddFile.Size = new System.Drawing.Size(75, 23);
-            this.CS_Button_AddFile.TabIndex = 3;
-            this.CS_Button_AddFile.Text = "Add";
-            // 
-            // CS_Button_DeleteFile
-            // 
-            this.CS_Button_DeleteFile.Location = new System.Drawing.Point(191, 26);
-            this.CS_Button_DeleteFile.Name = "CS_Button_DeleteFile";
-            this.CS_Button_DeleteFile.Padding = new System.Windows.Forms.Padding(5);
-            this.CS_Button_DeleteFile.Size = new System.Drawing.Size(75, 23);
-            this.CS_Button_DeleteFile.TabIndex = 4;
-            this.CS_Button_DeleteFile.Text = "Delete";
-            // 
-            // CS_Button_StartScan
-            // 
-            this.CS_Button_StartScan.Location = new System.Drawing.Point(45, 224);
-            this.CS_Button_StartScan.Name = "CS_Button_StartScan";
-            this.CS_Button_StartScan.Padding = new System.Windows.Forms.Padding(5);
-            this.CS_Button_StartScan.Size = new System.Drawing.Size(75, 23);
-            this.CS_Button_StartScan.TabIndex = 5;
-            this.CS_Button_StartScan.Text = "Cloud Scan";
-            // 
-            // CS_Button_Clear
-            // 
-            this.CS_Button_Clear.Location = new System.Drawing.Point(126, 224);
-            this.CS_Button_Clear.Name = "CS_Button_Clear";
-            this.CS_Button_Clear.Padding = new System.Windows.Forms.Padding(5);
-            this.CS_Button_Clear.Size = new System.Drawing.Size(75, 23);
-            this.CS_Button_Clear.TabIndex = 6;
-            this.CS_Button_Clear.Text = "Clear";
-            // 
-            // darkTextBox2
-            // 
-            this.darkTextBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
-            this.darkTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.darkTextBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.darkTextBox2.Location = new System.Drawing.Point(390, 56);
-            this.darkTextBox2.Multiline = true;
-            this.darkTextBox2.Name = "darkTextBox2";
-            this.darkTextBox2.Size = new System.Drawing.Size(219, 154);
-            this.darkTextBox2.TabIndex = 7;
-            // 
-            // darkTextBox3
-            // 
-            this.darkTextBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
-            this.darkTextBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.darkTextBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.darkTextBox3.Location = new System.Drawing.Point(39, 357);
-            this.darkTextBox3.Multiline = true;
-            this.darkTextBox3.Name = "darkTextBox3";
-            this.darkTextBox3.Size = new System.Drawing.Size(423, 101);
-            this.darkTextBox3.TabIndex = 10;
-            // 
-            // darkLabel8
-            // 
-            this.darkLabel8.AutoSize = true;
-            this.darkLabel8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.darkLabel8.Location = new System.Drawing.Point(40, 338);
-            this.darkLabel8.Name = "darkLabel8";
-            this.darkLabel8.Size = new System.Drawing.Size(25, 13);
-            this.darkLabel8.TabIndex = 11;
-            this.darkLabel8.Text = "Info";
-            // 
-            // NP_checkedListBox_Interfaces
-            // 
-            this.NP_checkedListBox_Interfaces.FormattingEnabled = true;
-            this.NP_checkedListBox_Interfaces.Location = new System.Drawing.Point(40, 59);
-            this.NP_checkedListBox_Interfaces.Name = "NP_checkedListBox_Interfaces";
-            this.NP_checkedListBox_Interfaces.Size = new System.Drawing.Size(230, 169);
-            this.NP_checkedListBox_Interfaces.TabIndex = 0;
-            // 
-            // darkLabel10
-            // 
-            this.darkLabel10.AutoSize = true;
-            this.darkLabel10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.darkLabel10.Location = new System.Drawing.Point(37, 40);
-            this.darkLabel10.Name = "darkLabel10";
-            this.darkLabel10.Size = new System.Drawing.Size(54, 13);
-            this.darkLabel10.TabIndex = 1;
-            this.darkLabel10.Text = "Interfaces";
-            // 
-            // darkLabel11
-            // 
-            this.darkLabel11.AutoSize = true;
-            this.darkLabel11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.darkLabel11.Location = new System.Drawing.Point(318, 40);
-            this.darkLabel11.Name = "darkLabel11";
-            this.darkLabel11.Size = new System.Drawing.Size(34, 13);
-            this.darkLabel11.TabIndex = 2;
-            this.darkLabel11.Text = "Rules";
-            // 
-            // darkLabel12
-            // 
-            this.darkLabel12.AutoSize = true;
-            this.darkLabel12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.darkLabel12.Location = new System.Drawing.Point(40, 245);
-            this.darkLabel12.Name = "darkLabel12";
-            this.darkLabel12.Size = new System.Drawing.Size(40, 13);
-            this.darkLabel12.TabIndex = 3;
-            this.darkLabel12.Text = "Events";
-            // 
-            // NP_checkedListBox_Rules
-            // 
-            this.NP_checkedListBox_Rules.FormattingEnabled = true;
-            this.NP_checkedListBox_Rules.Location = new System.Drawing.Point(321, 59);
-            this.NP_checkedListBox_Rules.Name = "NP_checkedListBox_Rules";
-            this.NP_checkedListBox_Rules.Size = new System.Drawing.Size(227, 169);
-            this.NP_checkedListBox_Rules.TabIndex = 4;
+            // NP_Button_ClearEvents
+            // 
+            this.NP_Button_ClearEvents.Location = new System.Drawing.Point(86, 240);
+            this.NP_Button_ClearEvents.Name = "NP_Button_ClearEvents";
+            this.NP_Button_ClearEvents.Padding = new System.Windows.Forms.Padding(5);
+            this.NP_Button_ClearEvents.Size = new System.Drawing.Size(75, 23);
+            this.NP_Button_ClearEvents.TabIndex = 8;
+            this.NP_Button_ClearEvents.Text = "Clear";
+            // 
+            // NP_Button_DeleteRule
+            // 
+            this.NP_Button_DeleteRule.Location = new System.Drawing.Point(473, 28);
+            this.NP_Button_DeleteRule.Name = "NP_Button_DeleteRule";
+            this.NP_Button_DeleteRule.Padding = new System.Windows.Forms.Padding(5);
+            this.NP_Button_DeleteRule.Size = new System.Drawing.Size(75, 23);
+            this.NP_Button_DeleteRule.TabIndex = 7;
+            this.NP_Button_DeleteRule.Text = "Delete";
+            // 
+            // NP_Button_AddRule
+            // 
+            this.NP_Button_AddRule.Location = new System.Drawing.Point(391, 29);
+            this.NP_Button_AddRule.Name = "NP_Button_AddRule";
+            this.NP_Button_AddRule.Padding = new System.Windows.Forms.Padding(5);
+            this.NP_Button_AddRule.Size = new System.Drawing.Size(75, 23);
+            this.NP_Button_AddRule.TabIndex = 6;
+            this.NP_Button_AddRule.Text = "Add";
             // 
             // NP_TextBox_Events
             // 
@@ -702,32 +683,51 @@
             this.NP_TextBox_Events.Size = new System.Drawing.Size(502, 112);
             this.NP_TextBox_Events.TabIndex = 5;
             // 
-            // NP_Button_AddRule
+            // NP_checkedListBox_Rules
             // 
-            this.NP_Button_AddRule.Location = new System.Drawing.Point(391, 29);
-            this.NP_Button_AddRule.Name = "NP_Button_AddRule";
-            this.NP_Button_AddRule.Padding = new System.Windows.Forms.Padding(5);
-            this.NP_Button_AddRule.Size = new System.Drawing.Size(75, 23);
-            this.NP_Button_AddRule.TabIndex = 6;
-            this.NP_Button_AddRule.Text = "Add";
+            this.NP_checkedListBox_Rules.FormattingEnabled = true;
+            this.NP_checkedListBox_Rules.Location = new System.Drawing.Point(321, 59);
+            this.NP_checkedListBox_Rules.Name = "NP_checkedListBox_Rules";
+            this.NP_checkedListBox_Rules.Size = new System.Drawing.Size(227, 169);
+            this.NP_checkedListBox_Rules.TabIndex = 4;
             // 
-            // NP_Button_DeleteRule
+            // darkLabel12
             // 
-            this.NP_Button_DeleteRule.Location = new System.Drawing.Point(473, 28);
-            this.NP_Button_DeleteRule.Name = "NP_Button_DeleteRule";
-            this.NP_Button_DeleteRule.Padding = new System.Windows.Forms.Padding(5);
-            this.NP_Button_DeleteRule.Size = new System.Drawing.Size(75, 23);
-            this.NP_Button_DeleteRule.TabIndex = 7;
-            this.NP_Button_DeleteRule.Text = "Delete";
+            this.darkLabel12.AutoSize = true;
+            this.darkLabel12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.darkLabel12.Location = new System.Drawing.Point(40, 245);
+            this.darkLabel12.Name = "darkLabel12";
+            this.darkLabel12.Size = new System.Drawing.Size(40, 13);
+            this.darkLabel12.TabIndex = 3;
+            this.darkLabel12.Text = "Events";
             // 
-            // NP_Button_ClearEvents
+            // darkLabel11
             // 
-            this.NP_Button_ClearEvents.Location = new System.Drawing.Point(86, 240);
-            this.NP_Button_ClearEvents.Name = "NP_Button_ClearEvents";
-            this.NP_Button_ClearEvents.Padding = new System.Windows.Forms.Padding(5);
-            this.NP_Button_ClearEvents.Size = new System.Drawing.Size(75, 23);
-            this.NP_Button_ClearEvents.TabIndex = 8;
-            this.NP_Button_ClearEvents.Text = "Clear";
+            this.darkLabel11.AutoSize = true;
+            this.darkLabel11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.darkLabel11.Location = new System.Drawing.Point(318, 40);
+            this.darkLabel11.Name = "darkLabel11";
+            this.darkLabel11.Size = new System.Drawing.Size(34, 13);
+            this.darkLabel11.TabIndex = 2;
+            this.darkLabel11.Text = "Rules";
+            // 
+            // darkLabel10
+            // 
+            this.darkLabel10.AutoSize = true;
+            this.darkLabel10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.darkLabel10.Location = new System.Drawing.Point(37, 40);
+            this.darkLabel10.Name = "darkLabel10";
+            this.darkLabel10.Size = new System.Drawing.Size(54, 13);
+            this.darkLabel10.TabIndex = 1;
+            this.darkLabel10.Text = "Interfaces";
+            // 
+            // NP_checkedListBox_Interfaces
+            // 
+            this.NP_checkedListBox_Interfaces.FormattingEnabled = true;
+            this.NP_checkedListBox_Interfaces.Location = new System.Drawing.Point(40, 59);
+            this.NP_checkedListBox_Interfaces.Name = "NP_checkedListBox_Interfaces";
+            this.NP_checkedListBox_Interfaces.Size = new System.Drawing.Size(230, 169);
+            this.NP_checkedListBox_Interfaces.TabIndex = 0;
             // 
             // Form_BUGAV
             // 
