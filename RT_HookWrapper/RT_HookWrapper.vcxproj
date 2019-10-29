@@ -95,7 +95,8 @@
       <AdditionalIncludeDirectories>F:\UNIVER\9_sem\TISUIB\2\BUGAV\LIBS\EasyHook;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies />
+      <AdditionalDependencies>EasyHook64.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)LIBS\EasyHook\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -108,7 +109,8 @@
       <AdditionalIncludeDirectories>F:\UNIVER\9_sem\TISUIB\2\BUGAV\LIBS\EasyHook;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies />
+      <AdditionalDependencies>EasyHook64.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)LIBS\EasyHook\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -120,7 +122,8 @@
       <AdditionalIncludeDirectories>F:\UNIVER\9_sem\TISUIB\2\BUGAV\LIBS\EasyHook;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies />
+      <AdditionalDependencies>EasyHook64.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)LIBS\EasyHook\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -132,7 +135,8 @@
       <AdditionalIncludeDirectories>F:\UNIVER\9_sem\TISUIB\2\BUGAV\LIBS\EasyHook;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies />
+      <AdditionalDependencies>EasyHook64.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)LIBS\EasyHook\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -160,6 +164,11 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\InjectorLib\InjectorLib.vcxproj">
+      <Project>{ff5709a0-d5ac-4c52-9b64-9eff62437866}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

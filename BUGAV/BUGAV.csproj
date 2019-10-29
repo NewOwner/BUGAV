@@ -56,10 +56,49 @@
     <Compile Include="Form_BUGAV.Designer.cs">
       <DependentUpon>Form_BUGAV.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form_FilterFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_FilterFile.Designer.cs">
+      <DependentUpon>Form_FilterFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_FilterNetwork.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_FilterNetwork.Designer.cs">
+      <DependentUpon>Form_FilterNetwork.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_FilterRegistry.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_FilterRegistry.Designer.cs">
+      <DependentUpon>Form_FilterRegistry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Info.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Info.Designer.cs">
+      <DependentUpon>Form_Info.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_RTProtection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_RTProtection.Designer.cs">
+      <DependentUpon>Form_RTProtection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_StaticAnalyze.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_StaticAnalyze.Designer.cs">
+      <DependentUpon>Form_StaticAnalyze.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form_BUGAV.resx">
       <DependentUpon>Form_BUGAV.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_FilterFile.resx">
+      <DependentUpon>Form_FilterFile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
