@@ -151,6 +151,10 @@
     <Content Include="Flat-Halloween-Bug.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\__FilterFile\FilterFileWrap\FilterFileWrap.vcxproj">
+      <Project>{ba509e7c-8c91-4162-955b-62ab5d727e2d}</Project>
+      <Name>FilterFileWrap</Name>
+    </ProjectReference>
     <ProjectReference Include="..\__GUI\DarkUI\DarkUI\DarkUI.csproj">
       <Project>{f19472f5-8c44-4c51-a8a0-b9de5f555255}</Project>
       <Name>DarkUI</Name>

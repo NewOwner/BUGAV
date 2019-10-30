@@ -33,12 +33,13 @@
             // 
             // FilterFile_Button_Delete
             // 
-            this.FilterFile_Button_Delete.Location = new System.Drawing.Point(137, 21);
+            this.FilterFile_Button_Delete.Location = new System.Drawing.Point(246, 21);
             this.FilterFile_Button_Delete.Name = "FilterFile_Button_Delete";
             this.FilterFile_Button_Delete.Padding = new System.Windows.Forms.Padding(5);
             this.FilterFile_Button_Delete.Size = new System.Drawing.Size(75, 23);
             this.FilterFile_Button_Delete.TabIndex = 8;
             this.FilterFile_Button_Delete.Text = "Delete";
+            this.FilterFile_Button_Delete.Click += new System.EventHandler(this.FilterFile_Button_Delete_Click);
             // 
             // darkLabel4
             // 
@@ -57,21 +58,22 @@
             this.FilterFiler_checkedListBox_Files.FormattingEnabled = true;
             this.FilterFiler_checkedListBox_Files.Location = new System.Drawing.Point(31, 50);
             this.FilterFiler_checkedListBox_Files.Name = "FilterFiler_checkedListBox_Files";
-            this.FilterFiler_checkedListBox_Files.Size = new System.Drawing.Size(181, 229);
+            this.FilterFiler_checkedListBox_Files.Size = new System.Drawing.Size(290, 229);
             this.FilterFiler_checkedListBox_Files.TabIndex = 6;
             // 
             // FilterFile_Button_Add
             // 
-            this.FilterFile_Button_Add.Location = new System.Drawing.Point(66, 21);
+            this.FilterFile_Button_Add.Location = new System.Drawing.Point(175, 21);
             this.FilterFile_Button_Add.Name = "FilterFile_Button_Add";
             this.FilterFile_Button_Add.Padding = new System.Windows.Forms.Padding(5);
             this.FilterFile_Button_Add.Size = new System.Drawing.Size(65, 23);
             this.FilterFile_Button_Add.TabIndex = 5;
             this.FilterFile_Button_Add.Text = "Add";
+            this.FilterFile_Button_Add.Click += new System.EventHandler(this.FilterFile_Button_Add_Click);
             // 
             // FilterFile_Button_Activate
             // 
-            this.FilterFile_Button_Activate.Location = new System.Drawing.Point(34, 285);
+            this.FilterFile_Button_Activate.Location = new System.Drawing.Point(246, 285);
             this.FilterFile_Button_Activate.Name = "FilterFile_Button_Activate";
             this.FilterFile_Button_Activate.Padding = new System.Windows.Forms.Padding(5);
             this.FilterFile_Button_Activate.Size = new System.Drawing.Size(75, 23);
@@ -100,7 +102,7 @@
 
         private DarkUI.Controls.DarkButton FilterFile_Button_Delete;
         private DarkUI.Controls.DarkLabel darkLabel4;
-        private System.Windows.Forms.CheckedListBox FilterFiler_checkedListBox_Files;
+        public System.Windows.Forms.CheckedListBox FilterFiler_checkedListBox_Files;
         private DarkUI.Controls.DarkButton FilterFile_Button_Add;
         private DarkUI.Controls.DarkButton FilterFile_Button_Activate;
     }
