@@ -169,12 +169,6 @@
     <ProjectReference Include="..\FilterFileCtrl\FilterFileCtrl.vcxproj">
       <Project>{378b0b4c-be88-4ffe-89ca-98fe5e0dfa7e}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\FilterNetworkCtrl\FilterNetworkCtrl.vcxproj">
-      <Project>{bf00245a-3cdb-47b3-9253-b47dcd804756}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\FilterRegistryCtrl\FilterRegistryCtrl.vcxproj">
-      <Project>{d984d869-6670-410a-aa5d-56966d824d4f}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

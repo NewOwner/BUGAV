@@ -11,12 +11,12 @@ public:
     FilterFileWrap();
     ~FilterFileWrap();
 
-    VOID CLI_Passflt_LoadDriver();
-    VOID CLI_Passflt_UnloadDriver();
-    VOID CLI_Passflt_OpenDevice();
+    VOID WRAP_FilterFileDrv_LoadDriver();
+    VOID WRAP_FilterFileDrv_UnloadDriver();
+    VOID WRAP_FilterFileDrv_OpenDevice();
     
-    VOID CLI_Passflt_UpdateConfig();
-    VOID CLI_Passflt_ConnectCommunicationPort();
-    VOID CLI_Passflt_SendMessage(PCHAR msg);
+    VOID WRAP_FilterFileDrv_UpdateConfig();
+    VOID WRAP_FilterFileDrv_ConnectCommunicationPort();
+    VOID WRAP_FilterFileDrv_SendMessage(PCHAR msg);
 
 };

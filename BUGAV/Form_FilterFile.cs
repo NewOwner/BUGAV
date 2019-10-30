@@ -13,10 +13,18 @@ using DarkUI.Forms;
 
 namespace BUGAV {
     public partial class Form_FilterFile : DarkForm {
-        FilterFileConfig FileConfigInst;
+        FilterFileConfig __FileConfigInst;
+        FilterFileWrap __FilterFileWrapInst;
         public Form_FilterFile() {
             InitializeComponent();
-            FileConfigInst = new FilterFileConfig(FilterFiler_checkedListBox_Files);
+            __FileConfigInst = new FilterFileConfig(FilterFiler_checkedListBox_Files);
+            try {
+                __FilterFileWrapInst = new FilterFileWrap();
+            } catch (Exception e) {
+                MessageBox.Show(e.ToString());
+                
+                Console.WriteLine("{0} Exception caught.", e.ToString());
+            }
         }
         private void FilterFile_Button_Add_Click(object sender, EventArgs e) {
             var fileContent = string.Empty;
@@ -33,7 +41,7 @@ namespace BUGAV {
                     filePath = openFileDialog.FileName;
                     fileName = Path.GetFileName(filePath);
                     FilterFiler_checkedListBox_Files.Items.Insert(0, new FilesListBoxItem { Name = fileName, Value = filePath });
-                    FileConfigInst.UpdateConfig();
+                    __FileConfigInst.UpdateConfig();
                 }
             }
         }
@@ -41,7 +49,7 @@ namespace BUGAV {
             foreach (var item in FilterFiler_checkedListBox_Files.CheckedItems.OfType<FilesListBoxItem>().ToList()) {
                 FilterFiler_checkedListBox_Files.Items.Remove(item);
             }
-            FileConfigInst.UpdateConfig();
+            __FileConfigInst.UpdateConfig();
         }
     }
     public class FilesListBoxItem {

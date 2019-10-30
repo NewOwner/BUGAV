@@ -28,11 +28,11 @@ public:
     FilterFileCtrl();
     ~FilterFileCtrl();
 
-    VOID FilterFileDrv_LoadDriver();
-    VOID FilterFileDrv_UnloadDriver();
-    VOID FilterFileDrv_OpenDevice();
-    VOID FilterFileDrv_UpdateConfig();
-    VOID FilterFileDrv_ConnectCommunicationPort();
-    VOID FilterFileDrv_SendMessage(PCHAR msg);
+    BOOL FilterFileDrv_LoadDriver();
+    BOOL FilterFileDrv_UnloadDriver();
+    BOOL FilterFileDrv_OpenDevice();
+    BOOL FilterFileDrv_UpdateConfig();
+    BOOL FilterFileDrv_ConnectCommunicationPort();
+    BOOL FilterFileDrv_SendMessage(PCHAR msg);
 };
 

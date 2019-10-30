@@ -11,9 +11,8 @@ FilterFileCtrl::FilterFileCtrl()
 
 FilterFileCtrl::~FilterFileCtrl() {}
 
-VOID FilterFileCtrl::FilterFileDrv_LoadDriver() {
-    BOOL Result;
-    Result = DriverCtrl::UtilLoadDriver((LPTSTR)FILTERFILEDRV_DRIVER_NAME,
+BOOL FilterFileCtrl::FilterFileDrv_LoadDriver() {
+    BOOL Result = DriverCtrl::UtilLoadDriver((LPTSTR)FILTERFILEDRV_DRIVER_NAME,
         (LPTSTR)FILTERFILEDRV_DRIVER_NAME_WITH_EXT,
         (LPTSTR)FILTERFILEDRV_WIN32_DEVICE_NAME,
         &hDriver);
@@ -21,26 +20,30 @@ VOID FilterFileCtrl::FilterFileDrv_LoadDriver() {
     if (Result != TRUE) {
         ErrorPrint("UtilLoadDriver failed, exiting...");
     }
+    return Result;
 }
 
-VOID FilterFileCtrl::FilterFileDrv_UnloadDriver() {
-    BOOL Result;
-    Result = DriverCtrl::UtilUnloadDriver(hDriver, NULL, (LPTSTR)FILTERFILEDRV_DRIVER_NAME);
+BOOL FilterFileCtrl::FilterFileDrv_UnloadDriver() {
+    BOOL Result = DriverCtrl::UtilUnloadDriver(hDriver, NULL, (LPTSTR)FILTERFILEDRV_DRIVER_NAME);
+    return Result;
 }
 
-VOID FilterFileCtrl::FilterFileDrv_OpenDevice() {
-    BOOL ReturnValue = DriverCtrl::UtilOpenDevice((LPTSTR)FILTERFILEDRV_WIN32_DEVICE_NAME, &hDriver);
+BOOL FilterFileCtrl::FilterFileDrv_OpenDevice() {
+    BOOL Result = DriverCtrl::UtilOpenDevice((LPTSTR)FILTERFILEDRV_WIN32_DEVICE_NAME, &hDriver);
 
-    if (ReturnValue == FALSE) {
+    if (Result == FALSE) {
         ErrorPrint("UtilOpenDevice failed");
     }
+    return Result;
 }
 
-VOID FilterFileCtrl::FilterFileDrv_UpdateConfig() {
-    FilterFileDrv_SendMessage((PCHAR)PASSFLT_UPD_CFG_MSG);
+BOOL FilterFileCtrl::FilterFileDrv_UpdateConfig() {
+    BOOL Result = FilterFileDrv_SendMessage((PCHAR)PASSFLT_UPD_CFG_MSG);
+    return Result;
 }
 
-VOID FilterFileCtrl::FilterFileDrv_ConnectCommunicationPort() {
+BOOL FilterFileCtrl::FilterFileDrv_ConnectCommunicationPort() {
+    BOOL Result = TRUE;
     HRESULT hResult = S_OK;
     hResult = FilterConnectCommunicationPort(PASSFLT_PORT_NAME,
         0,
@@ -52,10 +55,13 @@ VOID FilterFileCtrl::FilterFileDrv_ConnectCommunicationPort() {
     if (hResult != S_OK) {
         printf("Could not connect to filter: 0x%08x\n", hResult);
         DisplayError(hResult);
+        Result = FALSE;
     }
+    return Result;
 }
 
-VOID FilterFileCtrl::FilterFileDrv_SendMessage(PCHAR msg) {
+BOOL FilterFileCtrl::FilterFileDrv_SendMessage(PCHAR msg) {
+    BOOL Result = TRUE;
     DWORD msg_sz = strlen(msg);
     CHAR out_buffer[10];
     DWORD breturned = 0;
@@ -65,7 +71,9 @@ VOID FilterFileCtrl::FilterFileDrv_SendMessage(PCHAR msg) {
     if (hResult != S_OK) {
         printf("Could not connect to filter: 0x%08x\n", hResult);
         DisplayError(hResult);
+        Result = FALSE;
     }
+    return Result;
 }
 
 VOID DisplayError(_In_ DWORD Code)
