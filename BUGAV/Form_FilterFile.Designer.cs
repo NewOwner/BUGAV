@@ -79,6 +79,7 @@
             this.FilterFile_Button_Activate.Size = new System.Drawing.Size(75, 23);
             this.FilterFile_Button_Activate.TabIndex = 9;
             this.FilterFile_Button_Activate.Text = "Activate";
+            this.FilterFile_Button_Activate.Click += new System.EventHandler(this.FilterFile_Button_Activate_Click);
             // 
             // Form_FilterFile
             // 

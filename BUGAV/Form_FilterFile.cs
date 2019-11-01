@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 using System.IO;
 using DarkUI.Forms;
+using System.Runtime.InteropServices;
 
 namespace BUGAV {
     public partial class Form_FilterFile : DarkForm {
@@ -29,19 +30,22 @@ namespace BUGAV {
         private void FilterFile_Button_Add_Click(object sender, EventArgs e) {
             var fileContent = string.Empty;
             var filePath = string.Empty;
+            var realfilePath = string.Empty;
             var fileName = string.Empty;
 
             using (OpenFileDialog openFileDialog = new OpenFileDialog()) {
-                openFileDialog.InitialDirectory = "f:\\";
+                openFileDialog.InitialDirectory = "e:\\";
                 openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
                 openFileDialog.FilterIndex = 2;
                 openFileDialog.RestoreDirectory = true;
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK) {
                     filePath = openFileDialog.FileName;
+                    realfilePath = GetRealPath(filePath);
                     fileName = Path.GetFileName(filePath);
-                    FilterFiler_checkedListBox_Files.Items.Insert(0, new FilesListBoxItem { Name = fileName, Value = filePath });
+                    FilterFiler_checkedListBox_Files.Items.Insert(0, new FilesListBoxItem { Name = fileName, Value = realfilePath });
                     __FileConfigInst.UpdateConfig();
+                    __FilterFileWrapInst.WRAP_FilterFileDrv_UpdateConfig();
                 }
             }
         }
@@ -50,7 +54,48 @@ namespace BUGAV {
                 FilterFiler_checkedListBox_Files.Items.Remove(item);
             }
             __FileConfigInst.UpdateConfig();
+            __FilterFileWrapInst.WRAP_FilterFileDrv_UpdateConfig();
         }
+
+        private void FilterFile_Button_Activate_Click(object sender, EventArgs e) {
+            //if(FilterFile_Button_Activate.Text == "Activate") {
+            //    __FilterFileWrapInst.WRAP_FilterFileDrv_LoadDriver();
+            //    if(__FilterFileWrapInst.Get_loaded() == true) {
+            //        FilterFile_Button_Activate.Text = "Deactivate";
+            //    }
+            //
+            //} else {
+            //    __FilterFileWrapInst.WRAP_FilterFileDrv_UnloadDriver();
+            //    if (__FilterFileWrapInst.Get_loaded() == false) {
+            //        FilterFile_Button_Activate.Text = "Activate";
+            //    }
+            //}
+            
+            __FilterFileWrapInst.WRAP_FilterFileDrv_ConnectCommunicationPort();
+        }
+
+        private static string GetRealPath(string path) {
+        
+            string realPath = path;
+            StringBuilder pathInformation = new StringBuilder(250);
+            string driveLetter = Path.GetPathRoot(realPath).Replace("\\", "");
+            QueryDosDevice(driveLetter, pathInformation, 250);
+
+            // If drive is substed, the result will be in the format of "\??\C:\RealPath\".
+
+            // Strip the \??\ prefix.
+            string realRoot = pathInformation.ToString();
+
+            //Combine the paths.
+            realPath = Path.Combine(realRoot, realPath.Replace(Path.GetPathRoot(realPath), ""));
+        
+        
+            return realPath;
+        }
+        
+        
+        [DllImport("kernel32.dll")]
+        static extern uint QueryDosDevice(string lpDeviceName, StringBuilder lpTargetPath, int ucchMax);
     }
     public class FilesListBoxItem {
         public string Name { get; set; }
@@ -72,6 +117,10 @@ namespace BUGAV {
                     file.WriteLine(item.Value);
                 }
             }
+            
         }
+
     }
+
+
 }

@@ -16,7 +16,7 @@
 #define FILTERFILEDRV_DOS_DEVICES_LINK_NAME   L"\\DosDevices\\FilterFileDrv"
 #define FILTERFILEDRV_WIN32_DEVICE_NAME       L"\\\\.\\FilterFileDrv"
 
-#define PASSFLT_PORT_NAME                   L"\\FilterFileDrvPort"
+#define PASSFLT_PORT_NAME                   L"\\FilterFilePort"
 
 #define PASSFLT_UPD_CFG_MSG         "updfcfg"
 

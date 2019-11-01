@@ -444,7 +444,7 @@ VOID PassReadCfg() {
     UNICODE_STRING     uniName;
     OBJECT_ATTRIBUTES  objAttr;
 
-    RtlInitUnicodeString(&uniName, L"\\DosDevices\\C:\\bugav.txt");  // or L"\\SystemRoot\\example.txt"
+    RtlInitUnicodeString(&uniName, L"\\DosDevices\\E:\\bugav_filefilter.txt");  // or L"\\SystemRoot\\example.txt"
     InitializeObjectAttributes(&objAttr, &uniName, OBJ_CASE_INSENSITIVE | OBJ_KERNEL_HANDLE, NULL, NULL);
 
     HANDLE   handle;

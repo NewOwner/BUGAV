@@ -1,11 +1,12 @@
 #pragma once
 
 #include "../FilterFileCtrl/FilterFileCtrl.h"
-
+#include <string>
 using namespace System;
 
 public ref class FilterFileWrap {
     FilterFileCtrl* ptr_FilterFileCtrl;
+    bool loaded;
 
 public:
     FilterFileWrap();
@@ -18,5 +19,5 @@ public:
     VOID WRAP_FilterFileDrv_UpdateConfig();
     VOID WRAP_FilterFileDrv_ConnectCommunicationPort();
     VOID WRAP_FilterFileDrv_SendMessage(PCHAR msg);
-
+    bool Get_loaded();
 };
