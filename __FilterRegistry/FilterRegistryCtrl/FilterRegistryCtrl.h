@@ -73,13 +73,13 @@ public:
     FilterRegistryCtrl();
     ~FilterRegistryCtrl();
 
-    VOID FilterRegistryDrv_LoadDriver();
-    VOID FilterRegistryDrv_UnloadDriver();
-    VOID FilterRegistryDrv_OpenDevice();
+    BOOL FilterRegistryDrv_LoadDriver();
+    BOOL FilterRegistryDrv_UnloadDriver();
+    BOOL FilterRegistryDrv_OpenDevice();
 
     BOOL FilterRegistryDrv_UpdateConfig();
-    VOID FilterRegistryDrv_RegisterCallback();
-    VOID FilterRegistryDrv_UnregisterCallback();
+    BOOL FilterRegistryDrv_RegisterCallback();
+    BOOL FilterRegistryDrv_UnregisterCallback();
     BOOL FilterRegistryDrv_GetCallbackVersion();
     VOID FilterRegistryDrv_TestCallbacks();
 };

@@ -12,13 +12,10 @@ FilterRegistryCtrl::FilterRegistryCtrl()
     RtlZeroMemory(&UnRegisterCallbackInput, sizeof(UNREGISTER_CALLBACK_INPUT));
 }
 
-FilterRegistryCtrl::~FilterRegistryCtrl() {
+FilterRegistryCtrl::~FilterRegistryCtrl() {}
 
-}
-
-VOID FilterRegistryCtrl::FilterRegistryDrv_LoadDriver() {
-    BOOL Result;
-    Result = DriverCtrl::UtilLoadDriver((LPTSTR)REG_DRIVER_NAME,
+BOOL FilterRegistryCtrl::FilterRegistryDrv_LoadDriver() {
+    BOOL Result = DriverCtrl::UtilLoadDriver((LPTSTR)REG_DRIVER_NAME,
         (LPTSTR)REG_DRIVER_NAME_WITH_EXT,
         (LPTSTR)REG_WIN32_DEVICE_NAME,
         &hDriver);
@@ -26,27 +23,27 @@ VOID FilterRegistryCtrl::FilterRegistryDrv_LoadDriver() {
     if (Result != TRUE) {
         ErrorPrint("UtilLoadDriver failed, exiting...");
     }
+    return Result;
 }
 
-VOID FilterRegistryCtrl::FilterRegistryDrv_UnloadDriver() {
-    BOOL Result;
-    Result = DriverCtrl::UtilUnloadDriver(hDriver, NULL, (LPTSTR)REG_DRIVER_NAME);
+BOOL FilterRegistryCtrl::FilterRegistryDrv_UnloadDriver() {
+    BOOL Result = DriverCtrl::UtilUnloadDriver(hDriver, NULL, (LPTSTR)REG_DRIVER_NAME);
+    return Result;
 }
 
-VOID FilterRegistryCtrl::FilterRegistryDrv_OpenDevice() {
-    BOOL ReturnValue;
-    ReturnValue = DriverCtrl::UtilOpenDevice((LPTSTR)REG_WIN32_DEVICE_NAME, &hDriver);
+BOOL FilterRegistryCtrl::FilterRegistryDrv_OpenDevice() {
+    BOOL Result = DriverCtrl::UtilOpenDevice((LPTSTR)REG_WIN32_DEVICE_NAME, &hDriver);
 
-    if (ReturnValue == FALSE) {
+    if (Result == FALSE) {
         ErrorPrint("UtilOpenDevice failed");
     }
+    return Result;
 }
 
 BOOL FilterRegistryCtrl::FilterRegistryDrv_UpdateConfig() {
-    BOOL Result;
     DWORD BytesReturned;
 
-    Result = DeviceIoControl(hDriver,
+    BOOL Result = DeviceIoControl(hDriver,
         IOCTL_UPDATE_CONFIG,
         NULL,
         0,
@@ -62,7 +59,7 @@ BOOL FilterRegistryCtrl::FilterRegistryDrv_UpdateConfig() {
     return Result;
 }
 
-VOID FilterRegistryCtrl::FilterRegistryDrv_RegisterCallback() {
+BOOL FilterRegistryCtrl::FilterRegistryDrv_RegisterCallback() {
     HRESULT hr;
     DWORD BytesReturned;
     BOOL Result;
@@ -90,9 +87,11 @@ VOID FilterRegistryCtrl::FilterRegistryDrv_RegisterCallback() {
     if (Result != TRUE) {
         ErrorPrint("RegisterCallback failed. Error %d", GetLastError());
     }
+
+    return Result;
 }
 
-VOID FilterRegistryCtrl::FilterRegistryDrv_UnregisterCallback() {
+BOOL FilterRegistryCtrl::FilterRegistryDrv_UnregisterCallback() {
     DWORD BytesReturned;
     BOOL Result;
 
@@ -110,14 +109,15 @@ VOID FilterRegistryCtrl::FilterRegistryDrv_UnregisterCallback() {
     if (Result != TRUE) {
         ErrorPrint("UnRegisterCallback failed. Error %d", GetLastError());
     }
+
+    return Result;
 }
 
 BOOL FilterRegistryCtrl::FilterRegistryDrv_GetCallbackVersion() {
     DWORD BytesReturned = 0;
-    BOOL Result;
     GET_CALLBACK_VERSION_OUTPUT Output = { 0 };
 
-    Result = DeviceIoControl(hDriver,
+    BOOL Result = DeviceIoControl(hDriver,
         IOCTL_GET_CALLBACK_VERSION,
         NULL,
         0,

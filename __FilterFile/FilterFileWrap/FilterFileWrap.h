@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../FilterFileCtrl/FilterFileCtrl.h"
-#include <string>
+
 using namespace System;
 
 public ref class FilterFileWrap {

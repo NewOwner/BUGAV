@@ -10,28 +10,25 @@
 #pragma comment(lib, "kernel32.lib")
 #pragma comment(lib, "setupapi.lib")
 
-FilterFileWrap::FilterFileWrap() : ptr_FilterFileCtrl(new FilterFileCtrl())
-{}
+FilterFileWrap::FilterFileWrap() : ptr_FilterFileCtrl(new FilterFileCtrl()) {}
 
-FilterFileWrap::~FilterFileWrap() {
-    delete ptr_FilterFileCtrl;
-}
+FilterFileWrap::~FilterFileWrap() { delete ptr_FilterFileCtrl; }
 
 // FILE
 
 VOID FilterFileWrap::WRAP_FilterFileDrv_LoadDriver() { loaded = ptr_FilterFileCtrl->FilterFileDrv_LoadDriver(); }
+
 VOID FilterFileWrap::WRAP_FilterFileDrv_UnloadDriver() { 
     bool res = ptr_FilterFileCtrl->FilterFileDrv_UnloadDriver();
-    if (res) { 
-        loaded = false; 
-    } else { 
-        loaded = true; 
-    }
+    if (res) { loaded = false; } 
+    else { loaded = true; }
 }
 VOID FilterFileWrap::WRAP_FilterFileDrv_OpenDevice() { ptr_FilterFileCtrl->FilterFileDrv_OpenDevice(); }
 
 VOID FilterFileWrap::WRAP_FilterFileDrv_UpdateConfig() { ptr_FilterFileCtrl->FilterFileDrv_UpdateConfig(); }
+
 VOID FilterFileWrap::WRAP_FilterFileDrv_ConnectCommunicationPort() { ptr_FilterFileCtrl->FilterFileDrv_ConnectCommunicationPort(); }
+
 VOID FilterFileWrap::WRAP_FilterFileDrv_SendMessage(PCHAR msg) { ptr_FilterFileCtrl->FilterFileDrv_SendMessage(msg); }
 
 bool FilterFileWrap::Get_loaded() { return loaded; }

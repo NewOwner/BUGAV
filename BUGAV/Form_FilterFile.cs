@@ -81,14 +81,9 @@ namespace BUGAV {
             string driveLetter = Path.GetPathRoot(realPath).Replace("\\", "");
             QueryDosDevice(driveLetter, pathInformation, 250);
 
-            // If drive is substed, the result will be in the format of "\??\C:\RealPath\".
-
-            // Strip the \??\ prefix.
             string realRoot = pathInformation.ToString();
 
-            //Combine the paths.
             realPath = Path.Combine(realRoot, realPath.Replace(Path.GetPathRoot(realPath), ""));
-        
         
             return realPath;
         }

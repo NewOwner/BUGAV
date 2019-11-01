@@ -29,6 +29,7 @@
             this.FilterRegistry_TextBox_RegKey = new DarkUI.Controls.DarkTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.FilterRegistry_Button_AddRegKey = new DarkUI.Controls.DarkButton();
+            this.FilterRegistry_Button_Activate = new DarkUI.Controls.DarkButton();
             this.SuspendLayout();
             // 
             // FilterRegistry_checkedListBox_RegKeys
@@ -49,6 +50,7 @@
             this.FilterRegistry_Button_DeleteRegKey.Size = new System.Drawing.Size(75, 23);
             this.FilterRegistry_Button_DeleteRegKey.TabIndex = 12;
             this.FilterRegistry_Button_DeleteRegKey.Text = "Delete";
+            this.FilterRegistry_Button_DeleteRegKey.Click += new System.EventHandler(this.FilterRegistry_Button_DeleteRegKey_Click);
             // 
             // FilterRegistry_TextBox_RegKey
             // 
@@ -78,12 +80,24 @@
             this.FilterRegistry_Button_AddRegKey.Size = new System.Drawing.Size(78, 23);
             this.FilterRegistry_Button_AddRegKey.TabIndex = 9;
             this.FilterRegistry_Button_AddRegKey.Text = "Add";
+            this.FilterRegistry_Button_AddRegKey.Click += new System.EventHandler(this.FilterRegistry_Button_AddRegKey_Click);
+            // 
+            // FilterRegistry_Button_Activate
+            // 
+            this.FilterRegistry_Button_Activate.Location = new System.Drawing.Point(187, 284);
+            this.FilterRegistry_Button_Activate.Name = "FilterRegistry_Button_Activate";
+            this.FilterRegistry_Button_Activate.Padding = new System.Windows.Forms.Padding(5);
+            this.FilterRegistry_Button_Activate.Size = new System.Drawing.Size(75, 23);
+            this.FilterRegistry_Button_Activate.TabIndex = 14;
+            this.FilterRegistry_Button_Activate.Text = "Activate";
+            this.FilterRegistry_Button_Activate.Click += new System.EventHandler(this.FilterRegistry_Button_Activate_Click);
             // 
             // Form_FilterRegistry
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.FilterRegistry_Button_Activate);
             this.Controls.Add(this.FilterRegistry_checkedListBox_RegKeys);
             this.Controls.Add(this.FilterRegistry_Button_DeleteRegKey);
             this.Controls.Add(this.FilterRegistry_TextBox_RegKey);
@@ -104,5 +118,6 @@
         private DarkUI.Controls.DarkTextBox FilterRegistry_TextBox_RegKey;
         private System.Windows.Forms.Label label1;
         private DarkUI.Controls.DarkButton FilterRegistry_Button_AddRegKey;
+        private DarkUI.Controls.DarkButton FilterRegistry_Button_Activate;
     }
 }
