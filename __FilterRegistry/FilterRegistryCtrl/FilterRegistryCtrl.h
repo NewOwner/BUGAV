@@ -2,12 +2,12 @@
 
 #include "../../__LIBS/DriverCtrl/DriverCtrl.h"
 
-#define REG_DRIVER_NAME             L"RegFltr"
-#define REG_DRIVER_NAME_WITH_EXT    L"RegFltr.sys"
+#define REG_DRIVER_NAME             L"FilterRegistryDrv"
+#define REG_DRIVER_NAME_WITH_EXT    L"FilterRegistryDrv.sys"
 
-#define REG_NT_DEVICE_NAME          L"\\Device\\RegFltr"
-#define REG_DOS_DEVICES_LINK_NAME   L"\\DosDevices\\RegFltr"
-#define REG_WIN32_DEVICE_NAME       L"\\\\.\\RegFltr"
+#define REG_NT_DEVICE_NAME          L"\\Device\\FilterRegistryDrv"
+#define REG_DOS_DEVICES_LINK_NAME   L"\\DosDevices\\FilterRegistryDrv"
+#define REG_WIN32_DEVICE_NAME       L"\\\\.\\FilterRegistryDrv"
 
 // SDDL string used when creating the device. This string
 // limits access to this driver to system and admins only.

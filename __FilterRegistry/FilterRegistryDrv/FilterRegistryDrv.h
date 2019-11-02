@@ -27,6 +27,10 @@
                __LINE__,                    \
                __VA_ARGS__)
 
+LPCWSTR
+GetNotifyClassString(
+    _In_ REG_NOTIFY_CLASS NotifyClass
+);
 
 // The root key used in the samples
 extern HANDLE g_RootKey;

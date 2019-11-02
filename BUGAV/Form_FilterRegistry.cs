@@ -29,6 +29,8 @@ namespace BUGAV {
 
         private void FilterRegistry_Button_AddRegKey_Click(object sender, EventArgs e) {
             //HKEY_LOCAL_MACHINE\SOFTWARE\Google\Chrome
+            // RegFltr: Use ed nt!Kd_IHVDRIVER_Mask 8 to enable more detailed printouts windbg
+
             string keystr = string.Empty;
             string rootkey = string.Empty;
             string valstr = string.Empty;
@@ -48,7 +50,7 @@ namespace BUGAV {
 
             FilterRegistry_checkedListBox_RegKeys.Items.Insert(0, new FilesListBoxItem { Name = keystr, Value = keystr });
             __RegConfig.UpdateConfig();
-            //__RegistryWrap.WRAP_FilterRegistryDrv_UpdateConfig();
+            __RegistryWrap.WRAP_FilterRegistryDrv_UpdateConfig();
         }
 
         private void FilterRegistry_Button_DeleteRegKey_Click(object sender, EventArgs e) {
@@ -56,17 +58,20 @@ namespace BUGAV {
                 FilterRegistry_checkedListBox_RegKeys.Items.Remove(item);
             }
             __RegConfig.UpdateConfig();
-            //__RegistryWrap.WRAP_FilterRegistryDrv_UpdateConfig();
+            __RegistryWrap.WRAP_FilterRegistryDrv_UpdateConfig();
         }
 
         private void FilterRegistry_Button_Activate_Click(object sender, EventArgs e) {
             if(FilterRegistry_Button_Activate.Text == "Activate") {
                 __RegistryWrap.WRAP_FilterRegistryDrv_LoadDriver();
-                if(__RegistryWrap.Get_loaded() == true) {
+                __RegistryWrap.WRAP_FilterRegistryDrv_RegisterCallback();
+                if (__RegistryWrap.Get_loaded() == true) {
+                    __RegistryWrap.WRAP_FilterRegistryDrv_TestCallbacks();
                     FilterRegistry_Button_Activate.Text = "Deactivate";
                 }
             
             } else {
+                __RegistryWrap.WRAP_FilterRegistryDrv_UnregisterCallback();
                 __RegistryWrap.WRAP_FilterRegistryDrv_UnloadDriver();
                 if (__RegistryWrap.Get_loaded() == false) {
                     FilterRegistry_Button_Activate.Text = "Activate";

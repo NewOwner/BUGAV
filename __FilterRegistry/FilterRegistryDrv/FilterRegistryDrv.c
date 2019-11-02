@@ -56,7 +56,6 @@ Return Value:
 
 --*/
 {
-
     NTSTATUS Status = STATUS_SUCCESS;
     REG_NOTIFY_CLASS NotifyClass;
     PCALLBACK_CONTEXT CallbackCtx;
@@ -69,13 +68,13 @@ Return Value:
     // wasn't registered by the current process, simply return success.
     //
 
-    if (CallbackCtx->ProcessId != PsGetCurrentProcessId()) {
-        return STATUS_SUCCESS;
-    }
+    //if (CallbackCtx->ProcessId != PsGetCurrentProcessId()) {
+    //    return STATUS_SUCCESS;
+    //}
 
-    InfoPrint("\tCallback: Altitude-%S, NotifyClass-%S.",
-               CallbackCtx->AltitudeBuffer,
-               GetNotifyClassString(NotifyClass));
+    //InfoPrint("\tCallback: Altitude-%S, NotifyClass-%S.",
+    //           CallbackCtx->AltitudeBuffer,
+    //           GetNotifyClassString(NotifyClass));
 
     //
     // Invoke a helper method depending on the value of CallbackMode in 
@@ -114,6 +113,8 @@ Return Value:
     return Status;
     
 }
+
+extern LARGE_INTEGER g_RegCookie;
 
 NTSTATUS
 RegisterCallback(
@@ -177,6 +178,9 @@ RegisterCallback(
     // callback and the pointer to the callback context.
     RegisterCallbackOutput = (PREGISTER_CALLBACK_OUTPUT)Irp->AssociatedIrp.SystemBuffer;
     RegisterCallbackOutput->Cookie = CallbackCtx->Cookie;
+    
+    g_RegCookie = CallbackCtx->Cookie;
+    
     Irp->IoStatus.Information = sizeof(REGISTER_CALLBACK_OUTPUT);
 
   Exit:

@@ -171,11 +171,6 @@ VOID FilterRegistryCtrl::FilterRegistryDrv_TestCallbacks() {
         &NotModifiedKey,
         NULL);
 
-    if (Res != ERROR_SUCCESS) {
-        ErrorPrint("RegCreateKeyEx returned unexpected error %d", Res);
-        Success = FALSE;
-    }
-
     Res = RegCreateKeyEx(g_RootKey,
         KEY_NAME,
         0,
@@ -186,11 +181,6 @@ VOID FilterRegistryCtrl::FilterRegistryDrv_TestCallbacks() {
         &Key,
         NULL);
 
-    if (Res != ERROR_ACCESS_DENIED) {
-        ErrorPrint("RegCreateKeyEx returned unexpected error %d", Res);
-        Success = FALSE;
-    }
-
     Res = RegSetValueEx(g_RootKey,
         NOT_MODIFIED_VALUE_NAME,
         0,
@@ -198,22 +188,12 @@ VOID FilterRegistryCtrl::FilterRegistryDrv_TestCallbacks() {
         (BYTE*)&ValueData,
         sizeof(ValueData));
 
-    if (Res != ERROR_SUCCESS) {
-        ErrorPrint("RegSetValueEx return unexpected status %d", Res);
-        Success = FALSE;
-    }
-
     Res = RegSetValueEx(g_RootKey,
         VALUE_NAME,
         0,
         REG_DWORD,
         (BYTE*)&ValueData,
         sizeof(ValueData));
-
-    if (Res != ERROR_ACCESS_DENIED) {
-        ErrorPrint("RegSetValueEx return unexpected status %d", Res);
-        Success = FALSE;
-    }
 
     // Clean up
     if (Key != NULL) {
@@ -228,10 +208,4 @@ VOID FilterRegistryCtrl::FilterRegistryDrv_TestCallbacks() {
 
     RegDeleteValue(g_RootKey, NOT_MODIFIED_VALUE_NAME);
     RegDeleteValue(g_RootKey, VALUE_NAME);
-
-    if (Success) {
-        InfoPrint("Pre-Notification Block Sample succeeded.");
-    } else {
-        ErrorPrint("Pre-Notification Block Sample FAILED.");
-    }
 }
