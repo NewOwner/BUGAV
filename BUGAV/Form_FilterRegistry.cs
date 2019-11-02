@@ -32,23 +32,34 @@ namespace BUGAV {
             // RegFltr: Use ed nt!Kd_IHVDRIVER_Mask 8 to enable more detailed printouts windbg
 
             string keystr = string.Empty;
-            string rootkey = string.Empty;
+            string rootstr = string.Empty;
+            string root_part = string.Empty;
             string valstr = string.Empty;
+            string newPath = "\\REGISTRY\\";
 
             keystr = FilterRegistry_TextBox_RegKey.Text.ToUpper();
-            keystr = FilterRegistry_TextBox_RegKey.Text;
+            valstr = FilterRegistry_TextBox_RegValue.Text.ToUpper();
             if (keystr == string.Empty) { return; }
-            rootkey = GetUntilOrEmpty(keystr);
-            valstr = GetAfterOrEmpty(keystr);
+            rootstr = GetUntilOrEmpty(keystr);
+            root_part = GetAfterOrEmpty(keystr);
             RegistryKey subkey = null;
-            if (rootkey == "HKEY_CLASSES_ROOT") { subkey = Registry.ClassesRoot.OpenSubKey(valstr); } else
-            if (rootkey == "HKEY_CURRENT_USER") { subkey = Registry.CurrentUser.OpenSubKey(valstr); } else
-            if (rootkey == "HKEY_LOCAL_MACHINE") { subkey = Registry.LocalMachine.OpenSubKey(valstr); } else
-            if (rootkey == "HKEY_USERS") { subkey = Registry.Users.OpenSubKey(valstr); } else
-            if (rootkey == "HKEY_CURRENT_CONFIG") { subkey = Registry.CurrentConfig.OpenSubKey(valstr); }
+            if (rootstr == "HKEY_CLASSES_ROOT") { subkey = Registry.ClassesRoot.OpenSubKey(root_part); newPath += "ROOT\\"; } else
+            if (rootstr == "HKEY_CURRENT_USER") { subkey = Registry.CurrentUser.OpenSubKey(root_part); newPath += "CURRENT_USER\\"; } else
+            if (rootstr == "HKEY_LOCAL_MACHINE") { subkey = Registry.LocalMachine.OpenSubKey(root_part); newPath += "MACHINE\\"; } else
+            if (rootstr == "HKEY_USERS") { subkey = Registry.Users.OpenSubKey(root_part); newPath += "USER\\"; } else
+            if (rootstr == "HKEY_CURRENT_CONFIG") { subkey = Registry.CurrentConfig.OpenSubKey(root_part); newPath += "CONFIG\\"; }
             if (subkey == null) { return; }
+            newPath += root_part.ToUpper();
 
-            FilterRegistry_checkedListBox_RegKeys.Items.Insert(0, new FilesListBoxItem { Name = keystr, Value = keystr });
+            if (valstr != string.Empty) {
+                if (Registry.GetValue(keystr, valstr, null) == null) {
+                    return;
+                }
+                newPath += "\\"+valstr;
+            }
+            
+
+            FilterRegistry_checkedListBox_RegKeys.Items.Insert(0, new FilesListBoxItem { Name = newPath, Value = newPath });
             __RegConfig.UpdateConfig();
             __RegistryWrap.WRAP_FilterRegistryDrv_UpdateConfig();
         }

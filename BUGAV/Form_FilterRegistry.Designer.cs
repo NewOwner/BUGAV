@@ -30,6 +30,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.FilterRegistry_Button_AddRegKey = new DarkUI.Controls.DarkButton();
             this.FilterRegistry_Button_Activate = new DarkUI.Controls.DarkButton();
+            this.darkLabel1 = new DarkUI.Controls.DarkLabel();
+            this.FilterRegistry_TextBox_RegValue = new DarkUI.Controls.DarkTextBox();
             this.SuspendLayout();
             // 
             // FilterRegistry_checkedListBox_RegKeys
@@ -37,7 +39,7 @@
             this.FilterRegistry_checkedListBox_RegKeys.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
             this.FilterRegistry_checkedListBox_RegKeys.ForeColor = System.Drawing.SystemColors.ScrollBar;
             this.FilterRegistry_checkedListBox_RegKeys.FormattingEnabled = true;
-            this.FilterRegistry_checkedListBox_RegKeys.Location = new System.Drawing.Point(29, 79);
+            this.FilterRegistry_checkedListBox_RegKeys.Location = new System.Drawing.Point(29, 105);
             this.FilterRegistry_checkedListBox_RegKeys.Name = "FilterRegistry_checkedListBox_RegKeys";
             this.FilterRegistry_checkedListBox_RegKeys.Size = new System.Drawing.Size(553, 199);
             this.FilterRegistry_checkedListBox_RegKeys.TabIndex = 13;
@@ -57,20 +59,20 @@
             this.FilterRegistry_TextBox_RegKey.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
             this.FilterRegistry_TextBox_RegKey.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.FilterRegistry_TextBox_RegKey.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.FilterRegistry_TextBox_RegKey.Location = new System.Drawing.Point(29, 52);
+            this.FilterRegistry_TextBox_RegKey.Location = new System.Drawing.Point(57, 52);
             this.FilterRegistry_TextBox_RegKey.Name = "FilterRegistry_TextBox_RegKey";
-            this.FilterRegistry_TextBox_RegKey.Size = new System.Drawing.Size(553, 20);
+            this.FilterRegistry_TextBox_RegKey.Size = new System.Drawing.Size(525, 20);
             this.FilterRegistry_TextBox_RegKey.TabIndex = 11;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.label1.Location = new System.Drawing.Point(26, 28);
+            this.label1.Location = new System.Drawing.Point(26, 54);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(71, 13);
+            this.label1.Size = new System.Drawing.Size(25, 13);
             this.label1.TabIndex = 10;
-            this.label1.Text = "Registry Keys";
+            this.label1.Text = "Key";
             // 
             // FilterRegistry_Button_AddRegKey
             // 
@@ -84,7 +86,7 @@
             // 
             // FilterRegistry_Button_Activate
             // 
-            this.FilterRegistry_Button_Activate.Location = new System.Drawing.Point(507, 284);
+            this.FilterRegistry_Button_Activate.Location = new System.Drawing.Point(507, 310);
             this.FilterRegistry_Button_Activate.Name = "FilterRegistry_Button_Activate";
             this.FilterRegistry_Button_Activate.Padding = new System.Windows.Forms.Padding(5);
             this.FilterRegistry_Button_Activate.Size = new System.Drawing.Size(75, 23);
@@ -92,11 +94,33 @@
             this.FilterRegistry_Button_Activate.Text = "Activate";
             this.FilterRegistry_Button_Activate.Click += new System.EventHandler(this.FilterRegistry_Button_Activate_Click);
             // 
+            // darkLabel1
+            // 
+            this.darkLabel1.AutoSize = true;
+            this.darkLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.darkLabel1.Location = new System.Drawing.Point(26, 81);
+            this.darkLabel1.Name = "darkLabel1";
+            this.darkLabel1.Size = new System.Drawing.Size(22, 13);
+            this.darkLabel1.TabIndex = 15;
+            this.darkLabel1.Text = "Val";
+            // 
+            // FilterRegistry_TextBox_RegValue
+            // 
+            this.FilterRegistry_TextBox_RegValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
+            this.FilterRegistry_TextBox_RegValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.FilterRegistry_TextBox_RegValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.FilterRegistry_TextBox_RegValue.Location = new System.Drawing.Point(57, 79);
+            this.FilterRegistry_TextBox_RegValue.Name = "FilterRegistry_TextBox_RegValue";
+            this.FilterRegistry_TextBox_RegValue.Size = new System.Drawing.Size(525, 20);
+            this.FilterRegistry_TextBox_RegValue.TabIndex = 16;
+            // 
             // Form_FilterRegistry
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.FilterRegistry_TextBox_RegValue);
+            this.Controls.Add(this.darkLabel1);
             this.Controls.Add(this.FilterRegistry_Button_Activate);
             this.Controls.Add(this.FilterRegistry_checkedListBox_RegKeys);
             this.Controls.Add(this.FilterRegistry_Button_DeleteRegKey);
@@ -119,5 +143,7 @@
         private System.Windows.Forms.Label label1;
         private DarkUI.Controls.DarkButton FilterRegistry_Button_AddRegKey;
         private DarkUI.Controls.DarkButton FilterRegistry_Button_Activate;
+        private DarkUI.Controls.DarkLabel darkLabel1;
+        private DarkUI.Controls.DarkTextBox FilterRegistry_TextBox_RegValue;
     }
 }
