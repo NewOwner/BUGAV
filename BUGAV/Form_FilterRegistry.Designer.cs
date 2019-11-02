@@ -39,12 +39,12 @@
             this.FilterRegistry_checkedListBox_RegKeys.FormattingEnabled = true;
             this.FilterRegistry_checkedListBox_RegKeys.Location = new System.Drawing.Point(29, 79);
             this.FilterRegistry_checkedListBox_RegKeys.Name = "FilterRegistry_checkedListBox_RegKeys";
-            this.FilterRegistry_checkedListBox_RegKeys.Size = new System.Drawing.Size(233, 199);
+            this.FilterRegistry_checkedListBox_RegKeys.Size = new System.Drawing.Size(553, 199);
             this.FilterRegistry_checkedListBox_RegKeys.TabIndex = 13;
             // 
             // FilterRegistry_Button_DeleteRegKey
             // 
-            this.FilterRegistry_Button_DeleteRegKey.Location = new System.Drawing.Point(187, 23);
+            this.FilterRegistry_Button_DeleteRegKey.Location = new System.Drawing.Point(507, 23);
             this.FilterRegistry_Button_DeleteRegKey.Name = "FilterRegistry_Button_DeleteRegKey";
             this.FilterRegistry_Button_DeleteRegKey.Padding = new System.Windows.Forms.Padding(5);
             this.FilterRegistry_Button_DeleteRegKey.Size = new System.Drawing.Size(75, 23);
@@ -59,7 +59,7 @@
             this.FilterRegistry_TextBox_RegKey.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.FilterRegistry_TextBox_RegKey.Location = new System.Drawing.Point(29, 52);
             this.FilterRegistry_TextBox_RegKey.Name = "FilterRegistry_TextBox_RegKey";
-            this.FilterRegistry_TextBox_RegKey.Size = new System.Drawing.Size(233, 20);
+            this.FilterRegistry_TextBox_RegKey.Size = new System.Drawing.Size(553, 20);
             this.FilterRegistry_TextBox_RegKey.TabIndex = 11;
             // 
             // label1
@@ -74,7 +74,7 @@
             // 
             // FilterRegistry_Button_AddRegKey
             // 
-            this.FilterRegistry_Button_AddRegKey.Location = new System.Drawing.Point(103, 23);
+            this.FilterRegistry_Button_AddRegKey.Location = new System.Drawing.Point(423, 23);
             this.FilterRegistry_Button_AddRegKey.Name = "FilterRegistry_Button_AddRegKey";
             this.FilterRegistry_Button_AddRegKey.Padding = new System.Windows.Forms.Padding(5);
             this.FilterRegistry_Button_AddRegKey.Size = new System.Drawing.Size(78, 23);
@@ -84,7 +84,7 @@
             // 
             // FilterRegistry_Button_Activate
             // 
-            this.FilterRegistry_Button_Activate.Location = new System.Drawing.Point(187, 284);
+            this.FilterRegistry_Button_Activate.Location = new System.Drawing.Point(507, 284);
             this.FilterRegistry_Button_Activate.Name = "FilterRegistry_Button_Activate";
             this.FilterRegistry_Button_Activate.Padding = new System.Windows.Forms.Padding(5);
             this.FilterRegistry_Button_Activate.Size = new System.Drawing.Size(75, 23);

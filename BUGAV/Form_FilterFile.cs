@@ -23,7 +23,6 @@ namespace BUGAV {
                 __FilterFileWrapInst = new FilterFileWrap();
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
-                
                 Console.WriteLine("{0} Exception caught.", e.ToString());
             }
         }

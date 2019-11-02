@@ -4,7 +4,7 @@
 
 using namespace System;
 
-ref class FilterRegistryWrap {
+public ref class FilterRegistryWrap {
     FilterRegistryCtrl* ptr_FilterRegistryCtrl;
     bool loaded;
 
