@@ -26,7 +26,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_FilterNetwork));
             this.FilterNetwork_Button_ClearEvents = new DarkUI.Controls.DarkButton();
             this.FilterNetwork_Button_DeleteRule = new DarkUI.Controls.DarkButton();
-            this.FilterNetwork_Button_AddRule = new DarkUI.Controls.DarkButton();
+            this.FilterNetwork_Button_CreateRule = new DarkUI.Controls.DarkButton();
             this.FilterNetwork_TextBox_Events = new DarkUI.Controls.DarkTextBox();
             this.FilterNetwork_checkedListBox_Rules = new System.Windows.Forms.CheckedListBox();
             this.darkLabel12 = new DarkUI.Controls.DarkLabel();
@@ -53,14 +53,15 @@
             this.FilterNetwork_Button_DeleteRule.TabIndex = 16;
             this.FilterNetwork_Button_DeleteRule.Text = "Delete";
             // 
-            // FilterNetwork_Button_AddRule
+            // FilterNetwork_Button_CreateRule
             // 
-            this.FilterNetwork_Button_AddRule.Location = new System.Drawing.Point(606, 12);
-            this.FilterNetwork_Button_AddRule.Name = "FilterNetwork_Button_AddRule";
-            this.FilterNetwork_Button_AddRule.Padding = new System.Windows.Forms.Padding(5);
-            this.FilterNetwork_Button_AddRule.Size = new System.Drawing.Size(75, 23);
-            this.FilterNetwork_Button_AddRule.TabIndex = 15;
-            this.FilterNetwork_Button_AddRule.Text = "Add";
+            this.FilterNetwork_Button_CreateRule.Location = new System.Drawing.Point(606, 12);
+            this.FilterNetwork_Button_CreateRule.Name = "FilterNetwork_Button_CreateRule";
+            this.FilterNetwork_Button_CreateRule.Padding = new System.Windows.Forms.Padding(5);
+            this.FilterNetwork_Button_CreateRule.Size = new System.Drawing.Size(75, 23);
+            this.FilterNetwork_Button_CreateRule.TabIndex = 15;
+            this.FilterNetwork_Button_CreateRule.Text = "Create";
+            this.FilterNetwork_Button_CreateRule.Click += new System.EventHandler(this.FilterNetwork_Button_CreateRule_Click);
             // 
             // FilterNetwork_TextBox_Events
             // 
@@ -126,7 +127,7 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.FilterNetwork_Button_ClearEvents);
             this.Controls.Add(this.FilterNetwork_Button_DeleteRule);
-            this.Controls.Add(this.FilterNetwork_Button_AddRule);
+            this.Controls.Add(this.FilterNetwork_Button_CreateRule);
             this.Controls.Add(this.FilterNetwork_TextBox_Events);
             this.Controls.Add(this.FilterNetwork_checkedListBox_Rules);
             this.Controls.Add(this.darkLabel12);
@@ -145,7 +146,7 @@
 
         private DarkUI.Controls.DarkButton FilterNetwork_Button_ClearEvents;
         private DarkUI.Controls.DarkButton FilterNetwork_Button_DeleteRule;
-        private DarkUI.Controls.DarkButton FilterNetwork_Button_AddRule;
+        private DarkUI.Controls.DarkButton FilterNetwork_Button_CreateRule;
         private DarkUI.Controls.DarkTextBox FilterNetwork_TextBox_Events;
         private System.Windows.Forms.CheckedListBox FilterNetwork_checkedListBox_Rules;
         private DarkUI.Controls.DarkLabel darkLabel12;
