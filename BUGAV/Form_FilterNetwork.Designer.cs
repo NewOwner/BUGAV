@@ -46,7 +46,7 @@
             // 
             // FilterNetwork_Button_DeleteRule
             // 
-            this.FilterNetwork_Button_DeleteRule.Location = new System.Drawing.Point(457, 14);
+            this.FilterNetwork_Button_DeleteRule.Location = new System.Drawing.Point(687, 12);
             this.FilterNetwork_Button_DeleteRule.Name = "FilterNetwork_Button_DeleteRule";
             this.FilterNetwork_Button_DeleteRule.Padding = new System.Windows.Forms.Padding(5);
             this.FilterNetwork_Button_DeleteRule.Size = new System.Drawing.Size(75, 23);
@@ -55,7 +55,7 @@
             // 
             // FilterNetwork_Button_AddRule
             // 
-            this.FilterNetwork_Button_AddRule.Location = new System.Drawing.Point(375, 15);
+            this.FilterNetwork_Button_AddRule.Location = new System.Drawing.Point(606, 12);
             this.FilterNetwork_Button_AddRule.Name = "FilterNetwork_Button_AddRule";
             this.FilterNetwork_Button_AddRule.Padding = new System.Windows.Forms.Padding(5);
             this.FilterNetwork_Button_AddRule.Size = new System.Drawing.Size(75, 23);
@@ -70,7 +70,7 @@
             this.FilterNetwork_TextBox_Events.Location = new System.Drawing.Point(24, 255);
             this.FilterNetwork_TextBox_Events.Multiline = true;
             this.FilterNetwork_TextBox_Events.Name = "FilterNetwork_TextBox_Events";
-            this.FilterNetwork_TextBox_Events.Size = new System.Drawing.Size(502, 112);
+            this.FilterNetwork_TextBox_Events.Size = new System.Drawing.Size(738, 112);
             this.FilterNetwork_TextBox_Events.TabIndex = 14;
             // 
             // FilterNetwork_checkedListBox_Rules
@@ -78,7 +78,7 @@
             this.FilterNetwork_checkedListBox_Rules.FormattingEnabled = true;
             this.FilterNetwork_checkedListBox_Rules.Location = new System.Drawing.Point(305, 45);
             this.FilterNetwork_checkedListBox_Rules.Name = "FilterNetwork_checkedListBox_Rules";
-            this.FilterNetwork_checkedListBox_Rules.Size = new System.Drawing.Size(227, 169);
+            this.FilterNetwork_checkedListBox_Rules.Size = new System.Drawing.Size(457, 169);
             this.FilterNetwork_checkedListBox_Rules.TabIndex = 13;
             // 
             // darkLabel12
