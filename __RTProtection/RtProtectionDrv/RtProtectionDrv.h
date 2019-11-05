@@ -1,0 +1,33 @@
+#pragma once
+// Device type           -- in the "User Defined" range."
+//
+#define SIOCTL_TYPE 40000
+//
+// The IOCTL function codes from 0x800 to 0xFFF are for customer use.
+//
+#define IOCTL_SIOCTL_METHOD_IN_DIRECT \
+    CTL_CODE( SIOCTL_TYPE, 0x900, METHOD_IN_DIRECT, FILE_ANY_ACCESS  )
+
+#define IOCTL_SIOCTL_METHOD_OUT_DIRECT \
+    CTL_CODE( SIOCTL_TYPE, 0x901, METHOD_OUT_DIRECT , FILE_ANY_ACCESS  )
+
+#define IOCTL_SIOCTL_METHOD_BUFFERED \
+    CTL_CODE( SIOCTL_TYPE, 0x902, METHOD_BUFFERED, FILE_ANY_ACCESS  )
+
+#define IOCTL_SIOCTL_METHOD_NEITHER \
+    CTL_CODE( SIOCTL_TYPE, 0x903, METHOD_NEITHER , FILE_ANY_ACCESS  )
+
+#define IOCTL_SIOCTL_GET_PID \
+    CTL_CODE( SIOCTL_TYPE, 0x904, METHOD_BUFFERED, FILE_ANY_ACCESS  )
+
+#define DRIVER_FUNC_INSTALL     0x01
+#define DRIVER_FUNC_REMOVE      0x02
+
+#define DRIVER_NAME       L"RtProtectionDrv"
+#define DRIVER_NAME_EXT       L"\\RtProtectionDrv.sys"
+
+typedef struct _NEWPROC_INFO {
+    HANDLE ParentId;
+    HANDLE ProcessId;
+    BOOLEAN Create;
+}NEWPROC_INFO, * PNEWPROC_INFO;
