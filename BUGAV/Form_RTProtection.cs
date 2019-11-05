@@ -15,6 +15,7 @@ namespace BUGAV {
     public partial class Form_RTProtection : DarkForm {
         RtProtectionWrap __RtProtectionInst;
         Thread __procMonThread;
+        bool __procMonThread_working;
         public Form_RTProtection() {
             InitializeComponent();
             try {
@@ -25,25 +26,26 @@ namespace BUGAV {
             }
         }
         private void RTProtection_Button_Activate_Click(object sender, EventArgs e) {
-            if(RTProtection_Button_Activate.Text == "Activate") {
+            if (RTProtection_Button_Activate.Text == "Activate") {
                 __RtProtectionInst.WRAP_RtProtectionDrv_LoadDriver();
-                if(__RtProtectionInst.Get_loaded() == true) {
+                if (__RtProtectionInst.Get_loaded() == true) {
                     RTProtection_Button_Activate.Text = "Deactivate";
-                    //__procMonThread = new Thread(new ThreadStart(ProcMonThreadFunc));
-                    //__procMonThread.Start();
+                    __procMonThread = new Thread(new ThreadStart(ProcMonThreadFunc));
+                    __procMonThread_working = true;
+                    __procMonThread.Start();
                 }
-            
+
             } else {
-                __RtProtectionInst.WRAP_RtProtectionDrv_UnloadDriver();
-                if (__RtProtectionInst.Get_loaded() == false) {
-                    RTProtection_Button_Activate.Text = "Activate";
-                    //__procMonThread.Abort();
-                }
+                __procMonThread_working = false;
             }
         }
         public void ProcMonThreadFunc() {
-            while (true) {
+            while (__procMonThread_working) {
                 __RtProtectionInst.WRAP_RtProtectionDrv_NewProcMon();
+            }
+            __RtProtectionInst.WRAP_RtProtectionDrv_UnloadDriver();
+            if (__RtProtectionInst.Get_loaded() == false) {
+                RTProtection_Button_Activate.Text = "Activate";
             }
         }
 
