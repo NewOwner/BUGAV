@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DarkUI.Forms;
 
+using System.Diagnostics;
 using System.Threading;
+using System.Runtime.InteropServices;
 
 namespace BUGAV {
     public partial class Form_RTProtection : DarkForm {
@@ -39,15 +41,59 @@ namespace BUGAV {
                 __procMonThread_working = false;
             }
         }
+
+        private void RTProtection_Button_TerminateProcess_Click(object sender, EventArgs e) {
+            foreach (var item in RTProtection_checkedListBox_Processes.SelectedItems.OfType<ProcListBoxItem>().ToList()) {
+                item.procHandler.Kill();
+                RTProtection_checkedListBox_Processes.Items.Remove(item);
+            }
+        }
+
+        public class ProcListBoxItem {
+            public string Name { get; set; }
+            public int ParentId { get; set; }
+            public int ProcessId { get; set; }
+            public int Create { get; set; }
+            public Process procHandler { get; set; }
+            public override string ToString() { return Name; }
+        }
+
         public void ProcMonThreadFunc() {
             while (__procMonThread_working) {
-                __RtProtectionInst.WRAP_RtProtectionDrv_NewProcMon();
+                Console.WriteLine("WRAP_RtProtectionDrv_NewProcMon");
+                bool res = __RtProtectionInst.WRAP_RtProtectionDrv_NewProcMon();
+                Console.WriteLine(res.ToString());
+                if (res) {
+                    int _ParentId = __RtProtectionInst.Get_ParentId();
+                    int _ProcessId = __RtProtectionInst.Get_ProcessId();
+                    int _Create = __RtProtectionInst.Get_Create();
+                    if (_Create == 1) {
+                        Process newproc = Process.GetProcessById(_ProcessId);
+                        ProcListBoxItem newListItem = new ProcListBoxItem {
+                            Name = newproc.ProcessName,
+                            ParentId = _ParentId,
+                            ProcessId = _ProcessId,
+                            procHandler = newproc
+                        };
+                        RTProtection_checkedListBox_Processes.Items.Insert(0, newListItem);
+
+                    } else {
+                        foreach (var item in RTProtection_checkedListBox_Processes.Items.OfType<ProcListBoxItem>().ToList()) {
+                            Console.WriteLine(item.ProcessId.ToString() + " " + _ProcessId.ToString());
+                            if (item.ProcessId == _ProcessId) {
+                                RTProtection_checkedListBox_Processes.Items.Remove(item);
+                                break;
+                            }
+                        }
+                    }
+                }
             }
             __RtProtectionInst.WRAP_RtProtectionDrv_UnloadDriver();
             if (__RtProtectionInst.Get_loaded() == false) {
                 RTProtection_Button_Activate.Text = "Activate";
             }
         }
+
 
     }
 }

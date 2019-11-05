@@ -59,6 +59,7 @@
             this.RTProtection_Button_TerminateProcess.Size = new System.Drawing.Size(75, 23);
             this.RTProtection_Button_TerminateProcess.TabIndex = 4;
             this.RTProtection_Button_TerminateProcess.Text = "Terminate";
+            this.RTProtection_Button_TerminateProcess.Click += new System.EventHandler(this.RTProtection_Button_TerminateProcess_Click);
             // 
             // RTProtection_checkedListBox_Processes
             // 

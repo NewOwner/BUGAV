@@ -15,6 +15,21 @@ VOID RtProtectionWrap::WRAP_RtProtectionDrv_UnloadDriver() {
     }
 }
 
-VOID RtProtectionWrap::WRAP_RtProtectionDrv_NewProcMon() { ptr_RtProtectionCtrl->RtProtectionDrv_NewProcMon(); }
+bool RtProtectionWrap::WRAP_RtProtectionDrv_NewProcMon() {
+    NEWPROC_INFO proc_info = { 0 };
+    bool res = ptr_RtProtectionCtrl->RtProtectionDrv_NewProcMon(&proc_info);
+    if (res) {
+        _ParentId = (int)proc_info.ParentId;
+        _ProcessId= (int)proc_info.ProcessId;
+        _Create= proc_info.Create;
+    }
+    return res;
+}
 
 bool RtProtectionWrap::Get_loaded() { return loaded; }
+
+int RtProtectionWrap::Get_ParentId() { return _ParentId; }
+
+int RtProtectionWrap::Get_ProcessId() { return _ProcessId; }
+
+int RtProtectionWrap::Get_Create() { return _Create; }

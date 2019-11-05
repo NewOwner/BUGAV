@@ -59,7 +59,7 @@ BOOL RtProtectionCtrl::RtProtectionDrv_UnloadDriver() {
     return TRUE;
 }
 
-BOOL RtProtectionCtrl::RtProtectionDrv_NewProcMon() {
+BOOL RtProtectionCtrl::RtProtectionDrv_NewProcMon(PNEWPROC_INFO _newproc_info) {
     PNEWPROC_INFO newproc_info = 0;
     BOOL bRc;
     char InputBuffer[100];
@@ -88,6 +88,11 @@ BOOL RtProtectionCtrl::RtProtectionDrv_NewProcMon() {
         newproc_info->ParentId,
         newproc_info->ProcessId,
         newproc_info->Create);
+    
+    _newproc_info->ParentId = newproc_info->ParentId;
+    _newproc_info->ProcessId = newproc_info->ProcessId;
+    _newproc_info->Create = newproc_info->Create;
+    return TRUE;
 }
 
 /*++

@@ -25,5 +25,5 @@ public:
 
     BOOL RtProtectionDrv_LoadDriver();
     BOOL RtProtectionDrv_UnloadDriver();
-    BOOL RtProtectionDrv_NewProcMon();
+    BOOL RtProtectionDrv_NewProcMon(PNEWPROC_INFO _newproc_info);
 };
