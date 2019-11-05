@@ -14,13 +14,14 @@ using System.Net.Sockets;
 
 namespace BUGAV {
     public partial class Form_FilterNetworkRule : DarkForm {
+        public Form_FilterNetwork ptrParentForm;
         public Form_FilterNetworkRule() {
             InitializeComponent();
         }
         private void FilterNetworkRule_Button_AddRule_Click(object sender, EventArgs e) {
 
             RuleComponent compAction = new RuleComponent(RuleComponentType.action, FilterNetworkRule_comboBox_Action.Text);
-            RuleComponent compDirection = new RuleComponent(RuleComponentType.direction, FilterNetworkRule_comboBox_Direction.Text);
+            //RuleComponent compDirection = new RuleComponent(RuleComponentType.direction, FilterNetworkRule_comboBox_Direction.Text);
             RuleComponent compEtherType = new RuleComponent(RuleComponentType.ether_type, FilterNetworkRule_comboBox_EtherType.Text);
             RuleComponent compIpNextProtocol = new RuleComponent(RuleComponentType.ip_next_protocol, FilterNetworkRule_comboBox_IpNextProtocol.Text);
             RuleComponent compSourceIp = new RuleComponent(RuleComponentType.source_ip, FilterNetworkRule_textBox_SourceIp.Text);
@@ -28,8 +29,8 @@ namespace BUGAV {
             RuleComponent compSourcePort = new RuleComponent(RuleComponentType.source_port, FilterNetworkRule_textBox_SourcePort.Text);
             RuleComponent compDestinationPort = new RuleComponent(RuleComponentType.destination_port, FilterNetworkRule_textBox_DestinationPort.Text);
 
-            NetRules newRule = new NetRules(compAction,
-                                            compDirection,
+            NetRule newRule = new NetRule(compAction,
+                                            //compDirection,
                                             compEtherType,
                                             compIpNextProtocol,
                                             compSourceIp,
@@ -37,6 +38,8 @@ namespace BUGAV {
                                             compSourcePort,
                                             compDestinationPort);
 
+
+            ptrParentForm.InsertNetRule(newRule);
         }
         private void FilterNetworkRule_Button_Cancel_Click(object sender, EventArgs e) {
             this.Close();
@@ -45,7 +48,7 @@ namespace BUGAV {
     }
     public enum RuleComponentType {
         action,
-        direction,
+        //direction,
         ether_type,
         ip_next_protocol,
         source_ip,
@@ -55,7 +58,7 @@ namespace BUGAV {
     }
     public class RuleComponent {
         RuleComponentType type;
-        string fieldStr;
+        public string fieldStr;
         public IEnumerable<byte> fieldBytes;
 
         public RuleComponent(RuleComponentType _type, string _fieldStr) {
@@ -73,11 +76,11 @@ namespace BUGAV {
                     else if(fieldStr == "Drop") { arr = new byte[] { 0x02 }; }
                     else if(fieldStr == "Ignore") { arr = new byte[] { 0x00 }; }
                     break;
-                case RuleComponentType.direction: 
-                    if(fieldStr == "From") { arr = new byte[] { 0x01 }; } 
-                    else if(fieldStr == "To") { arr = new byte[] { 0x02 }; }
-                    else if(fieldStr == "Ignore") { arr = new byte[] { 0x00 }; }
-                    break;
+                //case RuleComponentType.direction: 
+                //    if(fieldStr == "From") { arr = new byte[] { 0x01 }; } 
+                //    else if(fieldStr == "To") { arr = new byte[] { 0x02 }; }
+                //    else if(fieldStr == "Ignore") { arr = new byte[] { 0x00 }; }
+                //    break;
                 case RuleComponentType.ether_type:
                     if(fieldStr == "IP") { arr = new byte[] { 0x08, 0x00 }; } 
                     else if(fieldStr == "ARP") { arr = new byte[] { 0x08, 0x06 }; }
@@ -125,20 +128,21 @@ namespace BUGAV {
 
 
     }
-    public class NetRules {
+    public class NetRule {
         RuleComponent compAction;
-        RuleComponent compDirection;
+        //RuleComponent compDirection;
         RuleComponent compEtherType;
         RuleComponent compIpNextProtocol;
         RuleComponent compSourceIp;
         RuleComponent compDestinationIp;
         RuleComponent compSourcePort;
         RuleComponent compDestinationPort;
-        IEnumerable<byte> ruleBytes;
+        public IEnumerable<byte> ruleBytes;
+        public string ruleName;
 
-        public NetRules(
+        public NetRule(
         RuleComponent _compAction,
-        RuleComponent _compDirection,
+        //RuleComponent _compDirection,
         RuleComponent _compEtherType,
         RuleComponent _compIpNextProtocol,
         RuleComponent _compSourceIp,
@@ -147,7 +151,7 @@ namespace BUGAV {
         RuleComponent _compDestinationPort
             ) {
             compAction = _compAction;
-            compDirection = _compDirection;
+            //compDirection = _compDirection;
             compEtherType = _compEtherType;
             compIpNextProtocol = _compIpNextProtocol;
             compSourceIp = _compSourceIp;
@@ -155,11 +159,12 @@ namespace BUGAV {
             compSourcePort = _compSourcePort;
             compDestinationPort = _compDestinationPort;
             ToBytes();
+            ruleToString();
         }
         public void ToBytes() {
             ruleBytes =
                 compAction.fieldBytes.
-                Concat(compDirection.fieldBytes).
+                //Concat(compDirection.fieldBytes).
                 Concat(compEtherType.fieldBytes).
                 Concat(compIpNextProtocol.fieldBytes).
                 Concat(compSourceIp.fieldBytes).
@@ -169,5 +174,17 @@ namespace BUGAV {
 
             Console.WriteLine(BitConverter.ToString(ruleBytes.ToArray()));
         }
+        public void ruleToString() {
+            ruleName =
+                compAction.fieldStr + " " +
+                //compDirection.fieldStr + " " +
+                compEtherType.fieldStr + " " +
+                compIpNextProtocol.fieldStr + " " +
+                compSourceIp.fieldStr + " " +
+                compDestinationIp.fieldStr + " " +
+                compSourcePort.fieldStr + " " +
+                compDestinationPort.fieldStr;
+        }
+
     }
 }

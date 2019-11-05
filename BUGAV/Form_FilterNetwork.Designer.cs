@@ -33,6 +33,7 @@
             this.darkLabel11 = new DarkUI.Controls.DarkLabel();
             this.darkLabel10 = new DarkUI.Controls.DarkLabel();
             this.FilterNetwork_checkedListBox_Interfaces = new System.Windows.Forms.CheckedListBox();
+            this.FilterNetwork_Button_Activate = new DarkUI.Controls.DarkButton();
             this.SuspendLayout();
             // 
             // FilterNetwork_Button_ClearEvents
@@ -52,6 +53,7 @@
             this.FilterNetwork_Button_DeleteRule.Size = new System.Drawing.Size(75, 23);
             this.FilterNetwork_Button_DeleteRule.TabIndex = 16;
             this.FilterNetwork_Button_DeleteRule.Text = "Delete";
+            this.FilterNetwork_Button_DeleteRule.Click += new System.EventHandler(this.FilterNetwork_Button_DeleteRule_Click);
             // 
             // FilterNetwork_Button_CreateRule
             // 
@@ -120,11 +122,22 @@
             this.FilterNetwork_checkedListBox_Interfaces.Size = new System.Drawing.Size(230, 169);
             this.FilterNetwork_checkedListBox_Interfaces.TabIndex = 9;
             // 
+            // FilterNetwork_Button_Activate
+            // 
+            this.FilterNetwork_Button_Activate.Location = new System.Drawing.Point(686, 221);
+            this.FilterNetwork_Button_Activate.Name = "FilterNetwork_Button_Activate";
+            this.FilterNetwork_Button_Activate.Padding = new System.Windows.Forms.Padding(5);
+            this.FilterNetwork_Button_Activate.Size = new System.Drawing.Size(75, 23);
+            this.FilterNetwork_Button_Activate.TabIndex = 18;
+            this.FilterNetwork_Button_Activate.Text = "Activate";
+            this.FilterNetwork_Button_Activate.Click += new System.EventHandler(this.FilterNetwork_Button_Activate_Click);
+            // 
             // Form_FilterNetwork
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.FilterNetwork_Button_Activate);
             this.Controls.Add(this.FilterNetwork_Button_ClearEvents);
             this.Controls.Add(this.FilterNetwork_Button_DeleteRule);
             this.Controls.Add(this.FilterNetwork_Button_CreateRule);
@@ -153,5 +166,6 @@
         private DarkUI.Controls.DarkLabel darkLabel11;
         private DarkUI.Controls.DarkLabel darkLabel10;
         private System.Windows.Forms.CheckedListBox FilterNetwork_checkedListBox_Interfaces;
+        private DarkUI.Controls.DarkButton FilterNetwork_Button_Activate;
     }
 }
