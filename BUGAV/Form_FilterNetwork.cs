@@ -47,7 +47,7 @@ namespace BUGAV {
         public void InsertNetRule(NetRule _newRule) {
             FilterNetwork_checkedListBox_Rules.Items.Insert(0, new RulesListBoxItem { Name = _newRule.ruleName, Value = _newRule.ruleBytes });
             __NetworkConfigInst.UpdateConfig();
-            //__NetworkWrapInst.WRAP_FilterNetworkDrv_UpdateConfig();
+            __NetworkWrapInst.WRAP_FilterNetworkDrv_UpdateConfig();
         }
     }
 

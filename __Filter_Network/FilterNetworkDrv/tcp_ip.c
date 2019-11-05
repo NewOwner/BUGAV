@@ -84,49 +84,57 @@ BOOLEAN inspect_packet(PFLT_NETWORK_DATA packet_data) {
         match = TRUE;
 
         //UCHAR ether_type[2];
-        if (memcmp(packet_data->eth_hdr->type, rule_ptr->ether_type, 2) != 0) { 
+        if (*((UINT16*)rule_ptr->ether_type) == 0) { DbgPrint("ignore ethertype\n"); /*ignore*/ }
+        else if (memcmp(packet_data->eth_hdr->type, rule_ptr->ether_type, 2) != 0) { 
             match = FALSE; 
             rule_ptr = rule_ptr->_next;
             continue; 
         }
         
         //UCHAR ip_next_protocol[1];
-        if (packet_data->ipv4_hdr != NULL) { 
-            if (memcmp(packet_data->ipv4_hdr->protocol, rule_ptr->ip_next_protocol, 1) != 0) {
+        if (packet_data->ipv4_hdr != NULL) {
+
+            if (*((UCHAR*)rule_ptr->ip_next_protocol) == 0) { DbgPrint("ignore ipnext\n"); /*ignore*/ }
+            else if (memcmp(packet_data->ipv4_hdr->protocol, rule_ptr->ip_next_protocol, 1) != 0) {
                 match = FALSE;
                 rule_ptr = rule_ptr->_next;
                 continue;
             }
-        //
-        //    //UCHAR source_ip[4];
-        //    if (memcmp(packet_data->ipv4_hdr->source_ip, rule_ptr->source_ip, 4) != 0) {
-        //        match = FALSE;
-        //        rule_ptr = rule_ptr->_next;
-        //        continue;
-        //    }
-        //
-        //    //UCHAR destination_ip[4];
-        //    if (memcmp(packet_data->ipv4_hdr->destination_ip, rule_ptr->destination_ip, 4) != 0) {
-        //        match = FALSE;
-        //        rule_ptr = rule_ptr->_next;
-        //        continue;
-        //    }
-        //}
-        //
-        //if (packet_data->tcp_hdr != NULL) { 
-        //    //UCHAR source_port[2];
-        //    if (memcmp(packet_data->tcp_hdr->source_port, rule_ptr->source_port, 2) != 0) {
-        //        match = FALSE;
-        //        rule_ptr = rule_ptr->_next;
-        //        continue;
-        //    }
-        //
-        //    //UCHAR destination_port[2];
-        //    if (memcmp(packet_data->tcp_hdr->destination_port, rule_ptr->destination_port, 2) != 0) {
-        //        match = FALSE;
-        //        rule_ptr = rule_ptr->_next;
-        //        continue;
-        //    }
+        
+            //UCHAR source_ip[4];
+            if (*((UINT32*)rule_ptr->source_ip) == 0) { DbgPrint("ignore srcip\n"); /*ignore*/ }
+            else if (memcmp(packet_data->ipv4_hdr->source_ip, rule_ptr->source_ip, 4) != 0) {
+                match = FALSE;
+                rule_ptr = rule_ptr->_next;
+                continue;
+            }
+        
+            //UCHAR destination_ip[4];
+            if (*((UINT32*)rule_ptr->destination_ip) == 0) { DbgPrint("ignore dstip\n"); /*ignore*/ }
+            else if (memcmp(packet_data->ipv4_hdr->destination_ip, rule_ptr->destination_ip, 4) != 0) {
+                match = FALSE;
+                rule_ptr = rule_ptr->_next;
+                continue;
+            }
+        }
+        
+        if (packet_data->tcp_hdr != NULL) {
+
+            //UCHAR source_port[2];
+            if (*((UINT16*)rule_ptr->source_port) == 0) { DbgPrint("ignore srcport\n"); /*ignore*/ }
+            else if (memcmp(packet_data->tcp_hdr->source_port, rule_ptr->source_port, 2) != 0) {
+                match = FALSE;
+                rule_ptr = rule_ptr->_next;
+                continue;
+            }
+        
+            //UCHAR destination_port[2];
+            if (*((UINT16*)rule_ptr->destination_port) == 0) { DbgPrint("ignore dstport\n"); /*ignore*/ }
+            else if (memcmp(packet_data->tcp_hdr->destination_port, rule_ptr->destination_port, 2) != 0) {
+                match = FALSE;
+                rule_ptr = rule_ptr->_next;
+                continue;
+            }
         }
         break;
     }

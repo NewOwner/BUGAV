@@ -8,7 +8,7 @@ VOID ndisReadCfg() {
 
     DbgPrint("### ndisReadCfg\n");
 
-    RtlInitUnicodeString(&uniName, L"\\DosDevices\\C:\\bugav_networkfilter.txt");  // or L"\\SystemRoot\\example.txt"
+    RtlInitUnicodeString(&uniName, L"\\DosDevices\\E:\\bugav_networkfilter.txt");  // or L"\\SystemRoot\\example.txt"
     InitializeObjectAttributes(&objAttr, &uniName, OBJ_CASE_INSENSITIVE | OBJ_KERNEL_HANDLE, NULL, NULL);
 
     HANDLE   handle;
