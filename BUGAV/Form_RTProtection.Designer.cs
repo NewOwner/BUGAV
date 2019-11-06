@@ -39,6 +39,7 @@
             this.RTProtection_Button_Hook.Size = new System.Drawing.Size(75, 23);
             this.RTProtection_Button_Hook.TabIndex = 6;
             this.RTProtection_Button_Hook.Text = "Hook";
+            this.RTProtection_Button_Hook.Click += new System.EventHandler(this.RTProtection_Button_Hook_Click);
             // 
             // RTProtection_TextBox_ProcessInfo
             // 

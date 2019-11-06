@@ -2,7 +2,11 @@
 
 #include "RtProtectionWrap.h"
 
-RtProtectionWrap::RtProtectionWrap() : ptr_RtProtectionCtrl(new RtProtectionCtrl()) {}
+RtProtectionWrap::RtProtectionWrap() 
+    : 
+    ptr_RtProtectionCtrl(new RtProtectionCtrl()),
+    ptr_RtProtectionInjectCtrl(new RtProtectionInjectCtrl())
+{}
 
 RtProtectionWrap::~RtProtectionWrap() { delete ptr_RtProtectionCtrl; }
 

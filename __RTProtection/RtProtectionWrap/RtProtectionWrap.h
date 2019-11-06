@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../RtProtectionCtrl/RtProtectionCtrl.h"
+#include "../RtProtectionInjectCtrl/RtProtectionInjectCtrl.h"
 
 using namespace System;
 
@@ -12,6 +13,7 @@ public struct PROCINFO {
 
 public ref class RtProtectionWrap {
     RtProtectionCtrl* ptr_RtProtectionCtrl;
+    RtProtectionInjectCtrl* ptr_RtProtectionInjectCtrl;
     bool loaded;
     int _ParentId;
     int _ProcessId;
@@ -29,4 +31,13 @@ public:
     int Get_ParentId();
     int Get_ProcessId();
     int Get_Create();
+
+    /////
+
+    VOID WRAP_InjectLib(int pid) {
+        PWCHAR dll_to_inject = L"RtProtectionPayloadDll.dll";
+        DWORD dll_data = 1000;
+        ULONG data_sz = sizeof(DWORD);
+        ptr_RtProtectionInjectCtrl->InjectLib((DWORD)pid, dll_to_inject, &dll_data, data_sz);
+    }
 };

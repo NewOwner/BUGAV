@@ -49,6 +49,12 @@ namespace BUGAV {
             }
         }
 
+        private void RTProtection_Button_Hook_Click(object sender, EventArgs e) {
+            foreach (var item in RTProtection_checkedListBox_Processes.SelectedItems.OfType<ProcListBoxItem>().ToList()) {
+                __RtProtectionInst.WRAP_InjectLib(item.ProcessId);
+            }
+        }
+
         public class ProcListBoxItem {
             public string Name { get; set; }
             public int ParentId { get; set; }
@@ -94,6 +100,6 @@ namespace BUGAV {
             }
         }
 
-
+        
     }
 }
