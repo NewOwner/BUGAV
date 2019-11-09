@@ -185,6 +185,10 @@
       <Project>{ebf13f3d-3a90-475a-87ae-53985d470de9}</Project>
       <Name>RtProtectionWrap</Name>
     </ProjectReference>
+    <ProjectReference Include="..\__StaticAnalyze\de4dot-x64\de4dot.cui\de4dot.cui.csproj">
+      <Project>{446f4eb9-b10c-4e76-aeb0-06e35860c172}</Project>
+      <Name>de4dot.cui</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -14,5 +14,7 @@ namespace BUGAV {
         public Form_StaticAnalyze() {
             InitializeComponent();
         }
+
+        //static int Main(string[] args) => de4dot.cui.Program.Main(args);
     }
 }
