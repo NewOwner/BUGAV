@@ -13,8 +13,14 @@ using System.IO;
 
 namespace BUGAV {
     public partial class Form_StaticAnalyze : DarkForm {
+        StaticAnalyzeCppWrap __StaticAnalyzeCppWrapInst;
         public Form_StaticAnalyze() {
             InitializeComponent();
+            try {
+                __StaticAnalyzeCppWrapInst = new StaticAnalyzeCppWrap();
+            } catch (Exception e) {
+                Console.WriteLine("{0} Exception caught.", e.ToString());
+            }
         }
 
         private void StaticAnalyze_Button_AddFile_Click(object sender, EventArgs e) {
@@ -53,7 +59,22 @@ namespace BUGAV {
         }
 
         private void StaticAnalyze_Button_ScanCpp_Click(object sender, EventArgs e) {
-
+            foreach (var item in StaticAnalyze_checkedListBox_Files.CheckedItems.OfType<FilesStaticAnalyzeListBoxItem>().ToList()) {
+                byte[] bytes_dir = Encoding.ASCII.GetBytes(System.Environment.CurrentDirectory + "\\bugav.exe");
+                byte[] bytes_file = Encoding.ASCII.GetBytes(item.Value);
+                unsafe {
+                    sbyte* sp_dir;
+                    sbyte* sp_file;
+                    fixed (byte* p_dir = bytes_dir) {
+                        sp_dir = (sbyte*)p_dir;
+                    }
+                    fixed (byte* p_file = bytes_file) {
+                        sp_file = (sbyte*)p_file;
+                    }
+                    __StaticAnalyzeCppWrapInst.WRAP_PerformStaticAnalyzeInstance(sp_dir, sp_file);
+                }
+            }
+            
         }
 
         //static int Main(string[] args) => de4dot.cui.Program.Main(args);

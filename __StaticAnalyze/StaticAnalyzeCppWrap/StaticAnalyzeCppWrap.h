@@ -12,5 +12,5 @@ public:
     StaticAnalyzeCppWrap();
     ~StaticAnalyzeCppWrap();
 
-    bool WRAP_PerformStaticAnalyzeInstance(std::string fname);
+    bool WRAP_PerformStaticAnalyzeInstance(const char* dir, const char* file);
 };
