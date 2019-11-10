@@ -103,6 +103,7 @@
             this.StaticAnalyze_Button_ScanCpp.Size = new System.Drawing.Size(75, 23);
             this.StaticAnalyze_Button_ScanCpp.TabIndex = 23;
             this.StaticAnalyze_Button_ScanCpp.Text = "Scan C++";
+            this.StaticAnalyze_Button_ScanCpp.Click += new System.EventHandler(this.StaticAnalyze_Button_ScanCpp_Click);
             // 
             // Form_StaticAnalyze
             // 

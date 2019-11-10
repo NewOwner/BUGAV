@@ -52,6 +52,10 @@ namespace BUGAV {
             }
         }
 
+        private void StaticAnalyze_Button_ScanCpp_Click(object sender, EventArgs e) {
+
+        }
+
         //static int Main(string[] args) => de4dot.cui.Program.Main(args);
     }
 

@@ -189,6 +189,10 @@
       <Project>{446f4eb9-b10c-4e76-aeb0-06e35860c172}</Project>
       <Name>de4dot.cui</Name>
     </ProjectReference>
+    <ProjectReference Include="..\__StaticAnalyze\StaticAnalyzeCppWrap\StaticAnalyzeCppWrap.vcxproj">
+      <Project>{0c054ba7-bbaf-48eb-afe0-6b5991d4a1bc}</Project>
+      <Name>StaticAnalyzeCppWrap</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
