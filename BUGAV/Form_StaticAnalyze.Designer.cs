@@ -25,11 +25,12 @@
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_StaticAnalyze));
             this.StaticAnalyze_TextBox_Info = new DarkUI.Controls.DarkTextBox();
-            this.StaticAnalyze_Button_ScanFiles = new DarkUI.Controls.DarkButton();
+            this.StaticAnalyze_Button_ScanCs = new DarkUI.Controls.DarkButton();
             this.StaticAnalyze_Button_DeleteFile = new DarkUI.Controls.DarkButton();
             this.StaticAnalyze_Button_AddFile = new DarkUI.Controls.DarkButton();
             this.darkLabel5 = new DarkUI.Controls.DarkLabel();
             this.StaticAnalyze_checkedListBox_Files = new System.Windows.Forms.CheckedListBox();
+            this.StaticAnalyze_Button_ScanCpp = new DarkUI.Controls.DarkButton();
             this.SuspendLayout();
             // 
             // StaticAnalyze_TextBox_Info
@@ -43,32 +44,35 @@
             this.StaticAnalyze_TextBox_Info.Size = new System.Drawing.Size(644, 153);
             this.StaticAnalyze_TextBox_Info.TabIndex = 22;
             // 
-            // StaticAnalyze_Button_ScanFiles
+            // StaticAnalyze_Button_ScanCs
             // 
-            this.StaticAnalyze_Button_ScanFiles.Location = new System.Drawing.Point(580, 14);
-            this.StaticAnalyze_Button_ScanFiles.Name = "StaticAnalyze_Button_ScanFiles";
-            this.StaticAnalyze_Button_ScanFiles.Padding = new System.Windows.Forms.Padding(5);
-            this.StaticAnalyze_Button_ScanFiles.Size = new System.Drawing.Size(75, 23);
-            this.StaticAnalyze_Button_ScanFiles.TabIndex = 20;
-            this.StaticAnalyze_Button_ScanFiles.Text = "Scan";
+            this.StaticAnalyze_Button_ScanCs.Location = new System.Drawing.Point(500, 14);
+            this.StaticAnalyze_Button_ScanCs.Name = "StaticAnalyze_Button_ScanCs";
+            this.StaticAnalyze_Button_ScanCs.Padding = new System.Windows.Forms.Padding(5);
+            this.StaticAnalyze_Button_ScanCs.Size = new System.Drawing.Size(75, 23);
+            this.StaticAnalyze_Button_ScanCs.TabIndex = 20;
+            this.StaticAnalyze_Button_ScanCs.Text = "Scan .Net";
+            this.StaticAnalyze_Button_ScanCs.Click += new System.EventHandler(this.StaticAnalyze_Button_ScanCs_Click);
             // 
             // StaticAnalyze_Button_DeleteFile
             // 
-            this.StaticAnalyze_Button_DeleteFile.Location = new System.Drawing.Point(499, 14);
+            this.StaticAnalyze_Button_DeleteFile.Location = new System.Drawing.Point(419, 14);
             this.StaticAnalyze_Button_DeleteFile.Name = "StaticAnalyze_Button_DeleteFile";
             this.StaticAnalyze_Button_DeleteFile.Padding = new System.Windows.Forms.Padding(5);
             this.StaticAnalyze_Button_DeleteFile.Size = new System.Drawing.Size(75, 23);
             this.StaticAnalyze_Button_DeleteFile.TabIndex = 15;
             this.StaticAnalyze_Button_DeleteFile.Text = "Delete";
+            this.StaticAnalyze_Button_DeleteFile.Click += new System.EventHandler(this.StaticAnalyze_Button_DeleteFile_Click);
             // 
             // StaticAnalyze_Button_AddFile
             // 
-            this.StaticAnalyze_Button_AddFile.Location = new System.Drawing.Point(418, 14);
+            this.StaticAnalyze_Button_AddFile.Location = new System.Drawing.Point(338, 14);
             this.StaticAnalyze_Button_AddFile.Name = "StaticAnalyze_Button_AddFile";
             this.StaticAnalyze_Button_AddFile.Padding = new System.Windows.Forms.Padding(5);
             this.StaticAnalyze_Button_AddFile.Size = new System.Drawing.Size(75, 23);
             this.StaticAnalyze_Button_AddFile.TabIndex = 14;
             this.StaticAnalyze_Button_AddFile.Text = "Add";
+            this.StaticAnalyze_Button_AddFile.Click += new System.EventHandler(this.StaticAnalyze_Button_AddFile_Click);
             // 
             // darkLabel5
             // 
@@ -89,14 +93,25 @@
             this.StaticAnalyze_checkedListBox_Files.Name = "StaticAnalyze_checkedListBox_Files";
             this.StaticAnalyze_checkedListBox_Files.Size = new System.Drawing.Size(644, 169);
             this.StaticAnalyze_checkedListBox_Files.TabIndex = 12;
+            this.StaticAnalyze_checkedListBox_Files.SelectedIndexChanged += new System.EventHandler(this.StaticAnalyze_checkedListBox_Files_SelectedIndexChanged);
+            // 
+            // StaticAnalyze_Button_ScanCpp
+            // 
+            this.StaticAnalyze_Button_ScanCpp.Location = new System.Drawing.Point(581, 14);
+            this.StaticAnalyze_Button_ScanCpp.Name = "StaticAnalyze_Button_ScanCpp";
+            this.StaticAnalyze_Button_ScanCpp.Padding = new System.Windows.Forms.Padding(5);
+            this.StaticAnalyze_Button_ScanCpp.Size = new System.Drawing.Size(75, 23);
+            this.StaticAnalyze_Button_ScanCpp.TabIndex = 23;
+            this.StaticAnalyze_Button_ScanCpp.Text = "Scan C++";
             // 
             // Form_StaticAnalyze
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 397);
+            this.Controls.Add(this.StaticAnalyze_Button_ScanCpp);
             this.Controls.Add(this.StaticAnalyze_TextBox_Info);
-            this.Controls.Add(this.StaticAnalyze_Button_ScanFiles);
+            this.Controls.Add(this.StaticAnalyze_Button_ScanCs);
             this.Controls.Add(this.StaticAnalyze_Button_DeleteFile);
             this.Controls.Add(this.StaticAnalyze_Button_AddFile);
             this.Controls.Add(this.darkLabel5);
@@ -111,10 +126,11 @@
 
         #endregion
         private DarkUI.Controls.DarkTextBox StaticAnalyze_TextBox_Info;
-        private DarkUI.Controls.DarkButton StaticAnalyze_Button_ScanFiles;
+        private DarkUI.Controls.DarkButton StaticAnalyze_Button_ScanCs;
         private DarkUI.Controls.DarkButton StaticAnalyze_Button_DeleteFile;
         private DarkUI.Controls.DarkButton StaticAnalyze_Button_AddFile;
         private DarkUI.Controls.DarkLabel darkLabel5;
         private System.Windows.Forms.CheckedListBox StaticAnalyze_checkedListBox_Files;
+        private DarkUI.Controls.DarkButton StaticAnalyze_Button_ScanCpp;
     }
 }

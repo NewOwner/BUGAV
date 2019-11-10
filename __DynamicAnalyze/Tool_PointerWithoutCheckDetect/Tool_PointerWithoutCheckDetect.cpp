@@ -46,7 +46,7 @@ INT32 Usage()
 
 VOID ReadMem(UINT64 insAddr, std::string insDis, UINT64 memOp)
 {
-  list<struct mallocArea>::iterator i;
+    std::list<struct mallocArea>::iterator i;
   UINT64 addr = memOp;
 
   for(i = mallocAreaList.begin(); i != mallocAreaList.end(); i++){
@@ -57,7 +57,7 @@ VOID ReadMem(UINT64 insAddr, std::string insDis, UINT64 memOp)
 
 VOID WriteMem(UINT64 insAddr, std::string insDis, UINT64 memOp)
 {
-  list<struct mallocArea>::iterator i;
+    std::list<struct mallocArea>::iterator i;
   UINT64 addr = memOp;
   
   for(i = mallocAreaList.begin(); i != mallocAreaList.end(); i++){
@@ -68,7 +68,7 @@ VOID WriteMem(UINT64 insAddr, std::string insDis, UINT64 memOp)
 
 VOID cmpInst(UINT64 insAddr, std::string insDis, UINT64 memOp)
 {
-  list<struct mallocArea>::iterator i;
+    std::list<struct mallocArea>::iterator i;
   UINT64 addr = memOp;
 
   for(i = mallocAreaList.begin(); i != mallocAreaList.end(); i++){
@@ -81,7 +81,7 @@ VOID cmpInst(UINT64 insAddr, std::string insDis, UINT64 memOp)
 
 VOID testInst(UINT64 insAddr, std::string insDis, ADDRINT val_r0, ADDRINT val_r1)
 {
-  list<struct mallocArea>::iterator i;
+    std::list<struct mallocArea>::iterator i;
 
   for(i = mallocAreaList.begin(); i != mallocAreaList.end(); i++){
     if (val_r0 == val_r1 && val_r0 == i->base){
@@ -97,7 +97,7 @@ VOID Instruction(INS ins, VOID *v)
     INS_InsertCall(
         ins, IPOINT_BEFORE, (AFUNPTR)ReadMem,
         IARG_ADDRINT, INS_Address(ins),
-        IARG_PTR, new string(INS_Disassemble(ins)),
+        IARG_PTR, new std::string(INS_Disassemble(ins)),
         IARG_MEMORYOP_EA, 0,
         IARG_END);
   }
@@ -105,7 +105,7 @@ VOID Instruction(INS ins, VOID *v)
     INS_InsertCall(
         ins, IPOINT_BEFORE, (AFUNPTR)WriteMem,
         IARG_ADDRINT, INS_Address(ins),
-        IARG_PTR, new string(INS_Disassemble(ins)),
+        IARG_PTR, new std::string(INS_Disassemble(ins)),
         IARG_MEMORYOP_EA, 0,
         IARG_END);
   }
@@ -113,7 +113,7 @@ VOID Instruction(INS ins, VOID *v)
     INS_InsertCall(
         ins, IPOINT_BEFORE, (AFUNPTR)cmpInst,
         IARG_ADDRINT, INS_Address(ins),
-        IARG_PTR, new string(INS_Disassemble(ins)),
+        IARG_PTR, new std::string(INS_Disassemble(ins)),
         IARG_MEMORYOP_EA, 0,
         IARG_END);
   }
@@ -122,7 +122,7 @@ VOID Instruction(INS ins, VOID *v)
     INS_InsertCall(
         ins, IPOINT_BEFORE, (AFUNPTR)testInst,
         IARG_ADDRINT, INS_Address(ins),
-        IARG_PTR, new string(INS_Disassemble(ins)),
+        IARG_PTR, new std::string(INS_Disassemble(ins)),
         IARG_REG_VALUE, INS_OperandReg(ins, 0),
         IARG_REG_VALUE, INS_OperandReg(ins, 1),
         IARG_END);
@@ -136,7 +136,7 @@ VOID callbackBeforeMalloc(ADDRINT size)
 
 VOID callbackBeforeFree(ADDRINT addr)
 { 
-  list<struct mallocArea>::iterator i;
+    std::list<struct mallocArea>::iterator i;
   
   //std::cout << "[INFO]\t\t\t\t\tfree(" << std::hex << addr << ")" << std::endl;
   for(i = mallocAreaList.begin(); i != mallocAreaList.end(); i++){
@@ -149,7 +149,7 @@ VOID callbackBeforeFree(ADDRINT addr)
 
 VOID callbackAfterMalloc(ADDRINT ret)
 {
-  list<struct mallocArea>::iterator i;
+    std::list<struct mallocArea>::iterator i;
   struct mallocArea elem;
 
   //std::cout << "[INFO]\t\t\t\t\tmalloc(" << lastSize << ") = " << std::hex << ret << std::endl;

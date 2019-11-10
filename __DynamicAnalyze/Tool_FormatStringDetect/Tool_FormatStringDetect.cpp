@@ -167,7 +167,7 @@ INT32 Usage()
 
 BOOL checkAlreadyRegTainted(REG reg)
 {
-  list<REG>::iterator i;
+    std::list<REG>::iterator i;
 
   for(i = regsTainted.begin(); i != regsTainted.end(); i++){
     if (*i == reg){
@@ -299,8 +299,8 @@ BOOL removeRegTainted(REG reg)
 
 VOID ReadMem(UINT64 insAddr, std::string insDis, UINT32 opCount, REG reg_r, UINT64 memOp, UINT64 sp)
 {
-  list<UINT64>::iterator i;
-  list<struct mallocArea>::iterator i2;
+  std::list<UINT64>::iterator i;
+  std::list<struct mallocArea>::iterator i2;
   UINT64 addr = memOp;
  
   if (opCount != 2)
@@ -321,8 +321,8 @@ VOID ReadMem(UINT64 insAddr, std::string insDis, UINT32 opCount, REG reg_r, UINT
 
 VOID WriteMem(UINT64 insAddr, std::string insDis, UINT32 opCount, REG reg_r, UINT64 memOp, UINT64 sp)
 {
-  list<UINT64>::iterator i;
-  list<struct mallocArea>::iterator i2;
+  std::list<UINT64>::iterator i;
+  std::list<struct mallocArea>::iterator i2;
   UINT64 addr = memOp;
   
   if (opCount != 2)
@@ -377,7 +377,7 @@ VOID Instruction(INS ins, VOID *v)
     INS_InsertCall(
         ins, IPOINT_BEFORE, (AFUNPTR)ReadMem,
         IARG_ADDRINT, INS_Address(ins),
-        IARG_PTR, new string(INS_Disassemble(ins)),
+        IARG_PTR, new std::string(INS_Disassemble(ins)),
         IARG_UINT32, INS_OperandCount(ins),
         IARG_UINT32, INS_OperandReg(ins, 0),
         IARG_MEMORYOP_EA, 0,
@@ -388,7 +388,7 @@ VOID Instruction(INS ins, VOID *v)
     INS_InsertCall(
         ins, IPOINT_BEFORE, (AFUNPTR)WriteMem,
         IARG_ADDRINT, INS_Address(ins),
-        IARG_PTR, new string(INS_Disassemble(ins)),
+        IARG_PTR, new std::string(INS_Disassemble(ins)),
         IARG_UINT32, INS_OperandCount(ins),
         IARG_UINT32, INS_OperandReg(ins, 1),
         IARG_MEMORYOP_EA, 0,
@@ -399,7 +399,7 @@ VOID Instruction(INS ins, VOID *v)
     INS_InsertCall(
         ins, IPOINT_BEFORE, (AFUNPTR)spreadRegTaint,
         IARG_ADDRINT, INS_Address(ins),
-        IARG_PTR, new string(INS_Disassemble(ins)),
+        IARG_PTR, new std::string(INS_Disassemble(ins)),
         IARG_UINT32, INS_OperandCount(ins),
         IARG_UINT32, INS_RegR(ins, 0),
         IARG_UINT32, INS_RegW(ins, 0),
@@ -410,7 +410,7 @@ VOID Instruction(INS ins, VOID *v)
     INS_InsertCall(
         ins, IPOINT_BEFORE, (AFUNPTR)followData,
         IARG_ADDRINT, INS_Address(ins),
-        IARG_PTR, new string(INS_Disassemble(ins)),
+        IARG_PTR, new std::string(INS_Disassemble(ins)),
         IARG_UINT32, INS_RegR(ins, 0),
         IARG_END);
   }
@@ -418,7 +418,7 @@ VOID Instruction(INS ins, VOID *v)
 
 VOID checkFormatString(ADDRINT rdi)
 {
-  list<UINT64>::iterator i;
+    std::list<UINT64>::iterator i;
   std::string content = std::string((const char *)rdi);
 
   std::cout << "[frmtstr] \t\tprintf() is called" << std::endl;
@@ -427,7 +427,7 @@ VOID checkFormatString(ADDRINT rdi)
   for(i = addressTainted.begin(); i != addressTainted.end(); i++){
       if (rdi == *i){
         std::cout << "[frmtstr] \t\tThe RDI memory area is tagged as tainted" << std::endl;
-        if (content.find("%s") == string::npos)
+        if (content.find("%s") == std::string::npos)
           std::cout << "[frmtstr] \t\tThis printf is probably vulnerable" << std::endl;
         return;
       }

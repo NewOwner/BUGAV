@@ -47,7 +47,7 @@ VOID Instruction(INS ins, VOID *v)
   INS_InsertCall(
       ins, IPOINT_BEFORE, (AFUNPTR)insCallBack,
       IARG_ADDRINT, INS_Address(ins),
-      IARG_PTR, new string(INS_Disassemble(ins)),
+      IARG_PTR, new std::string(INS_Disassemble(ins)),
       IARG_END);
 }
 

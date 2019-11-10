@@ -108,7 +108,7 @@ VOID WriteMem(UINT64 insAddr, std::string insDis, UINT32 opCount, REG reg_r, UIN
 VOID PrologueAnalysis(UINT64 insAddr, UINT64 nextInsAddr, std::string insDis)
 {
   UINT64  i = 0;
-  list<struct stackFrameVar_s>::iterator it;
+  std::list<struct stackFrameVar_s>::iterator it;
 
   if (nextInsAddr >= 0x4004a0){
     #ifdef DEBUG
@@ -152,7 +152,7 @@ VOID ValueSetAnalysis(UINT64 insAddr, std::string insDis, ADDRINT rsp, ADDRINT r
 {
   UINT64 addrRBP = memOp;
   struct stackFrameVar_s elem;
-  list<struct stackFrameVar_s>::iterator i;
+  std::list<struct stackFrameVar_s>::iterator i;
 
   #ifdef DEBUG
     std::cout << insAddr << ": " << insDis << " (rsp: " << std::hex << rsp << ") (rbp: " << rbp << ") (dest: " << addrRBP << ") (stack frame ID: " << std::dec << stID << ")" << std::endl;
@@ -205,8 +205,8 @@ static UINT64 oldRIP = 0;
 
 VOID WriteMemAnalysis(UINT64 insAddr, std::string insDis, UINT64 memOp)
 {
-  list<struct stackFrameVar_s>::iterator it;
-  list<struct stackFrameVar_s>::iterator itNext;
+  std::list<struct stackFrameVar_s>::iterator it;
+  std::list<struct stackFrameVar_s>::iterator itNext;
   UINT64 addr = memOp;
   
 
@@ -264,7 +264,7 @@ VOID Instruction(INS ins, VOID *v)
           ins, IPOINT_BEFORE, (AFUNPTR)PrologueAnalysis,
           IARG_ADDRINT, INS_Address(ins),
           IARG_ADDRINT, INS_NextAddress(ins),
-          IARG_PTR, new string(INS_Disassemble(ins)),
+          IARG_PTR, new std::string(INS_Disassemble(ins)),
           IARG_END);
     }
     else if (INS_IsRet(ins)){
@@ -272,14 +272,14 @@ VOID Instruction(INS ins, VOID *v)
           ins, IPOINT_BEFORE, (AFUNPTR)EpilogueAnalysis,
           IARG_ADDRINT, INS_Address(ins),
           IARG_ADDRINT, INS_NextAddress(ins),
-          IARG_PTR, new string(INS_Disassemble(ins)),
+          IARG_PTR, new std::string(INS_Disassemble(ins)),
           IARG_END);
     }
     else if (INS_OperandCount(ins) > 1 && INS_MemoryOperandIsWritten(ins, 0)){
       INS_InsertCall(
           ins, IPOINT_BEFORE, (AFUNPTR)WriteMem,
           IARG_ADDRINT, INS_Address(ins),
-          IARG_PTR, new string(INS_Disassemble(ins)),
+          IARG_PTR, new std::string(INS_Disassemble(ins)),
           IARG_UINT32, INS_OperandCount(ins),
           IARG_UINT32, INS_OperandReg(ins, 1),
           IARG_MEMORYOP_EA, 0,
@@ -294,7 +294,7 @@ VOID Instruction(INS ins, VOID *v)
       INS_InsertCall(
           ins, IPOINT_BEFORE, (AFUNPTR)ValueSetAnalysis,
           IARG_ADDRINT, INS_Address(ins),
-          IARG_PTR, new string(INS_Disassemble(ins)),
+          IARG_PTR, new std::string(INS_Disassemble(ins)),
           IARG_REG_VALUE, REG_RSP,
           IARG_REG_VALUE, REG_RBP,
           IARG_MEMORYOP_EA, 0,
@@ -306,7 +306,7 @@ VOID Instruction(INS ins, VOID *v)
         INS_InsertCall(
             ins, IPOINT_BEFORE, (AFUNPTR)WriteMemAnalysis,
             IARG_ADDRINT, INS_Address(ins),
-            IARG_PTR, new string(INS_Disassemble(ins)),
+            IARG_PTR, new std::string(INS_Disassemble(ins)),
             IARG_MEMORYOP_EA, 0,
             IARG_END);
       }
@@ -316,7 +316,7 @@ VOID Instruction(INS ins, VOID *v)
       IARG_ADDRINT, INS_Address(INS_Prev(ins)),
       IARG_ADDRINT, INS_Address(ins),
       IARG_ADDRINT, INS_Address(INS_Next(ins)),
-      IARG_PTR, new string(INS_Disassemble(ins)),
+      IARG_PTR, new std::string(INS_Disassemble(ins)),
       IARG_END);
 
   }
@@ -329,7 +329,7 @@ VOID callbackBeforeMalloc(ADDRINT size)
 
 VOID callbackBeforeFree(ADDRINT addr)
 { 
-  list<struct mallocArea>::iterator i;
+    std::list<struct mallocArea>::iterator i;
   
   #ifdef DEBUG
     std::cout << "[INFO] free(" << std::hex << addr << ")" << std::endl;
@@ -344,7 +344,7 @@ VOID callbackBeforeFree(ADDRINT addr)
 
 VOID callbackAfterMalloc(ADDRINT ret)
 {
-  list<struct mallocArea>::iterator i;
+    std::list<struct mallocArea>::iterator i;
   struct mallocArea elem;
 
   #ifdef DEBUG
@@ -404,7 +404,7 @@ VOID Image(IMG img, VOID *v)
 VOID Fini(INT32 code, VOID *v)
 {
   UINT32 i;
-  list<struct stackFrameVar_s>::iterator it;
+  std::list<struct stackFrameVar_s>::iterator it;
   
   for (i = 0; i < 32; i++){
     if (VSAL[i].stackFrameVar.size()){

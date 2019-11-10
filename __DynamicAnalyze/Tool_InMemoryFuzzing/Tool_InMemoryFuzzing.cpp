@@ -127,12 +127,12 @@ CONTEXT                         snapshot;
 /* Required arg */
 KNOB<ADDRINT> KnobStart(KNOB_MODE_WRITEONCE, "pintool", "start", "0", "The start address of the fuzzing area");
 KNOB<ADDRINT> KnobEnd(KNOB_MODE_WRITEONCE, "pintool", "end", "0", "The end address of the fuzzing area");
-KNOB<string>  KnobREG(KNOB_MODE_WRITEONCE, "pintool", "reg", "none", "The register which will be fuzzed");
+KNOB<std::string>  KnobREG(KNOB_MODE_WRITEONCE, "pintool", "reg", "none", "The register which will be fuzzed");
 
 /* Optinal arg */
 KNOB<ADDRINT> KnobStartValue(KNOB_MODE_WRITEONCE, "pintool", "startValue", "0", "The start value");
 KNOB<ADDRINT> KnobMaxValue(KNOB_MODE_WRITEONCE, "pintool", "maxValue", "0xffffffff", "The end value");
-KNOB<string>  KnobFuzzType(KNOB_MODE_WRITEONCE, "pintool", "fuzzingType", "none", "Type of fuzzing: incremental or random");
+KNOB<std::string>  KnobFuzzType(KNOB_MODE_WRITEONCE, "pintool", "fuzzingType", "none", "Type of fuzzing: incremental or random");
 
 static struct regRef regsRef[] =
 {
@@ -164,7 +164,7 @@ static struct regRef regsRef[] =
 INT32 Usage()
 {
     std::cerr << "In-Memory Fuzzing tool" << std::endl;
-    cerr << endl << KNOB_BASE::StringKnobSummary() << endl;
+    std::cerr << std::endl << KNOB_BASE::StringKnobSummary() << std::endl;
     return -1;
 }
 
@@ -186,13 +186,14 @@ VOID displayCurrentContext(CONTEXT *ctx, UINT32 flag)
 }
 
 static UINT32 fuzzValue;
-
+#include "synchapi.h"
+#include "Windows.h"
 VOID randomizeREG(CONTEXT *ctx, ADDRINT nextInsAddr)
 {
   UINT32 i;
 
   if (KnobFuzzType.Value() == "random"){
-    sleep(1);
+    Sleep(1);
     srand(time(NULL));
     fuzzValue = (rand() % (KnobMaxValue.Value() - KnobStartValue.Value())) + KnobStartValue.Value();
   }
@@ -212,7 +213,7 @@ VOID randomizeREG(CONTEXT *ctx, ADDRINT nextInsAddr)
 
 VOID restoreMemory(void)
 {
-  list<struct memoryInput>::iterator i;
+    std::list<struct memoryInput>::iterator i;
 
   for(i = memInput.begin(); i != memInput.end(); ++i){
     *(reinterpret_cast<ADDRINT*>(i->address)) = i->value;
@@ -272,7 +273,7 @@ VOID Instruction(INS ins, VOID *v)
   if (IMG_Valid(img) && IMG_IsMainExecutable(img)){
     INS_InsertCall(ins, IPOINT_BEFORE, (AFUNPTR)insCallBack,
                    IARG_ADDRINT, INS_Address(ins),
-                   IARG_PTR, new string(INS_Disassemble(ins)),
+                   IARG_PTR, new std::string(INS_Disassemble(ins)),
                    IARG_CONTEXT,
                    IARG_ADDRINT, INS_NextAddress(ins),
                    IARG_END);
@@ -281,13 +282,13 @@ VOID Instruction(INS ins, VOID *v)
   if (INS_MemoryOperandIsWritten(ins, 0)){
     INS_InsertCall(ins, IPOINT_BEFORE, (AFUNPTR)WriteMem,
                    IARG_ADDRINT, INS_Address(ins),
-                   IARG_PTR, new string(INS_Disassemble(ins)),
+                   IARG_PTR, new std::string(INS_Disassemble(ins)),
                    IARG_MEMORYOP_EA, 0,
                    IARG_END);
   }
 }
 
-BOOL catchSignal(THREADID tid, INT32 sig, CONTEXT *ctx, BOOL hasHandler, const EXCEPTION_INFO *pExceptInfo, VOID *v)
+bool catchSignal(THREADID tid, INT32 sig, CONTEXT *ctx, bool hasHandler, const EXCEPTION_INFO *pExceptInfo, VOID *v)
 {
   std::cout << std::endl << std::endl << "/!\\ SIGSEGV received /!\\" << std::endl;
   displayCurrentContext(ctx, SIGSEGV_FLG);

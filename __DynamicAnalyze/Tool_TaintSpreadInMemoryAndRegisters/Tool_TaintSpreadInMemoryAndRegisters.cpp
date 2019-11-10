@@ -19,13 +19,13 @@ std::list<REG> regsTainted;
 
 INT32 Usage()
 {
-    cerr << "Ex 2" << endl;
+    std::cerr << "Ex 2" << std::endl;
     return -1;
 }
 
 bool checkAlreadyRegTainted(REG reg)
 {
-  list<REG>::iterator i;
+    std::list<REG>::iterator i;
 
   for(i = regsTainted.begin(); i != regsTainted.end(); i++){
     if (*i == reg){
@@ -157,7 +157,7 @@ bool removeRegTainted(REG reg)
 
 VOID ReadMem(UINT64 insAddr, std::string insDis, UINT32 opCount, REG reg_r, UINT64 memOp)
 {
-  list<UINT64>::iterator i;
+    std::list<UINT64>::iterator i;
   UINT64 addr = memOp;
   
   if (opCount != 2)
@@ -179,7 +179,7 @@ VOID ReadMem(UINT64 insAddr, std::string insDis, UINT32 opCount, REG reg_r, UINT
 
 VOID WriteMem(UINT64 insAddr, std::string insDis, UINT32 opCount, REG reg_r, UINT64 memOp)
 {
-  list<UINT64>::iterator i;
+    std::list<UINT64>::iterator i;
   UINT64 addr = memOp;
 
   if (opCount != 2)
@@ -224,7 +224,7 @@ VOID Instruction(INS ins, VOID *v)
     INS_InsertCall(
         ins, IPOINT_BEFORE, (AFUNPTR)ReadMem,
         IARG_ADDRINT, INS_Address(ins),
-        IARG_PTR, new string(INS_Disassemble(ins)),
+        IARG_PTR, new std::string(INS_Disassemble(ins)),
         IARG_UINT32, INS_OperandCount(ins),
         IARG_UINT32, INS_OperandReg(ins, 0),
         IARG_MEMORYOP_EA, 0,
@@ -234,7 +234,7 @@ VOID Instruction(INS ins, VOID *v)
     INS_InsertCall(
         ins, IPOINT_BEFORE, (AFUNPTR)WriteMem,
         IARG_ADDRINT, INS_Address(ins),
-        IARG_PTR, new string(INS_Disassemble(ins)),
+        IARG_PTR, new std::string(INS_Disassemble(ins)),
         IARG_UINT32, INS_OperandCount(ins),
         IARG_UINT32, INS_OperandReg(ins, 1),
         IARG_MEMORYOP_EA, 0,
@@ -244,7 +244,7 @@ VOID Instruction(INS ins, VOID *v)
     INS_InsertCall(
         ins, IPOINT_BEFORE, (AFUNPTR)spreadRegTaint,
         IARG_ADDRINT, INS_Address(ins),
-        IARG_PTR, new string(INS_Disassemble(ins)),
+        IARG_PTR, new std::string(INS_Disassemble(ins)),
         IARG_UINT32, INS_OperandCount(ins),
         IARG_UINT32, INS_RegR(ins, 0),
         IARG_UINT32, INS_RegW(ins, 0),

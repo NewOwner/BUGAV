@@ -1,169 +1,77 @@
-
-/*! @file
- *  This is an example of the PIN tool that demonstrates some basic PIN APIs 
- *  and could serve as the starting point for developing your first PIN tool
+/*
+imageload
+The example below prints a message to a trace file every time and image is loaded or unloaded.
+It really abuses the image instrumentation mode as the Pintool neither inspects the image nor adds instrumentation code.
  */
 
 #include "pin.H"
 #include <iostream>
 #include <fstream>
-using std::cerr;
+#include <stdlib.h>
+using std::ofstream;
 using std::string;
 using std::endl;
 
-/* ================================================================== */
-// Global variables 
-/* ================================================================== */
 
-UINT64 insCount = 0;        //number of dynamically executed instructions
-UINT64 bblCount = 0;        //number of dynamically executed basic blocks
-UINT64 threadCount = 0;     //total number of threads, including main thread
+KNOB<string> KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool",
+    "o", "imageload.out", "specify file name");
 
-std::ostream * out = &cerr;
+ofstream TraceFile;
+
+// Pin calls this function every time a new img is loaded
+// It can instrument the image, but this example does not
+// Note that imgs (including shared libraries) are loaded lazily
+
+VOID ImageLoad(IMG img, VOID *v) {
+    TraceFile << "Loading " << IMG_Name(img) << ", Image id = " << IMG_Id(img) << endl;
+}
+
+// Pin calls this function every time a new img is unloaded
+// You can't instrument an image that is about to be unloaded
+VOID ImageUnload(IMG img, VOID *v) {
+    TraceFile << "Unloading " << IMG_Name(img) << endl;
+}
+
+// This function is called when the application exits
+// It closes the output file.
+VOID Fini(INT32 code, VOID *v) {
+    if (TraceFile.is_open()) { TraceFile.close(); }
+}
 
 /* ===================================================================== */
-// Command line switches
-/* ===================================================================== */
-KNOB<string> KnobOutputFile(KNOB_MODE_WRITEONCE,  "pintool",
-    "o", "", "specify file name for MyPinTool output");
-
-KNOB<BOOL>   KnobCount(KNOB_MODE_WRITEONCE,  "pintool",
-    "count", "1", "count instructions, basic blocks and threads in the application");
-
-
-/* ===================================================================== */
-// Utilities
+/* Print Help Message                                                    */
 /* ===================================================================== */
 
-/*!
- *  Print out help message.
- */
-INT32 Usage()
-{
-    cerr << "This tool prints out the number of dynamically executed " << endl <<
-            "instructions, basic blocks and threads in the application." << endl << endl;
-
-    cerr << KNOB_BASE::StringKnobSummary() << endl;
-
+INT32 Usage() {
+    PIN_ERROR("This tool prints a log of image load and unload events\n"
+        + KNOB_BASE::StringKnobSummary() + "\n");
     return -1;
 }
 
 /* ===================================================================== */
-// Analysis routines
+/* Main                                                                  */
 /* ===================================================================== */
 
-/*!
- * Increase counter of the executed basic blocks and instructions.
- * This function is called for every basic block when it is about to be executed.
- * @param[in]   numInstInBbl    number of instructions in the basic block
- * @note use atomic operations for multi-threaded applications
- */
-VOID CountBbl(UINT32 numInstInBbl)
-{
-    bblCount++;
-    insCount += numInstInBbl;
-}
+int main(int argc, char * argv[]) {
+    // Initialize symbol processing
+    PIN_InitSymbols();
 
-/* ===================================================================== */
-// Instrumentation callbacks
-/* ===================================================================== */
+    // Initialize pin
+    if (PIN_Init(argc, argv)) return Usage();
 
-/*!
- * Insert call to the CountBbl() analysis routine before every basic block 
- * of the trace.
- * This function is called every time a new trace is encountered.
- * @param[in]   trace    trace to be instrumented
- * @param[in]   v        value specified by the tool in the TRACE_AddInstrumentFunction
- *                       function call
- */
-VOID Trace(TRACE trace, VOID *v)
-{
-    // Visit every basic block in the trace
-    for (BBL bbl = TRACE_BblHead(trace); BBL_Valid(bbl); bbl = BBL_Next(bbl))
-    {
-        // Insert a call to CountBbl() before every basic bloc, passing the number of instructions
-        BBL_InsertCall(bbl, IPOINT_BEFORE, (AFUNPTR)CountBbl, IARG_UINT32, BBL_NumIns(bbl), IARG_END);
-    }
-}
+    TraceFile.open(KnobOutputFile.Value().c_str());
 
-/*!
- * Increase counter of threads in the application.
- * This function is called for every thread created by the application when it is
- * about to start running (including the root thread).
- * @param[in]   threadIndex     ID assigned by PIN to the new thread
- * @param[in]   ctxt            initial register state for the new thread
- * @param[in]   flags           thread creation flags (OS specific)
- * @param[in]   v               value specified by the tool in the 
- *                              PIN_AddThreadStartFunction function call
- */
-VOID ThreadStart(THREADID threadIndex, CONTEXT *ctxt, INT32 flags, VOID *v)
-{
-    threadCount++;
-}
+    // Register ImageLoad to be called when an image is loaded
+    IMG_AddInstrumentFunction(ImageLoad, 0);
 
-/*!
- * Print out analysis results.
- * This function is called when the application exits.
- * @param[in]   code            exit code of the application
- * @param[in]   v               value specified by the tool in the 
- *                              PIN_AddFiniFunction function call
- */
-VOID Fini(INT32 code, VOID *v)
-{
-    *out <<  "===============================================" << endl;
-    *out <<  "MyPinTool analysis results: " << endl;
-    *out <<  "Number of instructions: " << insCount  << endl;
-    *out <<  "Number of basic blocks: " << bblCount  << endl;
-    *out <<  "Number of threads: " << threadCount  << endl;
-    *out <<  "===============================================" << endl;
-}
+    // Register ImageUnload to be called when an image is unloaded
+    IMG_AddUnloadFunction(ImageUnload, 0);
 
-/*!
- * The main procedure of the tool.
- * This function is called when the application image is loaded but not yet started.
- * @param[in]   argc            total number of elements in the argv array
- * @param[in]   argv            array of command line arguments, 
- *                              including pin -t <toolname> -- ...
- */
-int main(int argc, char *argv[])
-{
-    // Initialize PIN library. Print help message if -h(elp) is specified
-    // in the command line or the command line is invalid 
-    if( PIN_Init(argc,argv) )
-    {
-        return Usage();
-    }
-    
-    string fileName = KnobOutputFile.Value();
-
-    if (!fileName.empty()) { out = new std::ofstream(fileName.c_str());}
-
-    if (KnobCount)
-    {
-        // Register function to be called to instrument traces
-        TRACE_AddInstrumentFunction(Trace, 0);
-
-        // Register function to be called for every thread before it starts running
-        PIN_AddThreadStartFunction(ThreadStart, 0);
-
-        // Register function to be called when the application exits
-        PIN_AddFiniFunction(Fini, 0);
-    }
-    
-    cerr <<  "===============================================" << endl;
-    cerr <<  "This application is instrumented by MyPinTool" << endl;
-    if (!KnobOutputFile.Value().empty()) 
-    {
-        cerr << "See file " << KnobOutputFile.Value() << " for analysis results" << endl;
-    }
-    cerr <<  "===============================================" << endl;
+    // Register Fini to be called when the application exits
+    PIN_AddFiniFunction(Fini, 0);
 
     // Start the program, never returns
     PIN_StartProgram();
-    
+
     return 0;
 }
-
-/* ===================================================================== */
-/* eof */
-/* ===================================================================== */

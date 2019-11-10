@@ -25,13 +25,13 @@ std::list<struct range> bytesTainted;
 
 INT32 Usage()
 {
-    cerr << "Ex 1" << endl;
+    std::cerr << "Ex 1" << std::endl;
     return -1;
 }
 
 VOID ReadMem(UINT64 insAddr, std::string insDis, UINT64 memOp)
 {
-  list<struct range>::iterator i;
+    std::list<struct range>::iterator i;
   UINT64 addr = memOp;
   
   for(i = bytesTainted.begin(); i != bytesTainted.end(); ++i){
@@ -43,7 +43,7 @@ VOID ReadMem(UINT64 insAddr, std::string insDis, UINT64 memOp)
 
 VOID WriteMem(UINT64 insAddr, std::string insDis, UINT64 memOp)
 {
-  list<struct range>::iterator i;
+    std::list<struct range>::iterator i;
   UINT64 addr = memOp;
 
   for(i = bytesTainted.begin(); i != bytesTainted.end(); ++i){
@@ -59,7 +59,7 @@ VOID Instruction(INS ins, VOID *v)
     INS_InsertCall(
         ins, IPOINT_BEFORE, (AFUNPTR)ReadMem,
         IARG_ADDRINT, INS_Address(ins),
-        IARG_PTR, new string(INS_Disassemble(ins)),
+        IARG_PTR, new std::string(INS_Disassemble(ins)),
         IARG_MEMORYOP_EA, 0,
         IARG_END);
   }
@@ -67,7 +67,7 @@ VOID Instruction(INS ins, VOID *v)
     INS_InsertCall(
         ins, IPOINT_BEFORE, (AFUNPTR)WriteMem,
         IARG_ADDRINT, INS_Address(ins),
-        IARG_PTR, new string(INS_Disassemble(ins)),
+        IARG_PTR, new std::string(INS_Disassemble(ins)),
         IARG_MEMORYOP_EA, 0,
         IARG_END);
   }

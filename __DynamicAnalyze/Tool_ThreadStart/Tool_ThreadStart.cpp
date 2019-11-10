@@ -1,169 +1,133 @@
+/*
+malloc_mt
 
-/*! @file
- *  This is an example of the PIN tool that demonstrates some basic PIN APIs 
- *  and could serve as the starting point for developing your first PIN tool
+XXX malloc -> function name
+
+The following example demonstrates using the ThreadStart() and ThreadFini() notification callbacks.
+Although ThreadStart() and ThreadFini() are executed under the VM and client locks,
+they could still contend with resources that are shared by other analysis routines.
+Using PIN_GetLock() prevents this.
+
+Note that there is known isolation issue when using Pin on Windows.
+On Windows, a deadlock can occur if a tool opens a file in a callback when run on a multi-threaded application.
+To work around this problem, open one file in main, and tag the data with the thread ID.
+See source/tools/ManualExamples/buffer_windows.cpp as an example. This problem does not exist on Linux.
  */
 
-#include "pin.H"
-#include <iostream>
+#include <stdio.h>
 #include <fstream>
-using std::cerr;
+#include "pin.H"
 using std::string;
-using std::endl;
 
-/* ================================================================== */
-// Global variables 
-/* ================================================================== */
+KNOB<string> KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool",
+    "o", "malloc_mt.out", "specify output file name");
 
-UINT64 insCount = 0;        //number of dynamically executed instructions
-UINT64 bblCount = 0;        //number of dynamically executed basic blocks
-UINT64 threadCount = 0;     //total number of threads, including main thread
+//==============================================================
+//  Analysis Routines
+//==============================================================
+// Note:  threadid+1 is used as an argument to the PIN_GetLock()
+//        routine as a debugging aid.  This is the value that
+//        the lock is set to, so it must be non-zero.
 
-std::ostream * out = &cerr;
+// lock serializes access to the output file.
+FILE * out;
+std::ifstream InFile;
+PIN_LOCK pinLock;
+std::string func_tofind;
+
+// Note that opening a file in a callback is only supported on Linux systems.
+// See buffer-win.cpp for how to work around this issue on Windows.
+//
+// This routine is executed every time a thread is created.
+VOID ThreadStart(THREADID threadid, CONTEXT *ctxt, INT32 flags, VOID *v) {
+    PIN_GetLock(&pinLock, threadid + 1);
+    fprintf(out, "thread begin %d\n", threadid);
+    fflush(out);
+    PIN_ReleaseLock(&pinLock);
+}
+
+// This routine is executed every time a thread is destroyed.
+VOID ThreadFini(THREADID threadid, const CONTEXT *ctxt, INT32 code, VOID *v) {
+    PIN_GetLock(&pinLock, threadid + 1);
+    fprintf(out, "thread end %d code %d\n", threadid, code);
+    fflush(out);
+    PIN_ReleaseLock(&pinLock);
+}
+
+// This routine is executed each time malloc is called.
+VOID BeforeFunc(int size, THREADID threadid) {
+    PIN_GetLock(&pinLock, threadid + 1);
+    fprintf(out, "thread %d entered malloc(%d)\n", threadid, size);
+    fflush(out);
+    PIN_ReleaseLock(&pinLock);
+}
+
+
+//====================================================================
+// Instrumentation Routines
+//====================================================================
+
+// This routine is executed for each image.
+VOID ImageLoad(IMG img, VOID *) {
+    RTN rtn = RTN_FindByName(img, func_tofind.c_str());
+
+    if (RTN_Valid(rtn)) {
+        RTN_Open(rtn);
+
+        RTN_InsertCall(rtn, IPOINT_BEFORE, AFUNPTR(BeforeFunc),
+            IARG_FUNCARG_ENTRYPOINT_VALUE, 0,
+            IARG_THREAD_ID, IARG_END);
+
+        RTN_Close(rtn);
+    }
+}
+
+// This routine is executed once at the end.
+VOID Fini(INT32 code, VOID *v) {
+    fclose(out);
+}
 
 /* ===================================================================== */
-// Command line switches
-/* ===================================================================== */
-KNOB<string> KnobOutputFile(KNOB_MODE_WRITEONCE,  "pintool",
-    "o", "", "specify file name for MyPinTool output");
-
-KNOB<BOOL>   KnobCount(KNOB_MODE_WRITEONCE,  "pintool",
-    "count", "1", "count instructions, basic blocks and threads in the application");
-
-
-/* ===================================================================== */
-// Utilities
+/* Print Help Message                                                    */
 /* ===================================================================== */
 
-/*!
- *  Print out help message.
- */
-INT32 Usage()
-{
-    cerr << "This tool prints out the number of dynamically executed " << endl <<
-            "instructions, basic blocks and threads in the application." << endl << endl;
-
-    cerr << KNOB_BASE::StringKnobSummary() << endl;
-
+INT32 Usage() {
+    PIN_ERROR("This Pintool prints a trace of func in arg calls in the guest application\n"
+        + KNOB_BASE::StringKnobSummary() + "\n");
     return -1;
 }
 
 /* ===================================================================== */
-// Analysis routines
+/* Main                                                                  */
 /* ===================================================================== */
 
-/*!
- * Increase counter of the executed basic blocks and instructions.
- * This function is called for every basic block when it is about to be executed.
- * @param[in]   numInstInBbl    number of instructions in the basic block
- * @note use atomic operations for multi-threaded applications
- */
-VOID CountBbl(UINT32 numInstInBbl)
-{
-    bblCount++;
-    insCount += numInstInBbl;
-}
+int main(INT32 argc, CHAR **argv) {
+    func_tofind = string(argv[1]);
 
-/* ===================================================================== */
-// Instrumentation callbacks
-/* ===================================================================== */
+    // Initialize the pin lock
+    PIN_InitLock(&pinLock);
 
-/*!
- * Insert call to the CountBbl() analysis routine before every basic block 
- * of the trace.
- * This function is called every time a new trace is encountered.
- * @param[in]   trace    trace to be instrumented
- * @param[in]   v        value specified by the tool in the TRACE_AddInstrumentFunction
- *                       function call
- */
-VOID Trace(TRACE trace, VOID *v)
-{
-    // Visit every basic block in the trace
-    for (BBL bbl = TRACE_BblHead(trace); BBL_Valid(bbl); bbl = BBL_Next(bbl))
-    {
-        // Insert a call to CountBbl() before every basic bloc, passing the number of instructions
-        BBL_InsertCall(bbl, IPOINT_BEFORE, (AFUNPTR)CountBbl, IARG_UINT32, BBL_NumIns(bbl), IARG_END);
-    }
-}
+    // Initialize pin
+    if (PIN_Init(argc, argv)) return Usage();
+    PIN_InitSymbols();
 
-/*!
- * Increase counter of threads in the application.
- * This function is called for every thread created by the application when it is
- * about to start running (including the root thread).
- * @param[in]   threadIndex     ID assigned by PIN to the new thread
- * @param[in]   ctxt            initial register state for the new thread
- * @param[in]   flags           thread creation flags (OS specific)
- * @param[in]   v               value specified by the tool in the 
- *                              PIN_AddThreadStartFunction function call
- */
-VOID ThreadStart(THREADID threadIndex, CONTEXT *ctxt, INT32 flags, VOID *v)
-{
-    threadCount++;
-}
+    out = fopen(KnobOutputFile.Value().c_str(), "w");
 
-/*!
- * Print out analysis results.
- * This function is called when the application exits.
- * @param[in]   code            exit code of the application
- * @param[in]   v               value specified by the tool in the 
- *                              PIN_AddFiniFunction function call
- */
-VOID Fini(INT32 code, VOID *v)
-{
-    *out <<  "===============================================" << endl;
-    *out <<  "MyPinTool analysis results: " << endl;
-    *out <<  "Number of instructions: " << insCount  << endl;
-    *out <<  "Number of basic blocks: " << bblCount  << endl;
-    *out <<  "Number of threads: " << threadCount  << endl;
-    *out <<  "===============================================" << endl;
-}
+    InFile.open("inf.txt");
+    InFile >> func_tofind;
 
-/*!
- * The main procedure of the tool.
- * This function is called when the application image is loaded but not yet started.
- * @param[in]   argc            total number of elements in the argv array
- * @param[in]   argv            array of command line arguments, 
- *                              including pin -t <toolname> -- ...
- */
-int main(int argc, char *argv[])
-{
-    // Initialize PIN library. Print help message if -h(elp) is specified
-    // in the command line or the command line is invalid 
-    if( PIN_Init(argc,argv) )
-    {
-        return Usage();
-    }
-    
-    string fileName = KnobOutputFile.Value();
+    // Register ImageLoad to be called when each image is loaded.
+    IMG_AddInstrumentFunction(ImageLoad, 0);
 
-    if (!fileName.empty()) { out = new std::ofstream(fileName.c_str());}
+    // Register Analysis routines to be called when a thread begins/ends
+    PIN_AddThreadStartFunction(ThreadStart, 0);
+    PIN_AddThreadFiniFunction(ThreadFini, 0);
 
-    if (KnobCount)
-    {
-        // Register function to be called to instrument traces
-        TRACE_AddInstrumentFunction(Trace, 0);
+    // Register Fini to be called when the application exits
+    PIN_AddFiniFunction(Fini, 0);
 
-        // Register function to be called for every thread before it starts running
-        PIN_AddThreadStartFunction(ThreadStart, 0);
-
-        // Register function to be called when the application exits
-        PIN_AddFiniFunction(Fini, 0);
-    }
-    
-    cerr <<  "===============================================" << endl;
-    cerr <<  "This application is instrumented by MyPinTool" << endl;
-    if (!KnobOutputFile.Value().empty()) 
-    {
-        cerr << "See file " << KnobOutputFile.Value() << " for analysis results" << endl;
-    }
-    cerr <<  "===============================================" << endl;
-
-    // Start the program, never returns
+    // Never returns
     PIN_StartProgram();
-    
+
     return 0;
 }
-
-/* ===================================================================== */
-/* eof */
-/* ===================================================================== */

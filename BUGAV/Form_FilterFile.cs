@@ -27,7 +27,6 @@ namespace BUGAV {
             }
         }
         private void FilterFile_Button_Add_Click(object sender, EventArgs e) {
-            var fileContent = string.Empty;
             var filePath = string.Empty;
             var realfilePath = string.Empty;
             var fileName = string.Empty;
