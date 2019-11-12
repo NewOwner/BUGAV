@@ -55,15 +55,6 @@ namespace BUGAV {
             }
         }
 
-        public class ProcListBoxItem {
-            public string Name { get; set; }
-            public int ParentId { get; set; }
-            public int ProcessId { get; set; }
-            public int Create { get; set; }
-            public Process procHandler { get; set; }
-            public override string ToString() { return Name; }
-        }
-
         public void ProcMonThreadFunc() {
             while (__procMonThread_working) {
                 Console.WriteLine("WRAP_RtProtectionDrv_NewProcMon");
@@ -101,5 +92,13 @@ namespace BUGAV {
         }
 
         
+    }
+    public class ProcListBoxItem {
+        public string Name { get; set; }
+        public int ParentId { get; set; }
+        public int ProcessId { get; set; }
+        public int Create { get; set; }
+        public Process procHandler { get; set; }
+        public override string ToString() { return Name; }
     }
 }

@@ -22,7 +22,6 @@ namespace BUGAV {
             try {
                 __RegistryWrap = new FilterRegistryWrap();
             } catch (Exception e) {
-                MessageBox.Show(e.ToString());
                 Console.WriteLine("{0} Exception caught.", e.ToString());
             }
         }

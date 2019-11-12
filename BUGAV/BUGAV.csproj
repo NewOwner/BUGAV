@@ -166,6 +166,10 @@
     <Content Include="Flat-Halloween-Bug.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\__DynamicAnalyze\DynamicAnalyzeCtrl\DynamicAnalyzeCtrl.csproj">
+      <Project>{53748e26-67b2-4e58-939d-4a82ba91e20a}</Project>
+      <Name>DynamicAnalyzeCtrl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\__FilterFile\FilterFileWrap\FilterFileWrap.vcxproj">
       <Project>{ba509e7c-8c91-4162-955b-62ab5d727e2d}</Project>
       <Name>FilterFileWrap</Name>
