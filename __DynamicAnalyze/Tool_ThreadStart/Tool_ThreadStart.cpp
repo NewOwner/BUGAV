@@ -20,7 +20,7 @@ See source/tools/ManualExamples/buffer_windows.cpp as an example. This problem d
 using std::string;
 
 KNOB<string> KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool",
-    "o", "malloc_mt.out", "specify output file name");
+    "o", "tool_threadstart.txt", "specify output file name");
 
 //==============================================================
 //  Analysis Routines

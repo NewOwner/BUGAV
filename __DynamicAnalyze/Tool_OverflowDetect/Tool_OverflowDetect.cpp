@@ -11,6 +11,15 @@
 #include <fstream>
 #include <iostream>
 #include <list>
+using std::ofstream;
+using std::string;
+using std::endl;
+
+
+KNOB<string> KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool",
+    "o", "tool_overflowdetect.txt", "specify file name");
+
+ofstream TraceFile;
 
 #define LOCKED    1
 #define UNLOCKED  !LOCKED
@@ -65,7 +74,7 @@ std::list<struct mallocArea>    mallocAreaList;
 
 INT32 Usage()
 {
-    std::cerr << "Stack/Heap overflow detection" << std::endl;
+    TraceFile << "Stack/Heap overflow detection" << std::endl;
     return -1;
 }
 
@@ -84,8 +93,9 @@ VOID WriteMem(UINT64 insAddr, std::string insDis, UINT32 opCount, REG reg_r, UIN
 
   /* Check if the address is in a section */
   for(sec = IMG_SecHead(img); SEC_Valid(sec); sec = SEC_Next(sec)){
-    if (addr >= SEC_Address(sec) && addr < (SEC_Address(sec) + SEC_Size(sec)))
-      return;
+      if (addr >= SEC_Address(sec) && addr < (SEC_Address(sec) + SEC_Size(sec))) {
+          return;
+      }
   }
 
   /* Check if the address is mapped */
@@ -93,7 +103,7 @@ VOID WriteMem(UINT64 insAddr, std::string insDis, UINT32 opCount, REG reg_r, UIN
     if (i->status == ALLOCATE && addr >= i->base && addr < (i->base + i->size))
       return;
     if (i->status == FREE && addr >= i->base && addr < (i->base + i->size)){
-      std::cout << std::hex << insAddr << ": " << insDis << " -- Use after free in " << addr << std::endl;
+      TraceFile << std::hex << insAddr << ": " << insDis << " -- Use after free in " << addr << std::endl;
       return;
     }
   }
@@ -102,7 +112,7 @@ VOID WriteMem(UINT64 insAddr, std::string insDis, UINT32 opCount, REG reg_r, UIN
   if (addr > 0x700000000000)
     return;
  
-  std::cout << std::hex << insAddr << ": " << insDis << " -- Heap overflow in " << addr << std::endl;
+  TraceFile << std::hex << insAddr << ": " << insDis << " -- Heap overflow in " << addr << std::endl;
 }
 
 VOID PrologueAnalysis(UINT64 insAddr, UINT64 nextInsAddr, std::string insDis)
@@ -112,7 +122,7 @@ VOID PrologueAnalysis(UINT64 insAddr, UINT64 nextInsAddr, std::string insDis)
 
   if (nextInsAddr >= 0x4004a0){
     #ifdef DEBUG
-      //std::cout << "Function opened " << hex << nextInsAddr << std::endl;
+      //TraceFile << "Function opened " << hex << nextInsAddr << std::endl;
     #endif
 
     if (VSAL[stID].stackFrameVar.size() == 0){
@@ -143,7 +153,7 @@ VOID EpilogueAnalysis(UINT64 insAddr, UINT64 nextInsAddr, std::string insDis)
 {
   if (nextInsAddr >= 0x4004a0){
     #ifdef DEBUG
-      //std::cout << "Function closed" << std::endl;
+      //TraceFile << "Function closed" << std::endl;
     #endif
   }
 }
@@ -155,7 +165,7 @@ VOID ValueSetAnalysis(UINT64 insAddr, std::string insDis, ADDRINT rsp, ADDRINT r
   std::list<struct stackFrameVar_s>::iterator i;
 
   #ifdef DEBUG
-    std::cout << insAddr << ": " << insDis << " (rsp: " << std::hex << rsp << ") (rbp: " << rbp << ") (dest: " << addrRBP << ") (stack frame ID: " << std::dec << stID << ")" << std::endl;
+    TraceFile << insAddr << ": " << insDis << " (rsp: " << std::hex << rsp << ") (rbp: " << rbp << ") (dest: " << addrRBP << ") (stack frame ID: " << std::dec << stID << ")" << std::endl;
   #endif
 
   /* Ajout des variables de la stack frame dans une VSAL */
@@ -214,14 +224,14 @@ VOID WriteMemAnalysis(UINT64 insAddr, std::string insDis, UINT64 memOp)
 //    return;
 
   for(it = VSAL[stID].stackFrameVar.begin(); it != VSAL[stID].stackFrameVar.end(); it++){
-    //std::cout << "addr     = " << std::hex << addr << std::endl;
-    //std::cout << "addrVar  = " << std::hex << it->addrVar << std::endl;
-    //std::cout << "addrSize = " << std::hex << it->sizeVar << std::endl;
+    //TraceFile << "addr     = " << std::hex << addr << std::endl;
+    //TraceFile << "addrVar  = " << std::hex << it->addrVar << std::endl;
+    //TraceFile << "addrSize = " << std::hex << it->sizeVar << std::endl;
 
     itNext = NextIT(it);
     if (addr >= it->addrVar && addr < itNext->addrVar){
       #ifdef DEBUG
-        std::cout << "[Write Mem B] " << std::hex << insAddr << ": " << insDis << std::endl;
+        TraceFile << "[Write Mem B] " << std::hex << insAddr << ": " << insDis << std::endl;
       #endif
 
     if (oldAddrWritten == 0)
@@ -237,18 +247,18 @@ VOID WriteMemAnalysis(UINT64 insAddr, std::string insDis, UINT64 memOp)
     oldRIP = insAddr;
 
     if (counterWrite > 4){
-      std::cout << std::hex << insAddr << ": " << insDis << " -- Stack overflow in " << addr << std::endl;
+      TraceFile << std::hex << insAddr << ": " << insDis << " -- Stack overflow in " << addr << std::endl;
       counterWrite = 0;
       oldAddrWritten = addr;
     }
 
     #ifdef DEBUG
-      std::cout << "counterWrite: " << std::dec << counterWrite << std::endl;
+      TraceFile << "counterWrite: " << std::dec << counterWrite << std::endl;
     #endif
     oldAddrWritten = addr;
     break;
     }
-    //  std::cout << "itNext: " << std::hex << itNext->addrVar << std::endl;
+    //  TraceFile << "itNext: " << std::hex << itNext->addrVar << std::endl;
   } 
 }
 
@@ -332,7 +342,7 @@ VOID callbackBeforeFree(ADDRINT addr)
     std::list<struct mallocArea>::iterator i;
   
   #ifdef DEBUG
-    std::cout << "[INFO] free(" << std::hex << addr << ")" << std::endl;
+    TraceFile << "[INFO] free(" << std::hex << addr << ")" << std::endl;
   #endif
   for(i = mallocAreaList.begin(); i != mallocAreaList.end(); i++){
     if (addr == i->base){
@@ -348,7 +358,7 @@ VOID callbackAfterMalloc(ADDRINT ret)
   struct mallocArea elem;
 
   #ifdef DEBUG
-    std::cout << "[INFO] malloc(" << std::dec << lastSize << ") = " << std::hex << ret << std::endl;
+    TraceFile << "[INFO] malloc(" << std::dec << lastSize << ") = " << std::hex << ret << std::endl;
   #endif
   if (ret){
 
@@ -408,20 +418,20 @@ VOID Fini(INT32 code, VOID *v)
   
   for (i = 0; i < 32; i++){
     if (VSAL[i].stackFrameVar.size()){
-      std::cout << "id stack frame: " << std::dec << i << "\t Num var: " << VSAL[i].stackFrameVar.size() << " ( ";
+      TraceFile << "id stack frame: " << std::dec << i << "\t Num var: " << VSAL[i].stackFrameVar.size() << " ( ";
 
       for(it = VSAL[i].stackFrameVar.begin(); it != VSAL[i].stackFrameVar.end(); it++){
-        std::cout << std::hex << it->addrVar << ":" << std::dec << it->sizeVar << " ";
+        TraceFile << std::hex << it->addrVar << ":" << std::dec << it->sizeVar << " ";
       }
-      std::cout << ")" << std::endl;
+      TraceFile << ")" << std::endl;
     }
   }
 
-  std::cout << "------------------" << std::endl;
-  std::cout << "Addr\tNumber\tDisass" << std::endl;
+  TraceFile << "------------------" << std::endl;
+  TraceFile << "Addr\tNumber\tDisass" << std::endl;
   for (i = 0; i < 0x10000; i++){
     if (_tabAddr[i])
-      std::cout << std::hex << (0x400000 + i) << "\t" << std::dec << _tabAddr[i] << "\t" << _tabStr[i] << std::endl;
+      TraceFile << std::hex << (0x400000 + i) << "\t" << std::dec << _tabAddr[i] << "\t" << _tabStr[i] << std::endl;
   }
 }
 #endif
@@ -433,6 +443,8 @@ int main(int argc, char *argv[])
         return Usage();
     }
     
+    TraceFile.open(KnobOutputFile.Value().c_str());
+
     PIN_SetSyntaxIntel();
     IMG_AddInstrumentFunction(Image, 0);
     INS_AddInstrumentFunction(Instruction, 0);

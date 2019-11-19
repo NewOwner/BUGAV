@@ -14,11 +14,17 @@
 
 using namespace CONTROLLER;
 using namespace INSTLIB;
+using std::ofstream;
+using std::string;
+using std::endl;
 /* ================================================================== */
 // Global variables
 /* ================================================================== */
 
-std::ostream * out = &cerr;
+KNOB<string> KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool",
+    "o", "tool_ropdetect.txt", "specify file name");
+
+ofstream TraceFile;
 
 // heuristic parameters
 INT32 short_val = 3;
@@ -39,9 +45,6 @@ std::list<INT32> address_dists;
 /* ===================================================================== */
 // Command line switches
 /* ===================================================================== */
-KNOB<string> KnobOutputFile(KNOB_MODE_WRITEONCE,  "pintool",
-    "o", "","specify file name for detection result output");
-
 KNOB<BOOL>   KnobSymbols(KNOB_MODE_WRITEONCE, "pintool",
 	"symbols", "1", "Include symbol information");
 /* ===================================================================== */
@@ -107,14 +110,14 @@ BOOL TooShortIntervals(std::list<INT32> intervals) {
     BOOL too_super_shorts = (((float) super_short_ints)/len) > (((float)sshort_percent)/100);
 
     if(too_shorts && too_super_shorts) {
-        *out << "======================================================="<< endl;
-        *out << "!!! Too short intervals !!!" << endl;
-        *out << "short intervals: " << (((float) short_intervals)/len)*100 << "%" <<endl;
-        *out << "super short intervals: " << (((float) super_short_ints)/len)*100 << "%" <<endl;
+        TraceFile << "======================================================="<< endl;
+        TraceFile << "!!! Too short intervals !!!" << endl;
+        TraceFile << "short intervals: " << (((float) short_intervals)/len)*100 << "%" <<endl;
+        TraceFile << "super short intervals: " << (((float) super_short_ints)/len)*100 << "%" <<endl;
 		for (std::list<int>::iterator it=intervals.begin(); it != intervals.end(); ++it) {
-			*out << *it << " ";
+            TraceFile << *it << " ";
 		}
-        *out << endl << "======================================================="<< endl;
+        TraceFile << endl << "======================================================="<< endl;
         return TRUE;
     }
     return FALSE;
@@ -133,10 +136,10 @@ BOOL TooLargeDistances(std::list<INT32> dists) {
     BOOL too_far_instructions = (((float) large_dists)/len) > (((float) dist_percent)/100);
 
     if(too_far_instructions) {
-        *out << "*******************************************************"<< endl;
-        *out << "!!! Too far instructions !!!" << endl;
-        *out << "large distances: " << (((float) large_dists)/len)*100 << "%" <<endl;
-        *out << "*******************************************************"<< endl;
+        TraceFile << "*******************************************************"<< endl;
+        TraceFile << "!!! Too far instructions !!!" << endl;
+        TraceFile << "large distances: " << (((float) large_dists)/len)*100 << "%" <<endl;
+        TraceFile << "*******************************************************"<< endl;
         return TRUE;
     }
     return FALSE;
@@ -158,8 +161,8 @@ VOID InstructionTrace(TRACE trace, INS ins) {
         if(interval_alert) {
             BOOL distance_alert = TooLargeDistances(address_dists);
             if(distance_alert) {
-                *out << "ROP DETECTED!" << endl;
-            	*out << "Exiting Program..." << endl;
+                TraceFile << "ROP DETECTED!" << endl;
+            	TraceFile << "Exiting Program..." << endl;
             	exit(-1);
             }
         }
@@ -207,11 +210,11 @@ VOID Trace(TRACE trace, VOID *v)
  */
 VOID Fini(INT32 code, VOID *v)
 {
-    *out << "======================================================="<< endl;
-    *out <<  "Analysis successfully completed." << endl;
-	*out <<  "Exit code: " << code << endl;
-	*out <<  "No ROP chain executing detected."<< endl;
-    *out << "======================================================="<< endl;
+    TraceFile << "======================================================="<< endl;
+    TraceFile <<  "Analysis successfully completed." << endl;
+	TraceFile <<  "Exit code: " << code << endl;
+	TraceFile <<  "No ROP chain executing detected."<< endl;
+    TraceFile << "======================================================="<< endl;
 }
 
 /*!
@@ -227,9 +230,7 @@ int main(int argc, char *argv[])
     // in the command line or the command line is invalid
     if( PIN_Init(argc,argv) ) { return Usage(); }
 
-    string fileName = KnobOutputFile.Value();
-
-    if (!fileName.empty()) { out = new std::ofstream(fileName.c_str());}
+    TraceFile.open(KnobOutputFile.Value().c_str());
 
 	//PIN_AddInternalExceptionHandler(catchSegfault, 0);
 
@@ -238,12 +239,6 @@ int main(int argc, char *argv[])
 
     // Register function to be called when the application exits
     PIN_AddFiniFunction(Fini, 0);
-
-    cerr <<  "=======================================================" << endl;
-    cerr <<  "This application is analised by ropdet" << endl;
-    if (!KnobOutputFile.Value().empty()) {
-        cerr << "See file " << KnobOutputFile.Value() << " for analysis results" << endl;
-    }
 
     // Start the program, never returns
     PIN_StartProgram();

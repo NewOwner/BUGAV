@@ -12,6 +12,15 @@
 #include <fstream>
 #include <iostream>
 #include <list>
+using std::ofstream;
+using std::string;
+using std::endl;
+
+
+KNOB<string> KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool",
+    "o", "tool_loopdetection.txt", "specify file name");
+
+ofstream TraceFile;
 
 #define LOCKED    1
 #define UNLOCKED  !LOCKED
@@ -22,7 +31,7 @@ static std::string  _tabStr[0x10000];
 
 INT32 Usage()
 {
-    std::cerr << "Foo test" << std::endl;
+    TraceFile << "Foo test" << std::endl;
     return -1;
 }
 
@@ -77,10 +86,10 @@ VOID Fini(INT32 code, VOID *v)
 {
   UINT32 i;
 
-  std::cout << "Addr\tNumber\tDisass" << std::endl;
+  TraceFile << "Addr\tNumber\tDisass" << std::endl;
   for (i = 0; i < 0x10000; i++){
     if (_tabAddr[i])
-      std::cout << std::hex << (0x400000 + i) << "\t" << std::dec << _tabAddr[i] << "\t" << _tabStr[i] << std::endl;
+      TraceFile << std::hex << (0x400000 + i) << "\t" << std::dec << _tabAddr[i] << "\t" << _tabStr[i] << std::endl;
   }
 }
 
@@ -90,7 +99,9 @@ int main(int argc, char *argv[])
     if(PIN_Init(argc, argv)){
         return Usage();
     }
-    
+
+    TraceFile.open(KnobOutputFile.Value().c_str());
+
     PIN_SetSyntaxIntel();
     //IMG_AddInstrumentFunction(Image, 0);
     INS_AddInstrumentFunction(Instruction, 0);

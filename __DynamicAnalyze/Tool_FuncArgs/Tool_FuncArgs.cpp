@@ -30,7 +30,7 @@ std::string func_tofind;
 /* ===================================================================== */
 
 KNOB<string> KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool",
-    "o", "malloctrace.out", "specify trace file name");
+    "o", "tool_funcargs.txt", "specify file name");
 
 /* ===================================================================== */
 

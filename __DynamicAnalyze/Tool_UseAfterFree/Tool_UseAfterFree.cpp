@@ -13,6 +13,10 @@
 #include <fstream>
 #include <iostream>
 #include <list>
+#include <stdlib.h>
+using std::ofstream;
+using std::string;
+using std::endl;
 
 #define LOCKED    1
 #define UNLOCKED  !LOCKED
@@ -35,9 +39,15 @@ std::list<UINT64>               addressTainted;
 std::list<REG>                  regsTainted;
 std::list<struct mallocArea>    mallocAreaList;
 
+KNOB<string> KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool",
+    "o", "tool_useafterfree.txt", "specify file name");
+
+ofstream TraceFile;
+
 INT32 Usage()
 {
-    std::cerr << "Ex 5" << std::endl;
+    PIN_ERROR("This tool prints use after free events\n"
+        + KNOB_BASE::StringKnobSummary() + "\n");
     return -1;
 }
 
@@ -56,19 +66,19 @@ BOOL checkAlreadyRegTainted(REG reg)
 VOID removeMemTainted(UINT64 addr)
 {
   addressTainted.remove(addr);
-  std::cout << std::hex << "\t\t\t" << addr << " is now freed" << std::endl;
+  TraceFile << std::hex << "\t\t\t" << addr << " is now freed" << std::endl;
 }
 
 VOID addMemTainted(UINT64 addr)
 {
   addressTainted.push_back(addr);
-  std::cout << std::hex << "\t\t\t" << addr << " is now tainted" << std::endl;
+  TraceFile << std::hex << "\t\t\t" << addr << " is now tainted" << std::endl;
 }
 
 BOOL taintReg(REG reg)
 {
   if (checkAlreadyRegTainted(reg) == true){
-    std::cout << "\t\t\t" << REG_StringShort(reg) << " is already tainted" << std::endl;
+    TraceFile << "\t\t\t" << REG_StringShort(reg) << " is already tainted" << std::endl;
     return false;
   }
 
@@ -115,10 +125,10 @@ BOOL taintReg(REG reg)
          break;
 
     default:
-      std::cout << "\t\t\t" << REG_StringShort(reg) << " can't be tainted" << std::endl;
+      TraceFile << "\t\t\t" << REG_StringShort(reg) << " can't be tainted" << std::endl;
       return false;
   }
-  std::cout << "\t\t\t" << REG_StringShort(reg) << " is now tainted" << std::endl;
+  TraceFile << "\t\t\t" << REG_StringShort(reg) << " is now tainted" << std::endl;
   return true;
 }
 
@@ -169,7 +179,7 @@ BOOL removeRegTainted(REG reg)
     default:
       return false;
   }
-  std::cout << "\t\t\t" << REG_StringShort(reg) << " is now freed" << std::endl;
+  TraceFile << "\t\t\t" << REG_StringShort(reg) << " is now freed" << std::endl;
   return true;
 }
 
@@ -184,24 +194,24 @@ VOID ReadMem(UINT64 insAddr, std::string insDis, UINT32 opCount, REG reg_r, UINT
 
   for(i2 = mallocAreaList.begin(); i2 != mallocAreaList.end(); i2++){
     if (addr >= i2->base && addr < (i2->base + i2->size) && i2->status == FREE){
-      std::cout << std::hex << "[UAF in " << addr << "]\t" << insAddr << ": " << insDis << std::endl;
+      TraceFile << std::hex << "[UAF in " << addr << "]\t" << insAddr << ": " << insDis << std::endl;
       return;
     }
   }
 
   for(i = addressTainted.begin(); i != addressTainted.end(); i++){
       if (addr == *i){
-        std::cout << std::hex << "[READ in " << addr << "]\t" << insAddr << ": " << insDis << std::endl;
+        TraceFile << std::hex << "[READ in " << addr << "]\t" << insAddr << ": " << insDis << std::endl;
         taintReg(reg_r);
       
         if (sp > addr && addr > 0x700000000000)
-          std::cout << std::hex << "[UAF in " << addr << "]\t" << insAddr << ": " << insDis << std::endl;
+          TraceFile << std::hex << "[UAF in " << addr << "]\t" << insAddr << ": " << insDis << std::endl;
 
         return;
       }
   }
   if (checkAlreadyRegTainted(reg_r)){
-    std::cout << std::hex << "[READ in " << addr << "]\t" << insAddr << ": " << insDis << std::endl;
+    TraceFile << std::hex << "[READ in " << addr << "]\t" << insAddr << ": " << insDis << std::endl;
     removeRegTainted(reg_r);
   }
 }
@@ -217,25 +227,25 @@ VOID WriteMem(UINT64 insAddr, std::string insDis, UINT32 opCount, REG reg_r, UIN
   
   for(i2 = mallocAreaList.begin(); i2 != mallocAreaList.end(); i2++){
     if (addr >= i2->base && addr < (i2->base + i2->size) && i2->status == FREE){
-      std::cout << std::hex << "[UAF in " << addr << "]\t" << insAddr << ": " << insDis << std::endl;
+      TraceFile << std::hex << "[UAF in " << addr << "]\t" << insAddr << ": " << insDis << std::endl;
       return;
     }
   }
 
   for(i = addressTainted.begin(); i != addressTainted.end(); i++){
       if (addr == *i){
-        std::cout << std::hex << "[WRITE in " << addr << "]\t" << insAddr << ": " << insDis << std::endl;
+        TraceFile << std::hex << "[WRITE in " << addr << "]\t" << insAddr << ": " << insDis << std::endl;
         if (!REG_valid(reg_r) || !checkAlreadyRegTainted(reg_r))
           removeMemTainted(addr);
         
         if (sp > addr && addr > 0x700000000000)
-          std::cout << std::hex << "[UAF in " << addr << "]\t" << insAddr << ": " << insDis << std::endl;
+          TraceFile << std::hex << "[UAF in " << addr << "]\t" << insAddr << ": " << insDis << std::endl;
 
         return ;
       }
   }
   if (checkAlreadyRegTainted(reg_r)){
-    std::cout << std::hex << "[WRITE in " << addr << "]\t" << insAddr << ": " << insDis << std::endl;
+    TraceFile << std::hex << "[WRITE in " << addr << "]\t" << insAddr << ": " << insDis << std::endl;
     addMemTainted(addr);
   }
 }
@@ -247,13 +257,13 @@ VOID spreadRegTaint(UINT64 insAddr, std::string insDis, UINT32 opCount, REG reg_
 
   if (REG_valid(reg_w)){
     if (checkAlreadyRegTainted(reg_w) && (!REG_valid(reg_r) || !checkAlreadyRegTainted(reg_r))){
-      std::cout << "[SPREAD]\t\t" << insAddr << ": " << insDis << std::endl;
-      std::cout << "\t\t\toutput: "<< REG_StringShort(reg_w) << " | input: " << (REG_valid(reg_r) ? REG_StringShort(reg_r) : "constant") << std::endl;
+      TraceFile << "[SPREAD]\t\t" << insAddr << ": " << insDis << std::endl;
+      TraceFile << "\t\t\toutput: "<< REG_StringShort(reg_w) << " | input: " << (REG_valid(reg_r) ? REG_StringShort(reg_r) : "constant") << std::endl;
       removeRegTainted(reg_w);
     }
     else if (!checkAlreadyRegTainted(reg_w) && checkAlreadyRegTainted(reg_r)){
-      std::cout << "[SPREAD]\t\t" << insAddr << ": " << insDis << std::endl;
-      std::cout << "\t\t\toutput: " << REG_StringShort(reg_w) << " | input: "<< REG_StringShort(reg_r) << std::endl;
+      TraceFile << "[SPREAD]\t\t" << insAddr << ": " << insDis << std::endl;
+      TraceFile << "\t\t\toutput: " << REG_StringShort(reg_w) << " | input: "<< REG_StringShort(reg_r) << std::endl;
       taintReg(reg_w);
     }
   }
@@ -265,7 +275,7 @@ VOID followData(UINT64 insAddr, std::string insDis, REG reg)
     return;
 
   if (checkAlreadyRegTainted(reg)){
-      std::cout << "[FOLLOW]\t\t" << insAddr << ": " << insDis << std::endl;
+      TraceFile << "[FOLLOW]\t\t" << insAddr << ": " << insDis << std::endl;
   }
 }
 
@@ -323,7 +333,7 @@ VOID callbackBeforeFree(ADDRINT addr)
 { 
     std::list<struct mallocArea>::iterator i;
   
-  std::cout << "[INFO]\t\tfree(" << std::hex << addr << ")" << std::endl;
+  TraceFile << "[INFO]\t\tfree(" << std::hex << addr << ")" << std::endl;
   for(i = mallocAreaList.begin(); i != mallocAreaList.end(); i++){
     if (addr == i->base){
       i->status = FREE;
@@ -337,7 +347,7 @@ VOID callbackAfterMalloc(ADDRINT ret)
     std::list<struct mallocArea>::iterator i;
   struct mallocArea elem;
 
-  std::cout << "[INFO]\t\tmalloc(" << lastSize << ") = " << std::hex << ret << std::endl;
+  TraceFile << "[INFO]\t\tmalloc(" << lastSize << ") = " << std::hex << ret << std::endl;
   if (ret){
 
     for(i = mallocAreaList.begin(); i != mallocAreaList.end(); i++){
@@ -395,6 +405,8 @@ int main(int argc, char *argv[])
         return Usage();
     }
     
+    TraceFile.open(KnobOutputFile.Value().c_str());
+
     PIN_SetSyntaxIntel();
     IMG_AddInstrumentFunction(Image, 0);
     INS_AddInstrumentFunction(Instruction, 0);

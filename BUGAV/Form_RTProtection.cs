@@ -99,6 +99,6 @@ namespace BUGAV {
         public int ProcessId { get; set; }
         public int Create { get; set; }
         public Process procHandler { get; set; }
-        public override string ToString() { return Name; }
+        public override string ToString() { return Name + " " + ProcessId.ToString(); }
     }
 }

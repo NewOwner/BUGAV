@@ -14,7 +14,7 @@ using std::endl;
 
 
 KNOB<string> KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool",
-    "o", "imageload.out", "specify file name");
+    "o", "tool_imageload.txt", "specify file name");
 
 ofstream TraceFile;
 

@@ -84,7 +84,9 @@ namespace BUGAV {
             foreach (var tool in DynamicAnalyze_checkedListBox_Tools.CheckedItems.OfType<FilesListBoxItem>().ToList()) {
 
                 foreach (var file in DynamicAnalyze_checkedListBox_Files.CheckedItems.OfType<FilesListBoxItem>().ToList()) {
-                    PinToolManager.RunTool(tool.Value, file.Value);
+                    //PinToolManager.RunTool(tool.Value, file.Value);
+                    PinToolManager.RunToolOutCapture(tool.Value, file.Value);
+                    //PinToolManager.RunToolCmd(tool.Value, file.Value);
                 }
                 foreach (var proc in DynamicAnalyze_checkedListBox_Processes.CheckedItems.OfType<ProcListBoxItem>().ToList()) {
                     PinToolManager.RunTool(tool.Value, proc.ProcessId);

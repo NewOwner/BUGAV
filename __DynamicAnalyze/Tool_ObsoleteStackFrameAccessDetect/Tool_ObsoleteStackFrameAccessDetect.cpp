@@ -13,13 +13,22 @@
 #include <fstream>
 #include <iostream>
 #include <list>
+using std::ofstream;
+using std::string;
+using std::endl;
+
+
+KNOB<string> KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool",
+    "o", "tool_obsoletestackaccess.txt", "specify file name");
+
+ofstream TraceFile;
 
 std::list<UINT64> addressTainted;
 std::list<REG> regsTainted;
 
 INT32 Usage()
 {
-    std::cerr << "Ex 4" << std::endl;
+   TraceFile << "Ex 4" << std::endl;
     return -1;
 }
 
@@ -38,7 +47,7 @@ bool checkAlreadyRegTainted(REG reg)
 VOID removeMemTainted(UINT64 addr)
 {
   addressTainted.remove(addr);
-  std::cout << std::hex << "\t\t\t" << addr << " is now freed" << std::endl;
+  TraceFile << std::hex << "\t\t\t" << addr << " is now freed" << std::endl;
 }
 
 VOID addMemTainted(UINT64 addr)
@@ -309,7 +318,9 @@ int main(int argc, char *argv[])
     if(PIN_Init(argc, argv)){
         return Usage();
     }
-    
+
+    TraceFile.open(KnobOutputFile.Value().c_str());
+
     PIN_SetSyntaxIntel();
     PIN_AddSyscallEntryFunction(Syscall_entry, 0);
     INS_AddInstrumentFunction(Instruction, 0);

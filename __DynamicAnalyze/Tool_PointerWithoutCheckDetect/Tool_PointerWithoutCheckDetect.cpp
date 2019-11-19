@@ -13,6 +13,15 @@
 #include <fstream>
 #include <iostream>
 #include <list>
+using std::ofstream;
+using std::string;
+using std::endl;
+
+
+KNOB<string> KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool",
+    "o", "tool_pointerwithoutcheck.txt", "specify file name");
+
+ofstream TraceFile;
 
 #define LOCKED    1
 #define UNLOCKED  !LOCKED
@@ -40,7 +49,7 @@ std::list<struct mallocArea>    mallocAreaList;
 
 INT32 Usage()
 {
-    std::cerr << "Ex 6" << std::endl;
+    TraceFile << "Ex 6" << std::endl;
     return -1;
 }
 
@@ -51,7 +60,7 @@ VOID ReadMem(UINT64 insAddr, std::string insDis, UINT64 memOp)
 
   for(i = mallocAreaList.begin(); i != mallocAreaList.end(); i++){
     if (i->base == addr && i->check != CHECKED)
-      std::cout << std::hex << "[READ in " << addr << " without check]\t\t" << insAddr << ": " << insDis << std::endl;
+      TraceFile << std::hex << "[READ in " << addr << " without check]\t\t" << insAddr << ": " << insDis << std::endl;
   } 
 }
 
@@ -62,7 +71,7 @@ VOID WriteMem(UINT64 insAddr, std::string insDis, UINT64 memOp)
   
   for(i = mallocAreaList.begin(); i != mallocAreaList.end(); i++){
     if (i->base == addr && i->check != CHECKED)
-      std::cout << std::hex << "[WRITE in " << addr << " without check]\t\t" << insAddr << ": " << insDis << std::endl;
+      TraceFile << std::hex << "[WRITE in " << addr << " without check]\t\t" << insAddr << ": " << insDis << std::endl;
   }
 }
 
@@ -73,7 +82,7 @@ VOID cmpInst(UINT64 insAddr, std::string insDis, UINT64 memOp)
 
   for(i = mallocAreaList.begin(); i != mallocAreaList.end(); i++){
     if (*(UINT64 *)addr == i->base){
-      //std::cout << std::hex << "[PTR " << *(UINT64 *)addr << " checked]\t\t\t" << insAddr << ": " << insDis << std::endl;
+      //TraceFile << std::hex << "[PTR " << *(UINT64 *)addr << " checked]\t\t\t" << insAddr << ": " << insDis << std::endl;
       i->check = CHECKED;
     }
   }
@@ -85,7 +94,7 @@ VOID testInst(UINT64 insAddr, std::string insDis, ADDRINT val_r0, ADDRINT val_r1
 
   for(i = mallocAreaList.begin(); i != mallocAreaList.end(); i++){
     if (val_r0 == val_r1 && val_r0 == i->base){
-      //std::cout << std::hex << "[PTR " << val_r0 << " checked]\t\t\t" << insAddr << ": " << insDis << std::endl;
+      //TraceFile << std::hex << "[PTR " << val_r0 << " checked]\t\t\t" << insAddr << ": " << insDis << std::endl;
       i->check = CHECKED;
     }
   }
@@ -138,7 +147,7 @@ VOID callbackBeforeFree(ADDRINT addr)
 { 
     std::list<struct mallocArea>::iterator i;
   
-  //std::cout << "[INFO]\t\t\t\t\tfree(" << std::hex << addr << ")" << std::endl;
+  //TraceFile << "[INFO]\t\t\t\t\tfree(" << std::hex << addr << ")" << std::endl;
   for(i = mallocAreaList.begin(); i != mallocAreaList.end(); i++){
     if (addr == i->base){
       i->status = FREE;
@@ -152,7 +161,7 @@ VOID callbackAfterMalloc(ADDRINT ret)
     std::list<struct mallocArea>::iterator i;
   struct mallocArea elem;
 
-  //std::cout << "[INFO]\t\t\t\t\tmalloc(" << lastSize << ") = " << std::hex << ret << std::endl;
+  //TraceFile << "[INFO]\t\t\t\t\tmalloc(" << lastSize << ") = " << std::hex << ret << std::endl;
   if (ret){
 
     for(i = mallocAreaList.begin(); i != mallocAreaList.end(); i++){
@@ -212,6 +221,8 @@ int main(int argc, char *argv[])
         return Usage();
     }
     
+    TraceFile.open(KnobOutputFile.Value().c_str());
+
     PIN_SetSyntaxIntel();
     IMG_AddInstrumentFunction(Image, 0);
     INS_AddInstrumentFunction(Instruction, 0);
