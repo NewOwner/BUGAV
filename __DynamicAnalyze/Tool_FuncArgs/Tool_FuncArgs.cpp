@@ -33,12 +33,8 @@ KNOB<string> KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool",
     "o", "tool_funcargs.txt", "specify file name");
 
 /* ===================================================================== */
-
-
-/* ===================================================================== */
 /* Analysis routines                                                     */
 /* ===================================================================== */
-
 VOID Arg1Before(CHAR * name, ADDRINT size) {
     TraceFile << name << "(" << size << ")" << endl;
 }
@@ -46,7 +42,6 @@ VOID Arg1Before(CHAR * name, ADDRINT size) {
 VOID MallocAfter(ADDRINT ret) {
     TraceFile << "  returns " << ret << endl;
 }
-
 
 /* ===================================================================== */
 /* Instrumentation routines                                              */
@@ -106,7 +101,7 @@ int main(int argc, char *argv[]) {
     TraceFile << hex;
     TraceFile.setf(ios::showbase);
 
-    InFile.open("inf.txt");
+    InFile.open("inp_tool_funcargs.txt");
     InFile >> func_tofind;
     TraceFile << func_tofind << endl;
 

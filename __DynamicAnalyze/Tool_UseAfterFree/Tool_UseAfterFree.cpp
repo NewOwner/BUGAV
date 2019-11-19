@@ -398,18 +398,25 @@ VOID Image(IMG img, VOID *v)
   }
 }
 
+VOID Fini(INT32 code, VOID* v) {
+    TraceFile << "=======================================================" << endl;
+    TraceFile << "Analysis successfully completed." << endl;
+    TraceFile << "Exit code: " << code << endl;
+    TraceFile << "=======================================================" << endl;
+}
+
 int main(int argc, char *argv[])
 {
     PIN_InitSymbols();
-    if(PIN_Init(argc, argv)){
-        return Usage();
-    }
+
+    if(PIN_Init(argc, argv)){ return Usage(); }
     
     TraceFile.open(KnobOutputFile.Value().c_str());
 
-    PIN_SetSyntaxIntel();
+    //PIN_SetSyntaxIntel();
     IMG_AddInstrumentFunction(Image, 0);
     INS_AddInstrumentFunction(Instruction, 0);
+    PIN_AddFiniFunction(Fini, 0);
     PIN_StartProgram();
     
     return 0;

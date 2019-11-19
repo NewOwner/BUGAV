@@ -46,7 +46,7 @@ std::list<INT32> address_dists;
 // Command line switches
 /* ===================================================================== */
 KNOB<BOOL>   KnobSymbols(KNOB_MODE_WRITEONCE, "pintool",
-	"symbols", "1", "Include symbol information");
+    "symbols", "1", "Include symbol information");
 /* ===================================================================== */
 // Utilities
 /* ===================================================================== */
@@ -54,70 +54,63 @@ KNOB<BOOL>   KnobSymbols(KNOB_MODE_WRITEONCE, "pintool",
 /*!
  *  Print out help message.
  */
-INT32 Usage()
-{
-    cerr << "This tool detects ret intructions crowding to signal ROP attacks. " << endl;
-
-    cerr << KNOB_BASE::StringKnobSummary() << endl;
-
+INT32 Usage() {
+    TraceFile << "This tool detects ret intructions crowding to signal ROP attacks. " << endl;
+    TraceFile << KNOB_BASE::StringKnobSummary() << endl;
     return -1;
 }
 
-string FormatAddress(ADDRINT address, RTN rtn)
-{
-	string s = StringFromAddrint(address);
+string FormatAddress(ADDRINT address, RTN rtn) {
+    string s = StringFromAddrint(address);
 
-	if (KnobSymbols && RTN_Valid(rtn))
-	{
-		IMG img = SEC_Img(RTN_Sec(rtn));
-		s += " ";
-		if (IMG_Valid(img))
-		{
-			s += IMG_Name(img) + ":";
-		}
+    if (KnobSymbols && RTN_Valid(rtn)) {
+        IMG img = SEC_Img(RTN_Sec(rtn));
+        s += " ";
+        if (IMG_Valid(img)) {
+            s += IMG_Name(img) + ":";
+        }
 
-		s += RTN_Name(rtn);
+        s += RTN_Name(rtn);
 
-		ADDRINT delta = address - RTN_Address(rtn);
-		if (delta != 0)
-		{
-			s += "+" + hexstr(delta, 4);
-		}
-	}
-	return s;
+        ADDRINT delta = address - RTN_Address(rtn);
+        if (delta != 0) {
+            s += "+" + hexstr(delta, 4);
+        }
+    }
+    return s;
 }
 
 /* ===================================================================== */
 // Analysis routines
 /* ===================================================================== */
 BOOL TooShortIntervals(std::list<INT32> intervals) {
-	//cerr << "Called" << "\t";
+    //cerr << "Called" << "\t";
     INT32 short_intervals = 0;
     INT32 super_short_ints = 0;
-    INT32 len = (INT32) intervals.size();
+    INT32 len = (INT32)intervals.size();
 
     INT32 indx = 0;
-    for (std::list<int>::iterator it=intervals.begin(); it != intervals.end(); ++it) {
-        if(*it < short_val) short_intervals++;
-        if(*it < super_short) super_short_ints++;
-        if(*it > max_gadget_len && indx!=13 && indx!=12 && indx!=11 && indx!=10) {
+    for (std::list<int>::iterator it = intervals.begin(); it != intervals.end(); ++it) {
+        if (*it < short_val) short_intervals++;
+        if (*it < super_short) super_short_ints++;
+        if (*it > max_gadget_len&& indx != 13 && indx != 12 && indx != 11 && indx != 10) {
             return FALSE;
         }
         indx++;
     }
 
-    BOOL too_shorts = (((float) short_intervals)/len) > (((float) percent)/100);
-    BOOL too_super_shorts = (((float) super_short_ints)/len) > (((float)sshort_percent)/100);
+    BOOL too_shorts = (((float)short_intervals) / len) > (((float)percent) / 100);
+    BOOL too_super_shorts = (((float)super_short_ints) / len) > (((float)sshort_percent) / 100);
 
-    if(too_shorts && too_super_shorts) {
-        TraceFile << "======================================================="<< endl;
+    if (too_shorts && too_super_shorts) {
+        TraceFile << "=======================================================" << endl;
         TraceFile << "!!! Too short intervals !!!" << endl;
-        TraceFile << "short intervals: " << (((float) short_intervals)/len)*100 << "%" <<endl;
-        TraceFile << "super short intervals: " << (((float) super_short_ints)/len)*100 << "%" <<endl;
-		for (std::list<int>::iterator it=intervals.begin(); it != intervals.end(); ++it) {
+        TraceFile << "short intervals: " << (((float)short_intervals) / len) * 100 << "%" << endl;
+        TraceFile << "super short intervals: " << (((float)super_short_ints) / len) * 100 << "%" << endl;
+        for (std::list<int>::iterator it = intervals.begin(); it != intervals.end(); ++it) {
             TraceFile << *it << " ";
-		}
-        TraceFile << endl << "======================================================="<< endl;
+        }
+        TraceFile << endl << "=======================================================" << endl;
         return TRUE;
     }
     return FALSE;
@@ -127,19 +120,19 @@ BOOL TooShortIntervals(std::list<INT32> intervals) {
 BOOL TooLargeDistances(std::list<INT32> dists) {
 
     INT32 large_dists = 0;
-    INT32 len = (INT32) dists.size();
+    INT32 len = (INT32)dists.size();
 
-    for (std::list<int>::iterator it=dists.begin(); it != dists.end(); ++it) {
-        if(*it > dist_threshold) large_dists++;
+    for (std::list<int>::iterator it = dists.begin(); it != dists.end(); ++it) {
+        if (*it > dist_threshold) large_dists++;
     }
 
-    BOOL too_far_instructions = (((float) large_dists)/len) > (((float) dist_percent)/100);
+    BOOL too_far_instructions = (((float)large_dists) / len) > (((float)dist_percent) / 100);
 
-    if(too_far_instructions) {
-        TraceFile << "*******************************************************"<< endl;
+    if (too_far_instructions) {
+        TraceFile << "*******************************************************" << endl;
         TraceFile << "!!! Too far instructions !!!" << endl;
-        TraceFile << "large distances: " << (((float) large_dists)/len)*100 << "%" <<endl;
-        TraceFile << "*******************************************************"<< endl;
+        TraceFile << "large distances: " << (((float)large_dists) / len) * 100 << "%" << endl;
+        TraceFile << "*******************************************************" << endl;
         return TRUE;
     }
     return FALSE;
@@ -152,23 +145,23 @@ VOID InstructionTrace(TRACE trace, INS ins) {
     // ASSERTX(addr);
     // string astring = FormatAddress(INS_Address(ins), TRACE_Rtn(trace));
     // string traceString = astring + "\t"  + INS_Disassemble(ins);
-	// *out << traceString << endl;
+    // *out << traceString << endl;
 
-    if(fifo.size() > ret_window_size) {
+    if (fifo.size() > ret_window_size) {
         fifo.pop_front();
         address_dists.pop_front();
         BOOL interval_alert = TooShortIntervals(fifo);
-        if(interval_alert) {
+        if (interval_alert) {
             BOOL distance_alert = TooLargeDistances(address_dists);
-            if(distance_alert) {
+            if (distance_alert) {
                 TraceFile << "ROP DETECTED!" << endl;
-            	TraceFile << "Exiting Program..." << endl;
-            	exit(-1);
+                TraceFile << "Exiting Program..." << endl;
+                exit(-1);
             }
         }
     }
 
-    if(INS_IsRet(ins)) {
+    if (INS_IsRet(ins)) {
         ADDRINT addr = INS_Address(ins);
         INT32 dist = abs((int)(addr - last_addr));
         fifo.push_back(interval_len);
@@ -191,11 +184,10 @@ VOID InstructionTrace(TRACE trace, INS ins) {
  * @param[in]   v        value specified by the tool in the TRACE_AddInstrumentFunction
  *                       function call
  */
-VOID Trace(TRACE trace, VOID *v)
-{
+VOID Trace(TRACE trace, VOID* v) {
     for (BBL bbl = TRACE_BblHead(trace); BBL_Valid(bbl); bbl = BBL_Next(bbl)) {
         for (INS ins = BBL_InsHead(bbl); INS_Valid(ins); ins = INS_Next(ins)) {
-                InstructionTrace(trace, ins);
+            InstructionTrace(trace, ins);
         }
     }
 }
@@ -208,13 +200,12 @@ VOID Trace(TRACE trace, VOID *v)
  * @param[in]   v               value specified by the tool in the
  *                              PIN_AddFiniFunction function call
  */
-VOID Fini(INT32 code, VOID *v)
-{
-    TraceFile << "======================================================="<< endl;
-    TraceFile <<  "Analysis successfully completed." << endl;
-	TraceFile <<  "Exit code: " << code << endl;
-	TraceFile <<  "No ROP chain executing detected."<< endl;
-    TraceFile << "======================================================="<< endl;
+VOID Fini(INT32 code, VOID* v) {
+    TraceFile << "=======================================================" << endl;
+    TraceFile << "Analysis successfully completed." << endl;
+    TraceFile << "Exit code: " << code << endl;
+    TraceFile << "No ROP chain executing detected." << endl;
+    TraceFile << "=======================================================" << endl;
 }
 
 /*!
@@ -224,23 +215,19 @@ VOID Fini(INT32 code, VOID *v)
  * @param[in]   argv            array of command line arguments,
  *                              including pin -t <toolname> -- ...
  */
-int main(int argc, char *argv[])
-{
+int main(int argc, char* argv[]) {
     // Initialize PIN library. Print help message if -h(elp) is specified
     // in the command line or the command line is invalid
-    if( PIN_Init(argc,argv) ) { return Usage(); }
+    if (PIN_Init(argc, argv)) { return Usage(); }
 
     TraceFile.open(KnobOutputFile.Value().c_str());
 
-	//PIN_AddInternalExceptionHandler(catchSegfault, 0);
+    //PIN_AddInternalExceptionHandler(catchSegfault, 0);
 
-    // Register function to be called to instrument traces
     TRACE_AddInstrumentFunction(Trace, 0);
 
-    // Register function to be called when the application exits
     PIN_AddFiniFunction(Fini, 0);
 
-    // Start the program, never returns
     PIN_StartProgram();
 
     return 0;

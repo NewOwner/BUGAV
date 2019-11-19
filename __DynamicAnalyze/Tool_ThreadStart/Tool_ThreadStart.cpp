@@ -31,7 +31,6 @@ KNOB<string> KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool",
 
 // lock serializes access to the output file.
 FILE * out;
-std::ifstream InFile;
 PIN_LOCK pinLock;
 std::string func_tofind;
 
@@ -57,7 +56,7 @@ VOID ThreadFini(THREADID threadid, const CONTEXT *ctxt, INT32 code, VOID *v) {
 // This routine is executed each time malloc is called.
 VOID BeforeFunc(int size, THREADID threadid) {
     PIN_GetLock(&pinLock, threadid + 1);
-    fprintf(out, "thread %d entered malloc(%d)\n", threadid, size);
+    fprintf(out, "thread %d entered func(%d)\n", threadid, size);
     fflush(out);
     PIN_ReleaseLock(&pinLock);
 }
@@ -69,17 +68,7 @@ VOID BeforeFunc(int size, THREADID threadid) {
 
 // This routine is executed for each image.
 VOID ImageLoad(IMG img, VOID *) {
-    RTN rtn = RTN_FindByName(img, func_tofind.c_str());
-
-    if (RTN_Valid(rtn)) {
-        RTN_Open(rtn);
-
-        RTN_InsertCall(rtn, IPOINT_BEFORE, AFUNPTR(BeforeFunc),
-            IARG_FUNCARG_ENTRYPOINT_VALUE, 0,
-            IARG_THREAD_ID, IARG_END);
-
-        RTN_Close(rtn);
-    }
+    fprintf(out, "Loading %s , Image id = %d\n", IMG_Name(img), IMG_Id(img));
 }
 
 // This routine is executed once at the end.
@@ -113,14 +102,12 @@ int main(INT32 argc, CHAR **argv) {
 
     out = fopen(KnobOutputFile.Value().c_str(), "w");
 
-    InFile.open("inf.txt");
-    InFile >> func_tofind;
-
     // Register ImageLoad to be called when each image is loaded.
     IMG_AddInstrumentFunction(ImageLoad, 0);
 
     // Register Analysis routines to be called when a thread begins/ends
     PIN_AddThreadStartFunction(ThreadStart, 0);
+
     PIN_AddThreadFiniFunction(ThreadFini, 0);
 
     // Register Fini to be called when the application exits
