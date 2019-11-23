@@ -92,7 +92,7 @@ namespace BUGAV {
     public class FilesListBoxItem {
         public string Name { get; set; }
         public string Value { get; set; }
-        public override string ToString() { return Name; }
+        public override string ToString() { return Value; }
     }
     public class FilterFileConfig {
         System.Windows.Forms.CheckedListBox FileList;

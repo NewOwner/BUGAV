@@ -30,6 +30,13 @@ bool RtProtectionWrap::WRAP_RtProtectionDrv_NewProcMon() {
     return res;
 }
 
+VOID RtProtectionWrap::WRAP_InjectLib(int pid) {
+    PWCHAR dll_to_inject = L"RtProtectionPayloadDll.dll";
+    DWORD dll_data = 1000;
+    ULONG data_sz = sizeof(DWORD);
+    ptr_RtProtectionInjectCtrl->InjectLib((DWORD)pid, dll_to_inject, &dll_data, data_sz);
+}
+
 bool RtProtectionWrap::Get_loaded() { return loaded; }
 
 int RtProtectionWrap::Get_ParentId() { return _ParentId; }
@@ -37,3 +44,4 @@ int RtProtectionWrap::Get_ParentId() { return _ParentId; }
 int RtProtectionWrap::Get_ProcessId() { return _ProcessId; }
 
 int RtProtectionWrap::Get_Create() { return _Create; }
+

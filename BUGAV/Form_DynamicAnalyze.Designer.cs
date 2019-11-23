@@ -51,7 +51,7 @@
             this.DynamicAnalyze_checkedListBox_Files.FormattingEnabled = true;
             this.DynamicAnalyze_checkedListBox_Files.Location = new System.Drawing.Point(12, 37);
             this.DynamicAnalyze_checkedListBox_Files.Name = "DynamicAnalyze_checkedListBox_Files";
-            this.DynamicAnalyze_checkedListBox_Files.Size = new System.Drawing.Size(219, 229);
+            this.DynamicAnalyze_checkedListBox_Files.Size = new System.Drawing.Size(219, 304);
             this.DynamicAnalyze_checkedListBox_Files.TabIndex = 10;
             // 
             // DynamicAnalyze_Button_AddFile
@@ -71,7 +71,7 @@
             this.DynamicAnalyze_checkedListBox_Processes.FormattingEnabled = true;
             this.DynamicAnalyze_checkedListBox_Processes.Location = new System.Drawing.Point(257, 37);
             this.DynamicAnalyze_checkedListBox_Processes.Name = "DynamicAnalyze_checkedListBox_Processes";
-            this.DynamicAnalyze_checkedListBox_Processes.Size = new System.Drawing.Size(219, 229);
+            this.DynamicAnalyze_checkedListBox_Processes.Size = new System.Drawing.Size(219, 304);
             this.DynamicAnalyze_checkedListBox_Processes.TabIndex = 13;
             // 
             // DynamicAnalyze_Button_UpdateProc
@@ -91,7 +91,7 @@
             this.DynamicAnalyze_checkedListBox_Tools.FormattingEnabled = true;
             this.DynamicAnalyze_checkedListBox_Tools.Location = new System.Drawing.Point(504, 37);
             this.DynamicAnalyze_checkedListBox_Tools.Name = "DynamicAnalyze_checkedListBox_Tools";
-            this.DynamicAnalyze_checkedListBox_Tools.Size = new System.Drawing.Size(219, 229);
+            this.DynamicAnalyze_checkedListBox_Tools.Size = new System.Drawing.Size(219, 304);
             this.DynamicAnalyze_checkedListBox_Tools.TabIndex = 15;
             // 
             // DynamicAnalyze_Button_StartPin
@@ -118,7 +118,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 439);
+            this.ClientSize = new System.Drawing.Size(740, 359);
             this.Controls.Add(this.DynamicAnalyze_Button_LoadTools);
             this.Controls.Add(this.DynamicAnalyze_Button_StartPin);
             this.Controls.Add(this.DynamicAnalyze_checkedListBox_Tools);

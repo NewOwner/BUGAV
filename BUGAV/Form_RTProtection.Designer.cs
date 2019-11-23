@@ -29,11 +29,13 @@
             this.RTProtection_Button_TerminateProcess = new DarkUI.Controls.DarkButton();
             this.RTProtection_checkedListBox_Processes = new System.Windows.Forms.CheckedListBox();
             this.RTProtection_Button_Activate = new DarkUI.Controls.DarkButton();
+            this.darkLabel1 = new DarkUI.Controls.DarkLabel();
+            this.RTProtection_Button_Auto = new DarkUI.Controls.DarkButton();
             this.SuspendLayout();
             // 
             // RTProtection_Button_Hook
             // 
-            this.RTProtection_Button_Hook.Location = new System.Drawing.Point(10, 96);
+            this.RTProtection_Button_Hook.Location = new System.Drawing.Point(96, 12);
             this.RTProtection_Button_Hook.Name = "RTProtection_Button_Hook";
             this.RTProtection_Button_Hook.Padding = new System.Windows.Forms.Padding(5);
             this.RTProtection_Button_Hook.Size = new System.Drawing.Size(75, 23);
@@ -46,15 +48,15 @@
             this.RTProtection_TextBox_ProcessInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
             this.RTProtection_TextBox_ProcessInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.RTProtection_TextBox_ProcessInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.RTProtection_TextBox_ProcessInfo.Location = new System.Drawing.Point(433, 16);
+            this.RTProtection_TextBox_ProcessInfo.Location = new System.Drawing.Point(348, 42);
             this.RTProtection_TextBox_ProcessInfo.Multiline = true;
             this.RTProtection_TextBox_ProcessInfo.Name = "RTProtection_TextBox_ProcessInfo";
-            this.RTProtection_TextBox_ProcessInfo.Size = new System.Drawing.Size(336, 274);
+            this.RTProtection_TextBox_ProcessInfo.Size = new System.Drawing.Size(336, 364);
             this.RTProtection_TextBox_ProcessInfo.TabIndex = 5;
             // 
             // RTProtection_Button_TerminateProcess
             // 
-            this.RTProtection_Button_TerminateProcess.Location = new System.Drawing.Point(10, 55);
+            this.RTProtection_Button_TerminateProcess.Location = new System.Drawing.Point(177, 12);
             this.RTProtection_Button_TerminateProcess.Name = "RTProtection_Button_TerminateProcess";
             this.RTProtection_Button_TerminateProcess.Padding = new System.Windows.Forms.Padding(5);
             this.RTProtection_Button_TerminateProcess.Size = new System.Drawing.Size(75, 23);
@@ -65,14 +67,14 @@
             // RTProtection_checkedListBox_Processes
             // 
             this.RTProtection_checkedListBox_Processes.FormattingEnabled = true;
-            this.RTProtection_checkedListBox_Processes.Location = new System.Drawing.Point(91, 16);
+            this.RTProtection_checkedListBox_Processes.Location = new System.Drawing.Point(14, 42);
             this.RTProtection_checkedListBox_Processes.Name = "RTProtection_checkedListBox_Processes";
-            this.RTProtection_checkedListBox_Processes.Size = new System.Drawing.Size(319, 274);
+            this.RTProtection_checkedListBox_Processes.Size = new System.Drawing.Size(319, 364);
             this.RTProtection_checkedListBox_Processes.TabIndex = 8;
             // 
             // RTProtection_Button_Activate
             // 
-            this.RTProtection_Button_Activate.Location = new System.Drawing.Point(10, 16);
+            this.RTProtection_Button_Activate.Location = new System.Drawing.Point(609, 12);
             this.RTProtection_Button_Activate.Name = "RTProtection_Button_Activate";
             this.RTProtection_Button_Activate.Padding = new System.Windows.Forms.Padding(5);
             this.RTProtection_Button_Activate.Size = new System.Drawing.Size(75, 23);
@@ -80,11 +82,32 @@
             this.RTProtection_Button_Activate.Text = "Activate";
             this.RTProtection_Button_Activate.Click += new System.EventHandler(this.RTProtection_Button_Activate_Click);
             // 
+            // darkLabel1
+            // 
+            this.darkLabel1.AutoSize = true;
+            this.darkLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.darkLabel1.Location = new System.Drawing.Point(14, 21);
+            this.darkLabel1.Name = "darkLabel1";
+            this.darkLabel1.Size = new System.Drawing.Size(81, 13);
+            this.darkLabel1.TabIndex = 10;
+            this.darkLabel1.Text = "New Processes";
+            // 
+            // RTProtection_Button_Auto
+            // 
+            this.RTProtection_Button_Auto.Location = new System.Drawing.Point(528, 12);
+            this.RTProtection_Button_Auto.Name = "RTProtection_Button_Auto";
+            this.RTProtection_Button_Auto.Padding = new System.Windows.Forms.Padding(5);
+            this.RTProtection_Button_Auto.Size = new System.Drawing.Size(75, 23);
+            this.RTProtection_Button_Auto.TabIndex = 11;
+            this.RTProtection_Button_Auto.Text = "Auto";
+            // 
             // Form_RTProtection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(710, 428);
+            this.Controls.Add(this.RTProtection_Button_Auto);
+            this.Controls.Add(this.darkLabel1);
             this.Controls.Add(this.RTProtection_Button_Activate);
             this.Controls.Add(this.RTProtection_checkedListBox_Processes);
             this.Controls.Add(this.RTProtection_Button_Hook);
@@ -104,5 +127,7 @@
         private DarkUI.Controls.DarkButton RTProtection_Button_TerminateProcess;
         private System.Windows.Forms.CheckedListBox RTProtection_checkedListBox_Processes;
         private DarkUI.Controls.DarkButton RTProtection_Button_Activate;
+        private DarkUI.Controls.DarkLabel darkLabel1;
+        private DarkUI.Controls.DarkButton RTProtection_Button_Auto;
     }
 }

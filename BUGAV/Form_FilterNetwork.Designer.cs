@@ -47,7 +47,7 @@
             // 
             // FilterNetwork_Button_DeleteRule
             // 
-            this.FilterNetwork_Button_DeleteRule.Location = new System.Drawing.Point(687, 12);
+            this.FilterNetwork_Button_DeleteRule.Location = new System.Drawing.Point(606, 12);
             this.FilterNetwork_Button_DeleteRule.Name = "FilterNetwork_Button_DeleteRule";
             this.FilterNetwork_Button_DeleteRule.Padding = new System.Windows.Forms.Padding(5);
             this.FilterNetwork_Button_DeleteRule.Size = new System.Drawing.Size(75, 23);
@@ -57,7 +57,7 @@
             // 
             // FilterNetwork_Button_CreateRule
             // 
-            this.FilterNetwork_Button_CreateRule.Location = new System.Drawing.Point(606, 12);
+            this.FilterNetwork_Button_CreateRule.Location = new System.Drawing.Point(525, 12);
             this.FilterNetwork_Button_CreateRule.Name = "FilterNetwork_Button_CreateRule";
             this.FilterNetwork_Button_CreateRule.Padding = new System.Windows.Forms.Padding(5);
             this.FilterNetwork_Button_CreateRule.Size = new System.Drawing.Size(75, 23);
@@ -119,12 +119,12 @@
             this.FilterNetwork_checkedListBox_Interfaces.FormattingEnabled = true;
             this.FilterNetwork_checkedListBox_Interfaces.Location = new System.Drawing.Point(24, 45);
             this.FilterNetwork_checkedListBox_Interfaces.Name = "FilterNetwork_checkedListBox_Interfaces";
-            this.FilterNetwork_checkedListBox_Interfaces.Size = new System.Drawing.Size(230, 169);
+            this.FilterNetwork_checkedListBox_Interfaces.Size = new System.Drawing.Size(260, 169);
             this.FilterNetwork_checkedListBox_Interfaces.TabIndex = 9;
             // 
             // FilterNetwork_Button_Activate
             // 
-            this.FilterNetwork_Button_Activate.Location = new System.Drawing.Point(686, 221);
+            this.FilterNetwork_Button_Activate.Location = new System.Drawing.Point(687, 12);
             this.FilterNetwork_Button_Activate.Name = "FilterNetwork_Button_Activate";
             this.FilterNetwork_Button_Activate.Padding = new System.Windows.Forms.Padding(5);
             this.FilterNetwork_Button_Activate.Size = new System.Drawing.Size(75, 23);
@@ -136,7 +136,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(774, 389);
             this.Controls.Add(this.FilterNetwork_Button_Activate);
             this.Controls.Add(this.FilterNetwork_Button_ClearEvents);
             this.Controls.Add(this.FilterNetwork_Button_DeleteRule);

@@ -34,10 +34,5 @@ public:
 
     /////
 
-    VOID WRAP_InjectLib(int pid) {
-        PWCHAR dll_to_inject = L"RtProtectionPayloadDll.dll";
-        DWORD dll_data = 1000;
-        ULONG data_sz = sizeof(DWORD);
-        ptr_RtProtectionInjectCtrl->InjectLib((DWORD)pid, dll_to_inject, &dll_data, data_sz);
-    }
+    VOID WRAP_InjectLib(int pid);
 };

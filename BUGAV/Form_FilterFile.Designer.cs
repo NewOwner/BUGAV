@@ -33,7 +33,7 @@
             // 
             // FilterFile_Button_Delete
             // 
-            this.FilterFile_Button_Delete.Location = new System.Drawing.Point(246, 21);
+            this.FilterFile_Button_Delete.Location = new System.Drawing.Point(453, 12);
             this.FilterFile_Button_Delete.Name = "FilterFile_Button_Delete";
             this.FilterFile_Button_Delete.Padding = new System.Windows.Forms.Padding(5);
             this.FilterFile_Button_Delete.Size = new System.Drawing.Size(75, 23);
@@ -45,7 +45,7 @@
             // 
             this.darkLabel4.AutoSize = true;
             this.darkLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.darkLabel4.Location = new System.Drawing.Point(31, 26);
+            this.darkLabel4.Location = new System.Drawing.Point(12, 17);
             this.darkLabel4.Name = "darkLabel4";
             this.darkLabel4.Size = new System.Drawing.Size(28, 13);
             this.darkLabel4.TabIndex = 7;
@@ -56,14 +56,14 @@
             this.FilterFiler_checkedListBox_Files.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
             this.FilterFiler_checkedListBox_Files.ForeColor = System.Drawing.SystemColors.ScrollBar;
             this.FilterFiler_checkedListBox_Files.FormattingEnabled = true;
-            this.FilterFiler_checkedListBox_Files.Location = new System.Drawing.Point(31, 50);
+            this.FilterFiler_checkedListBox_Files.Location = new System.Drawing.Point(12, 41);
             this.FilterFiler_checkedListBox_Files.Name = "FilterFiler_checkedListBox_Files";
-            this.FilterFiler_checkedListBox_Files.Size = new System.Drawing.Size(290, 229);
+            this.FilterFiler_checkedListBox_Files.Size = new System.Drawing.Size(597, 229);
             this.FilterFiler_checkedListBox_Files.TabIndex = 6;
             // 
             // FilterFile_Button_Add
             // 
-            this.FilterFile_Button_Add.Location = new System.Drawing.Point(175, 21);
+            this.FilterFile_Button_Add.Location = new System.Drawing.Point(382, 12);
             this.FilterFile_Button_Add.Name = "FilterFile_Button_Add";
             this.FilterFile_Button_Add.Padding = new System.Windows.Forms.Padding(5);
             this.FilterFile_Button_Add.Size = new System.Drawing.Size(65, 23);
@@ -73,7 +73,7 @@
             // 
             // FilterFile_Button_Activate
             // 
-            this.FilterFile_Button_Activate.Location = new System.Drawing.Point(246, 285);
+            this.FilterFile_Button_Activate.Location = new System.Drawing.Point(534, 12);
             this.FilterFile_Button_Activate.Name = "FilterFile_Button_Activate";
             this.FilterFile_Button_Activate.Padding = new System.Windows.Forms.Padding(5);
             this.FilterFile_Button_Activate.Size = new System.Drawing.Size(75, 23);
@@ -85,7 +85,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(624, 287);
             this.Controls.Add(this.FilterFile_Button_Activate);
             this.Controls.Add(this.FilterFile_Button_Delete);
             this.Controls.Add(this.darkLabel4);
