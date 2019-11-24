@@ -47,10 +47,12 @@ namespace BUGAV {
         SafeFileHandle clientHandle;
         public int ClientType;
 
-        public NamedPipeServer(string PName, int Mode) {
+        System.Windows.Forms.NotifyIcon notIcon;
+
+        public NamedPipeServer(string PName, int Mode, System.Windows.Forms.NotifyIcon _notIcon) {
             pipeName = PName;
             ClientType = Mode;//0 Reading Pipe, 1 Writing Pipe
-
+            notIcon = _notIcon;
         }
 
         public void Start() {
@@ -129,6 +131,7 @@ namespace BUGAV {
                     Buffer.BlockCopy(buffer, 0, Rc, 0, ReadLength);
 
                     Console.WriteLine("C# App: Received " + ReadLength + " Bytes: " + encoder.GetString(Rc, 0, ReadLength));
+                    notIcon.ShowBalloonTip(5000, "Suspitious App", "Suspitious Activity in App: ", System.Windows.Forms.ToolTipIcon.Warning);
                     buffer.Initialize();
                 }
 

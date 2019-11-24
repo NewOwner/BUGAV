@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_RTProtection));
             this.RTProtection_Button_Hook = new DarkUI.Controls.DarkButton();
             this.RTProtection_TextBox_ProcessInfo = new DarkUI.Controls.DarkTextBox();
@@ -31,6 +32,7 @@
             this.RTProtection_Button_Activate = new DarkUI.Controls.DarkButton();
             this.darkLabel1 = new DarkUI.Controls.DarkLabel();
             this.RTProtection_Button_Auto = new DarkUI.Controls.DarkButton();
+            this.RTProtection_notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.SuspendLayout();
             // 
             // RTProtection_Button_Hook
@@ -101,6 +103,15 @@
             this.RTProtection_Button_Auto.TabIndex = 11;
             this.RTProtection_Button_Auto.Text = "Auto";
             // 
+            // RTProtection_notifyIcon
+            // 
+            this.RTProtection_notifyIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.RTProtection_notifyIcon.BalloonTipText = "sdf";
+            this.RTProtection_notifyIcon.BalloonTipTitle = "adsfsf";
+            this.RTProtection_notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("RTProtection_notifyIcon.Icon")));
+            this.RTProtection_notifyIcon.Text = "notifyIcon1";
+            this.RTProtection_notifyIcon.Visible = true;
+            // 
             // Form_RTProtection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -129,5 +140,6 @@
         private DarkUI.Controls.DarkButton RTProtection_Button_Activate;
         private DarkUI.Controls.DarkLabel darkLabel1;
         private DarkUI.Controls.DarkButton RTProtection_Button_Auto;
+        public System.Windows.Forms.NotifyIcon RTProtection_notifyIcon;
     }
 }
