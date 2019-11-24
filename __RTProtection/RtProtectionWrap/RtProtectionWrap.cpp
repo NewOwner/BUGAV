@@ -32,7 +32,7 @@ bool RtProtectionWrap::WRAP_RtProtectionDrv_NewProcMon() {
 
 VOID RtProtectionWrap::WRAP_InjectLib(int pid) {
     PWCHAR dll_to_inject = L"RtProtectionPayloadDll.dll";
-    DWORD dll_data = 1000;
+    DWORD dll_data = pid;
     ULONG data_sz = sizeof(DWORD);
     ptr_RtProtectionInjectCtrl->InjectLib((DWORD)pid, dll_to_inject, &dll_data, data_sz);
 }

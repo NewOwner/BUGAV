@@ -6,7 +6,6 @@
 #include "hook_funcs.h"
 
 HANDLE hPipe1;
-LPCWSTR lpszPipename1 = TEXT("\\\\.\\pipe\\myNamedPipe2");
 
 extern "C" void __declspec(dllexport) __stdcall NativeInjectionEntryPoint(REMOTE_ENTRY_INFO * inRemoteInfo);
 
@@ -41,15 +40,20 @@ void perform_hook(LPCWSTR _module_name, LPCSTR _func_name, void* _hook_ptr) {
 void __stdcall NativeInjectionEntryPoint(REMOTE_ENTRY_INFO* inRemoteInfo) {
     std::cout << "NativeInjectionEntryPoint: Injected by process Id: " << inRemoteInfo->HostPID << "\n";
     std::cout << "NativeInjectionEntryPoint: Passed in data size: " << inRemoteInfo->UserDataSize << "\n";
+    DWORD inRemotePid=0;
     if (inRemoteInfo->UserDataSize == sizeof(DWORD)) {
-        //gFreqOffset = *reinterpret_cast<DWORD*>(inRemoteInfo->UserData);
-        //std::cout << "NativeInjectionEntryPoint: Adjusting Beep frequency by: " << gFreqOffset << "\n";
+        inRemotePid = *reinterpret_cast<DWORD*>(inRemoteInfo->UserData);
     }
+    std::cout << "NativeInjectionEntryPoint: Target Pid: " << inRemotePid << "\n";
     
-    char buf[100] = "dfgdfg";
+    char buf[500] = "hook msg";
     DWORD cbWritten;
     DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    hPipe1 = CreateFile(lpszPipename1, GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_FLAG_OVERLAPPED, NULL);
+    
+    std::wstring pipename = TEXT("\\\\.\\pipe\\myNamedPipe");
+    pipename += std::to_wstring(inRemotePid);
+    
+    hPipe1 = CreateFile(pipename.c_str(), GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_FLAG_OVERLAPPED, NULL);
     if ((hPipe1 == NULL || hPipe1 == INVALID_HANDLE_VALUE)) {
         printf("Could not open the pipe  - (error %d)\n", GetLastError());
     }
