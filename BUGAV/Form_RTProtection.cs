@@ -51,6 +51,8 @@ namespace BUGAV {
 
         private void RTProtection_Button_Hook_Click(object sender, EventArgs e) {
             foreach (var item in RTProtection_checkedListBox_Processes.SelectedItems.OfType<ProcListBoxItem>().ToList()) {
+                NamedPipeServer PServer1 = new NamedPipeServer(@"\\.\pipe\myNamedPipe2", 0);
+                PServer1.Start();
                 __RtProtectionInst.WRAP_InjectLib(item.ProcessId);
             }
         }

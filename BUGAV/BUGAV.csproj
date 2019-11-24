@@ -33,6 +33,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Flat-Halloween-Bug.ico</ApplicationIcon>
@@ -110,6 +111,7 @@
     <Compile Include="Form_StaticAnalyze.Designer.cs">
       <DependentUpon>Form_StaticAnalyze.cs</DependentUpon>
     </Compile>
+    <Compile Include="NamedPipeServer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form_BUGAV.resx">
