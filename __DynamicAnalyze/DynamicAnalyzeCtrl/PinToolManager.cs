@@ -18,7 +18,7 @@ namespace DynamicAnalyzeCtrl {
                 pinProcess.EnableRaisingEvents = false;
 
                 // Parameters
-//                pinProcess.StartInfo.Arguments = "-t " + _toolName + " -unique_logfile" + " -- " + _targetName;
+                pinProcess.StartInfo.Arguments = "-t " + _toolName + " -unique_logfile" + " -- " + _targetName;
 
                 // Modify the following to hide / show the window
                 pinProcess.StartInfo.CreateNoWindow = true;
@@ -76,32 +76,16 @@ namespace DynamicAnalyzeCtrl {
             Process pinProcess = new Process();
 
             try {
-                //ProcessStartInfo psi = new ProcessStartInfo();
-                //Process p = Process.Start(psi);
-                //if (p != null && !p.HasExited)
-                //    p.WaitForExit();
-
-
-
-
-
-
-
                 pinProcess.StartInfo.FileName = "CMD.EXE";
 
                 // hookup the eventhandlers to capture the data that is received
                 //Do not receive an event when the process exits.
                 pinProcess.EnableRaisingEvents = false;
 
-                // Parameters
-                //pinProcess.StartInfo.Arguments = "-t " + _toolName + " -unique_logfile" + " -- " + _targetName;
-                //pinProcess.StartInfo.Arguments = "/K ..\\..\\..\\__LIBS\\pin_dbi\\pin.exe " + "-t " + _toolName + " -- " + _targetName;
-                //pinProcess.StartInfo.Arguments = "/K F:\\UNIVER\\9_sem\\TISUIB\\2\\BUGAV\\__LIBS\\pin_dbi\\pin.exe " + "-t " + _toolName + " -- " + _targetName;
-                pinProcess.StartInfo.Arguments = "/K F:\\UNIVER\\9_sem\\TISUIB\\2\\BUGAV\\__LIBS\\pin_dbi\\pin.exe";
+                pinProcess.StartInfo.Arguments = "/K F:\\UNIVER\\9_sem\\TISUIB\\2\\BUGAV\\__LIBS\\pin_dbi\\pin.exe -t " + _toolName + " -- " + _targetName;
 
                 pinProcess.Start();
 
-                // until we are done
                 pinProcess.WaitForExit();
             } catch (Exception e) {
                 Console.WriteLine("{0} Exception caught.", e.ToString());
@@ -114,24 +98,22 @@ namespace DynamicAnalyzeCtrl {
             Process pinProcess = new Process();
 
             try {
-                pinProcess.StartInfo.FileName = "pin.exe";
+                pinProcess.StartInfo.FileName = "CMD.EXE";
 
+                // hookup the eventhandlers to capture the data that is received
                 //Do not receive an event when the process exits.
                 pinProcess.EnableRaisingEvents = false;
 
-                // Parameters
-                pinProcess.StartInfo.Arguments = "-t " + _toolName + " -unique_logfile" + " -pid " + _targetPid.ToString();
-
-                // Modify the following to hide / show the window
-                pinProcess.StartInfo.CreateNoWindow = true;
-                pinProcess.StartInfo.UseShellExecute = true;
-                pinProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
+                pinProcess.StartInfo.Arguments = "/K F:\\UNIVER\\9_sem\\TISUIB\\2\\BUGAV\\__LIBS\\pin_dbi\\pin.exe" + " -pid " + _targetPid.ToString() + " -t " + _toolName;
 
                 pinProcess.Start();
 
+                pinProcess.WaitForExit();
             } catch (Exception e) {
                 Console.WriteLine("{0} Exception caught.", e.ToString());
             }
         }
+
+
     }
 }

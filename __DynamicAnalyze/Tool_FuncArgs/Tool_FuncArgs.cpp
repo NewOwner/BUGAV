@@ -12,6 +12,9 @@ The example below prints the input argument for malloc() and free(), and the ret
 #include "pin.H"
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <list>
+
 using std::hex;
 using std::cerr;
 using std::string;
@@ -24,7 +27,7 @@ using std::endl;
 
 std::ofstream TraceFile;
 std::ifstream InFile;
-std::string func_tofind;
+std::list<std::string> funcs_tofind;
 /* ===================================================================== */
 /* Commandline Switches */
 /* ===================================================================== */
@@ -35,7 +38,7 @@ KNOB<string> KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool",
 /* ===================================================================== */
 /* Analysis routines                                                     */
 /* ===================================================================== */
-VOID Arg1Before(CHAR * name, ADDRINT size) {
+VOID Arg1Before(CHAR* name, ADDRINT size) {
     TraceFile << name << "(" << size << ")" << endl;
 }
 
@@ -47,30 +50,27 @@ VOID MallocAfter(ADDRINT ret) {
 /* Instrumentation routines                                              */
 /* ===================================================================== */
 
-VOID Image(IMG img, VOID *v) {
-    // Instrument the malloc() and free() functions.  Print the input argument
-    // of each malloc() or free(), and the return value of malloc().
-    //
-    //  Find the malloc() function.
-    RTN RtnToFind = RTN_FindByName(img, func_tofind.c_str());
-    if (RTN_Valid(RtnToFind)) {
-        RTN_Open(RtnToFind);
-
-        // Instrument malloc() to print the input argument value and the return value.
-        RTN_InsertCall(RtnToFind, IPOINT_BEFORE, (AFUNPTR)Arg1Before,
-            IARG_ADDRINT, func_tofind.c_str(),
-            IARG_FUNCARG_ENTRYPOINT_VALUE, 0,
-            IARG_END);
-        RTN_InsertCall(RtnToFind, IPOINT_AFTER, (AFUNPTR)MallocAfter,
-            IARG_FUNCRET_EXITPOINT_VALUE, IARG_END);
-
-        RTN_Close(RtnToFind);
+VOID Image(IMG img, VOID* v) {
+    for (auto const& func_tofind : funcs_tofind){
+        RTN RtnToFind = RTN_FindByName(img, func_tofind.c_str());
+        if (RTN_Valid(RtnToFind)) {
+            RTN_Open(RtnToFind);
+    
+            // Instrument malloc() to print the input argument value and the return value.
+            RTN_InsertCall(RtnToFind, IPOINT_BEFORE, (AFUNPTR)Arg1Before,
+                IARG_ADDRINT, func_tofind.c_str(),
+                IARG_FUNCARG_ENTRYPOINT_VALUE, 0,
+                IARG_END);
+            //RTN_InsertCall(RtnToFind, IPOINT_AFTER, (AFUNPTR)MallocAfter,
+            //    IARG_FUNCRET_EXITPOINT_VALUE, IARG_END);
+            RTN_Close(RtnToFind);
+        }
     }
 }
 
 /* ===================================================================== */
 
-VOID Fini(INT32 code, VOID *v) {
+VOID Fini(INT32 code, VOID* v) {
     TraceFile.close();
 }
 
@@ -88,7 +88,7 @@ INT32 Usage() {
 /* Main                                                                  */
 /* ===================================================================== */
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
 
     // Initialize pin & symbol manager
     PIN_InitSymbols();
@@ -101,9 +101,17 @@ int main(int argc, char *argv[]) {
     TraceFile << hex;
     TraceFile.setf(ios::showbase);
 
-    InFile.open("inp_tool_funcargs.txt");
-    InFile >> func_tofind;
-    TraceFile << func_tofind << endl;
+    std::ifstream f("inp_tool_funcargs.txt");
+    
+    if (!f) {
+        std::cerr << "ERROR: Cannot open 'inp_tool_funcargs.txt'!" << std::endl;
+        exit(1);
+    }
+    std::string line;
+    
+    while (std::getline(f, line)) {
+        funcs_tofind.push_back(line);
+    }
 
     // Register Image to be called to instrument functions.
     IMG_AddInstrumentFunction(Image, 0);
@@ -114,7 +122,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-/* ===================================================================== */
-/* eof */
-/* ===================================================================== */
