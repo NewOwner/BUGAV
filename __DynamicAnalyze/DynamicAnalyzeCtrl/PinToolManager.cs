@@ -8,29 +8,29 @@ using System.Diagnostics;
 
 namespace DynamicAnalyzeCtrl {
     public class PinToolManager {
-        public static void RunTool(string _toolName, string _targetName) {
-            Process pinProcess = new Process();
+        //public static void RunTool(string _toolName, string _targetName) {
+        //    Process pinProcess = new Process();
 
-            try {
-                pinProcess.StartInfo.FileName = @"..\..\..\__LIBS\pin_dbi\pin.exe";
+        //    try {
+        //        pinProcess.StartInfo.FileName = @"..\..\..\__LIBS\pin_dbi\pin.exe";
 
-                //Do not receive an event when the process exits.
-                pinProcess.EnableRaisingEvents = false;
+        //        //Do not receive an event when the process exits.
+        //        pinProcess.EnableRaisingEvents = false;
 
-                // Parameters
-                pinProcess.StartInfo.Arguments = "-t " + _toolName + " -unique_logfile" + " -- " + _targetName;
+        //        // Parameters
+        //        pinProcess.StartInfo.Arguments = "-t " + _toolName + " -unique_logfile" + " -- " + _targetName;
 
-                // Modify the following to hide / show the window
-                pinProcess.StartInfo.CreateNoWindow = true;
-                pinProcess.StartInfo.UseShellExecute = true;
-                //pinProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
+        //        // Modify the following to hide / show the window
+        //        pinProcess.StartInfo.CreateNoWindow = true;
+        //        pinProcess.StartInfo.UseShellExecute = true;
+        //        //pinProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
 
-                pinProcess.Start();
+        //        pinProcess.Start();
 
-            } catch (Exception e) {
-                Console.WriteLine("{0} Exception caught.", e.ToString());
-            }
-        }
+        //    } catch (Exception e) {
+        //        Console.WriteLine("{0} Exception caught.", e.ToString());
+        //    }
+        //}
 
         public static void RunToolOutCapture(string _toolName, string _targetName) {
             Process pinProcess = new Process();
@@ -72,7 +72,7 @@ namespace DynamicAnalyzeCtrl {
             }
         }
 
-        public static void RunToolCmd(string _toolName, string _targetName) {
+        public static void RunToolFile(string _toolName, string _targetName) {
             Process pinProcess = new Process();
 
             try {
@@ -94,7 +94,7 @@ namespace DynamicAnalyzeCtrl {
 
         
 
-        public static void RunTool(string _toolName, int _targetPid) {
+        public static void RunToolProcess(string _toolName, string _targetPid) {
             Process pinProcess = new Process();
 
             try {
@@ -104,7 +104,7 @@ namespace DynamicAnalyzeCtrl {
                 //Do not receive an event when the process exits.
                 pinProcess.EnableRaisingEvents = false;
 
-                pinProcess.StartInfo.Arguments = "/K F:\\UNIVER\\9_sem\\TISUIB\\2\\BUGAV\\__LIBS\\pin_dbi\\pin.exe" + " -pid " + _targetPid.ToString() + " -t " + _toolName;
+                pinProcess.StartInfo.Arguments = "/K F:\\UNIVER\\9_sem\\TISUIB\\2\\BUGAV\\__LIBS\\pin_dbi\\pin.exe" + " -pid " + _targetPid + " -t " + _toolName;
 
                 pinProcess.Start();
 

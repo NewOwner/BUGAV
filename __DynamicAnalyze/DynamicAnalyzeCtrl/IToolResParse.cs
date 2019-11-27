@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DynamicAnalyzeCtrl {
-    interface IToolResParse {
+    public interface IToolResParse {
         string ResFname { get; set; }
         bool ParseRes();
     }

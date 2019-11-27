@@ -110,7 +110,7 @@
             this.RTProtection_notifyIcon.BalloonTipTitle = "adsfsf";
             this.RTProtection_notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("RTProtection_notifyIcon.Icon")));
             this.RTProtection_notifyIcon.Text = "notifyIcon1";
-            this.RTProtection_notifyIcon.Visible = true;
+            this.RTProtection_notifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.RTProtection_notifyIcon_MouseClick);
             // 
             // Form_RTProtection
             // 

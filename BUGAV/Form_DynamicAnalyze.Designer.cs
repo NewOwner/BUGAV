@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_DynamicAnalyze));
             this.DynamicAnalyze_Button_DeleteFile = new DarkUI.Controls.DarkButton();
             this.DynamicAnalyze_checkedListBox_Files = new System.Windows.Forms.CheckedListBox();
@@ -32,6 +33,7 @@
             this.DynamicAnalyze_checkedListBox_Tools = new System.Windows.Forms.CheckedListBox();
             this.DynamicAnalyze_Button_StartPin = new DarkUI.Controls.DarkButton();
             this.DynamicAnalyze_Button_LoadTools = new DarkUI.Controls.DarkButton();
+            this.DynamicAnalyze_notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.SuspendLayout();
             // 
             // DynamicAnalyze_Button_DeleteFile
@@ -114,6 +116,12 @@
             this.DynamicAnalyze_Button_LoadTools.Text = "Load";
             this.DynamicAnalyze_Button_LoadTools.Click += new System.EventHandler(this.DynamicAnalyze_Button_LoadTools_Click);
             // 
+            // DynamicAnalyze_notifyIcon
+            // 
+            this.DynamicAnalyze_notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("DynamicAnalyze_notifyIcon.Icon")));
+            this.DynamicAnalyze_notifyIcon.Text = "notifyIcon1";
+            this.DynamicAnalyze_notifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DynamicAnalyze_notifyIcon_MouseClick);
+            // 
             // Form_DynamicAnalyze
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -144,5 +152,6 @@
         public System.Windows.Forms.CheckedListBox DynamicAnalyze_checkedListBox_Tools;
         private DarkUI.Controls.DarkButton DynamicAnalyze_Button_StartPin;
         private DarkUI.Controls.DarkButton DynamicAnalyze_Button_LoadTools;
+        private System.Windows.Forms.NotifyIcon DynamicAnalyze_notifyIcon;
     }
 }

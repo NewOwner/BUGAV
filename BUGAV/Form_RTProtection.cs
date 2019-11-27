@@ -95,7 +95,9 @@ namespace BUGAV {
             }
         }
 
-        
+        private void RTProtection_notifyIcon_MouseClick(object sender, MouseEventArgs e) {
+            RTProtection_notifyIcon.Visible = false;
+        }
     }
     public class ProcListBoxItem {
         public string Name { get; set; }
