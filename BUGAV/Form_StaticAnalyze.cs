@@ -10,6 +10,9 @@ using System.Windows.Forms;
 using DarkUI.Forms;
 
 using System.IO;
+using System.Threading;
+using DynamicAnalyzeCtrl;
+using StaticAnalyzeManager;
 
 namespace BUGAV {
     public partial class Form_StaticAnalyze : DarkForm {
@@ -36,13 +39,13 @@ namespace BUGAV {
                 if (openFileDialog.ShowDialog() == DialogResult.OK) {
                     filePath = openFileDialog.FileName;
                     fileName = Path.GetFileName(filePath);
-                    StaticAnalyze_checkedListBox_Files.Items.Insert(0, new FilesStaticAnalyzeListBoxItem { Name = fileName, Value = filePath, Info="not scanned" });
+                    StaticAnalyze_checkedListBox_Files.Items.Insert(0, new FilesStaticAnalyzeListBoxItem { Name = fileName, Value = filePath, Info = "not scanned" });
                 }
             }
         }
 
         private void StaticAnalyze_checkedListBox_Files_SelectedIndexChanged(object sender, EventArgs e) {
-          //  MessageBox.Show(sender.ToString());
+            //  MessageBox.Show(sender.ToString());
         }
 
         private void StaticAnalyze_Button_DeleteFile_Click(object sender, EventArgs e) {
@@ -53,33 +56,60 @@ namespace BUGAV {
 
         private void StaticAnalyze_Button_ScanCs_Click(object sender, EventArgs e) {
             foreach (var item in StaticAnalyze_checkedListBox_Files.CheckedItems.OfType<FilesStaticAnalyzeListBoxItem>().ToList()) {
-                string[] args_arr = new string[] { item.Value };
-                de4dot.cui.Program.Main(args_arr);
+                StartStaticAnalyzeThread("csharp", item.Value, __StaticAnalyzeCppWrapInst, StaticAnalyze_notifyIcon);
             }
         }
 
         private void StaticAnalyze_Button_ScanCpp_Click(object sender, EventArgs e) {
             foreach (var item in StaticAnalyze_checkedListBox_Files.CheckedItems.OfType<FilesStaticAnalyzeListBoxItem>().ToList()) {
-                byte[] bytes_dir = Encoding.ASCII.GetBytes(System.Environment.CurrentDirectory + "\\bugav.exe");
-                byte[] bytes_file = Encoding.ASCII.GetBytes(item.Value);
-                unsafe {
-                    sbyte* sp_dir;
-                    sbyte* sp_file;
-                    fixed (byte* p_dir = bytes_dir) {
-                        sp_dir = (sbyte*)p_dir;
-                    }
-                    fixed (byte* p_file = bytes_file) {
-                        sp_file = (sbyte*)p_file;
-                    }
-                    __StaticAnalyzeCppWrapInst.WRAP_PerformStaticAnalyzeInstance(sp_dir, sp_file);
-                }
+                StartStaticAnalyzeThread("cpp", item.Value, __StaticAnalyzeCppWrapInst, StaticAnalyze_notifyIcon);
             }
-            
+
+        }
+        public Thread StartStaticAnalyzeThread(string _method, string _target, StaticAnalyzeCppWrap _StaticAnalyzeCppWrapInst, System.Windows.Forms.NotifyIcon _notifyIcon) {
+            var t = new Thread(() => StaticAnalyzeThreadFunc(_method, _target, _StaticAnalyzeCppWrapInst, _notifyIcon));
+            t.Start();
+            return t;
         }
 
-        //static int Main(string[] args) => de4dot.cui.Program.Main(args);
-    }
+        private static void StaticAnalyzeThreadFunc(string _method, string _target, StaticAnalyzeCppWrap _StaticAnalyzeCppWrapInst, System.Windows.Forms.NotifyIcon _notifyIcon) {
+            IToolResParse resParser = GetTool(_method, _target);
+            if (_method == "csharp") {
+                string[] args_arr = new string[] { _target };
+                de4dot.cui.Program.Main(args_arr);
 
+            } else if (_method == "cpp") {
+                //byte[] bytes_dir = Encoding.ASCII.GetBytes(System.Environment.CurrentDirectory + "\\bugav.exe");
+                //byte[] bytes_file = Encoding.ASCII.GetBytes(_target);
+                //unsafe {
+                //    sbyte* sp_dir;
+                //    sbyte* sp_file;
+                //    fixed (byte* p_dir = bytes_dir) { sp_dir = (sbyte*)p_dir; }
+                //    fixed (byte* p_file = bytes_file) { sp_file = (sbyte*)p_file; }
+                //    _StaticAnalyzeCppWrapInst.WRAP_PerformStaticAnalyzeInstance(sp_dir, sp_file);
+                //}
+                SAManager.RunToolOutCapture(_target);
+            }
+            bool res = resParser.ParseRes();
+            _notifyIcon.Visible = true;
+            if (res) {
+                _notifyIcon.ShowBalloonTip(5000, "Suspitious App", "Suspitious Activity in App: " + _target, System.Windows.Forms.ToolTipIcon.Warning);
+            }
+        }
+
+        public static IToolResParse GetTool(string _method, string _target) {
+            string targetname = Path.GetFileName(_target);
+            if (_method == "csharp") { 
+                return new ToolResParse_StaticCsharp(targetname + ".cs.res.txt"); 
+            } 
+            else 
+            if (_method == "cpp") { 
+                return new ToolResParse_StaticCpp(targetname + ".cpp.res.txt"); 
+            }
+            else { return null; }
+        }
+
+    }
 
     public class FilesStaticAnalyzeListBoxItem {
         public string Name { get; set; }

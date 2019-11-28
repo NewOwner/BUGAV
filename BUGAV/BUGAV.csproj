@@ -200,6 +200,10 @@
       <Project>{0c054ba7-bbaf-48eb-afe0-6b5991d4a1bc}</Project>
       <Name>StaticAnalyzeCppWrap</Name>
     </ProjectReference>
+    <ProjectReference Include="..\__StaticAnalyze\StaticAnalyzeManager\StaticAnalyzeManager.csproj">
+      <Project>{80c317ae-01b9-4b12-987b-e26def3826ed}</Project>
+      <Name>StaticAnalyzeManager</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_StaticAnalyze));
             this.StaticAnalyze_TextBox_Info = new DarkUI.Controls.DarkTextBox();
             this.StaticAnalyze_Button_ScanCs = new DarkUI.Controls.DarkButton();
@@ -31,6 +32,7 @@
             this.darkLabel5 = new DarkUI.Controls.DarkLabel();
             this.StaticAnalyze_checkedListBox_Files = new System.Windows.Forms.CheckedListBox();
             this.StaticAnalyze_Button_ScanCpp = new DarkUI.Controls.DarkButton();
+            this.StaticAnalyze_notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.SuspendLayout();
             // 
             // StaticAnalyze_TextBox_Info
@@ -105,6 +107,10 @@
             this.StaticAnalyze_Button_ScanCpp.Text = "Scan C++";
             this.StaticAnalyze_Button_ScanCpp.Click += new System.EventHandler(this.StaticAnalyze_Button_ScanCpp_Click);
             // 
+            // StaticAnalyze_notifyIcon
+            // 
+            this.StaticAnalyze_notifyIcon.Text = "notifyIcon1";
+            // 
             // Form_StaticAnalyze
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -133,5 +139,6 @@
         private DarkUI.Controls.DarkLabel darkLabel5;
         private System.Windows.Forms.CheckedListBox StaticAnalyze_checkedListBox_Files;
         private DarkUI.Controls.DarkButton StaticAnalyze_Button_ScanCpp;
+        private System.Windows.Forms.NotifyIcon StaticAnalyze_notifyIcon;
     }
 }

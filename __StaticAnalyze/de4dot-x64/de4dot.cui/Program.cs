@@ -97,18 +97,17 @@ namespace de4dot.cui {
 
 		public static int Main(string[] args) {
 			int exitCode = 0;
+            
+            string target = Path.GetFileName(args[0]);
+            Logger.Instance.logFilePath = target + ".cs.res.txt";
+            using (var stream = File.Open(Logger.Instance.logFilePath, FileMode.Create)) { }
 
-			const string showAllMessagesEnvName = "SHOWALLMESSAGES";
+            const string showAllMessagesEnvName = "SHOWALLMESSAGES";
 			try {
 				if (Console.OutputEncoding.IsSingleByte || Console.OutputEncoding.CodePage == 437)
 					Console.OutputEncoding = new UTF8Encoding(false);
 
 				Logger.Instance.CanIgnoreMessages = !HasEnv(showAllMessagesEnvName);
-
-				Logger.n("");
-				Logger.n("de4dot v{0} Copyright (C) 2011-2015 de4dot@gmail.com", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
-				Logger.n("Latest version and source code: https://github.com/0xd4d/de4dot");
-				Logger.n("");
 
 				var options = new FilesDeobfuscator.Options();
 				ParseCommandLine(args, options);

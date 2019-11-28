@@ -20,11 +20,12 @@
 using System;
 using System.Collections.Generic;
 using dnlib.DotNet;
+using System.IO;
 
 namespace de4dot.code {
 	public class Logger : ILogger {
 		public readonly static Logger Instance = new Logger();
-
+        public string logFilePath;
 		int indentLevel = 0;
 		readonly int indentSize = 0;
 		LoggerEvent maxLoggerEvent = LoggerEvent.Info;
@@ -119,10 +120,15 @@ namespace de4dot.code {
 		}
 
 		void LogMessage(string indent, string format, params object[] args) {
-			if (args == null || args.Length == 0)
-				Console.WriteLine("{0}{1}", indent, format);
-			else
-				Console.WriteLine(indent + format, args);
+            if (args == null || args.Length == 0) {
+                using (StreamWriter sw = File.AppendText(logFilePath)) {
+                    sw.WriteLine("{0}{1}", indent, format);
+                }
+            } else {
+                using (StreamWriter sw = File.AppendText(logFilePath)) {
+                    sw.WriteLine(indent + format, args);
+                }
+            }
 		}
 
 		public bool IgnoresEvent(LoggerEvent loggerEvent) => loggerEvent > maxLoggerEvent;

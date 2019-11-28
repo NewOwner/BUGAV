@@ -16,7 +16,8 @@ StaticAnalyzeCppWrap::~StaticAnalyzeCppWrap() {
 }
 
 bool StaticAnalyzeCppWrap::WRAP_PerformStaticAnalyzeInstance(const char* dir, const char* file) {
-    char* arr[2] = { (char*)dir, (char*)file };
-    ptr_StaticAnalyzeCppCtrl->PerformStaticAnalyzeInstance(2, arr);
+    char* arr[] = { (char*)dir, (char*)file, "--output=json", "--hashes", "--plugins=all" };
+    int argc = 5;
+    ptr_StaticAnalyzeCppCtrl->PerformStaticAnalyzeInstance(argc, arr);
     return true;
 }
