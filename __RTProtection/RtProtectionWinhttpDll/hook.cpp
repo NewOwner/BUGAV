@@ -13,10 +13,8 @@ extern "C" void __declspec(dllexport) __stdcall NativeInjectionEntryPoint(REMOTE
 void perform_hook(LPCWSTR _module_name, LPCSTR _func_name, void* _hook_ptr) {
 
     HOOK_TRACE_INFO hHook = { NULL };
-
     std::cout << _func_name << " found at address: " << GetProcAddress(GetModuleHandle(_module_name), _func_name) << "\n";
 
-    // Install the hook
     NTSTATUS result = LhInstallHook(
         GetProcAddress(GetModuleHandle(_module_name), _func_name),
         _hook_ptr,
@@ -29,12 +27,7 @@ void perform_hook(LPCWSTR _module_name, LPCSTR _func_name, void* _hook_ptr) {
     } else {
         std::cout << "NativeInjectionEntryPoint: Hook for "<< _func_name <<" installed successfully.\n";
     }
-
-    // If the threadId in the ACL is set to 0,
-    // then internally EasyHook uses GetCurrentThreadId()
     ULONG ACLEntries[1] = { 0 };
-
-    // Disable the hook for the provided threadIds, enable for all others
     LhSetExclusiveACL(ACLEntries, 1, &hHook);
 }
 
@@ -62,24 +55,16 @@ void __stdcall NativeInjectionEntryPoint(REMOTE_ENTRY_INFO* inRemoteInfo) {
 
     perform_hook(TEXT("winhttp"), "WinHttpAddRequestHeaders", winhttp_ns::Hook_WinHttpAddRequestHeaders);
     perform_hook(TEXT("winhttp"), "WinHttpConnect", winhttp_ns::Hook_WinHttpConnect);
-    //perform_hook(TEXT("winhttp"), "WinHttpCrackUrl", Hook_WinHttpCrackUrl);
-    //perform_hook(TEXT("winhttp"), "WinHttpCreateUrl", Hook_WinHttpCreateUrl);
-    //perform_hook(TEXT("winhttp"), "WinHttpOpen", Hook_WinHttpOpen);
-    //perform_hook(TEXT("winhttp"), "WinHttpOpenRequest", Hook_WinHttpOpenRequest);
-    //perform_hook(TEXT("winhttp"), "WinHttpQueryAuthSchemes", Hook_WinHttpQueryAuthSchemes);
-    //perform_hook(TEXT("winhttp"), "WinHttpQueryDataAvailable", Hook_WinHttpQueryDataAvailable);
-    //perform_hook(TEXT("winhttp"), "WinHttpQueryHeaders", Hook_WinHttpQueryHeaders);
-    //perform_hook(TEXT("winhttp"), "WinHttpQueryOption", Hook_WinHttpQueryOption);
-    //perform_hook(TEXT("winhttp"), "WinHttpReadData", Hook_WinHttpReadData);
-    //perform_hook(TEXT("winhttp"), "WinHttpReceiveResponse", Hook_WinHttpReceiveResponse);
-    //perform_hook(TEXT("winhttp"), "WinHttpSendRequest", Hook_WinHttpSendRequest);
-    //perform_hook(TEXT("winhttp"), "WinHttpSetCredentials", Hook_WinHttpSetCredentials);
-    //perform_hook(TEXT("winhttp"), "WinHttpSetDefaultProxyConfiguration", Hook_WinHttpSetDefaultProxyConfiguration);
-    //perform_hook(TEXT("winhttp"), "WinHttpSetOption", Hook_WinHttpSetOption);
-    //perform_hook(TEXT("winhttp"), "WinHttpSetTimeouts", Hook_WinHttpSetTimeouts);
-    //perform_hook(TEXT("winhttp"), "WinHttpTimeFromSystemTime", Hook_WinHttpTimeFromSystemTime);
-    //perform_hook(TEXT("winhttp"), "WinHttpTimeToSystemTime", Hook_WinHttpTimeToSystemTime);
-    //perform_hook(TEXT("winhttp"), "WinHttpWriteData", Hook_WinHttpWriteData);
+    perform_hook(TEXT("winhttp"), "WinHttpCreateUrl", winhttp_ns::Hook_WinHttpCreateUrl);
+    perform_hook(TEXT("winhttp"), "WinHttpOpen", winhttp_ns::Hook_WinHttpOpen);
+    perform_hook(TEXT("winhttp"), "WinHttpOpenRequest", winhttp_ns::Hook_WinHttpOpenRequest);
+    perform_hook(TEXT("winhttp"), "WinHttpQueryDataAvailable", winhttp_ns::Hook_WinHttpQueryDataAvailable);
+    perform_hook(TEXT("winhttp"), "WinHttpQueryHeaders", winhttp_ns::Hook_WinHttpQueryHeaders);
+    perform_hook(TEXT("winhttp"), "WinHttpReadData", winhttp_ns::Hook_WinHttpReadData);
+    perform_hook(TEXT("winhttp"), "WinHttpReceiveResponse", winhttp_ns::Hook_WinHttpReceiveResponse);
+    perform_hook(TEXT("winhttp"), "WinHttpSendRequest", winhttp_ns::Hook_WinHttpSendRequest);
+    perform_hook(TEXT("winhttp"), "WinHttpSetCredentials", winhttp_ns::Hook_WinHttpSetCredentials);
+    perform_hook(TEXT("winhttp"), "WinHttpWriteData", winhttp_ns::Hook_WinHttpWriteData);
 
     return;
 }
