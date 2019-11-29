@@ -1,6 +1,9 @@
 
+#inpname = "_funclist_winhttp.txt"
+#inpname = "_funclist_wininet.txt"
+inpname = "_funclist_ws2_32.txt"
 
-with open("funclist.txt") as f:
+with open(inpname) as f:
 	content = f.readlines()
 # you may also want to remove whitespace characters like `\n` at the end of each line
 content = [x.strip() for x in content] 
@@ -16,11 +19,11 @@ for func in content:
     return """+func+"""();
     }"""
 	print(onefunc)
-	f = open("_code.txt","a+")
+	f = open(inpname+"_code.txt","a+")
 	f.write("%s\r\n"%(onefunc))
 	f.close()
 
-	f2 = open("_invoke.txt","a+")
+	f2 = open(inpname+"_invoke.txt","a+")
 	strinv = "perform_hook(TEXT(\"\"), \""+func+"\", Hook_"+func+");"
 	f2.write("%s\r\n"%(strinv))
 	f2.close()

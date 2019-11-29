@@ -1,0 +1,528 @@
+BOOL Hook_FtpCommandA() {
+    std::cout << "\n Hook_FtpCommandA \n\n";
+    char buf[500] = "FtpCommandA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return FtpCommandA();
+    }
+BOOL Hook_FtpCommandW() {
+    std::cout << "\n Hook_FtpCommandW \n\n";
+    char buf[500] = "FtpCommandW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return FtpCommandW();
+    }
+BOOL Hook_FtpCreateDirectoryA() {
+    std::cout << "\n Hook_FtpCreateDirectoryA \n\n";
+    char buf[500] = "FtpCreateDirectoryA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return FtpCreateDirectoryA();
+    }
+BOOL Hook_FtpCreateDirectoryW() {
+    std::cout << "\n Hook_FtpCreateDirectoryW \n\n";
+    char buf[500] = "FtpCreateDirectoryW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return FtpCreateDirectoryW();
+    }
+BOOL Hook_FtpDeleteFileA() {
+    std::cout << "\n Hook_FtpDeleteFileA \n\n";
+    char buf[500] = "FtpDeleteFileA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return FtpDeleteFileA();
+    }
+BOOL Hook_FtpDeleteFileW() {
+    std::cout << "\n Hook_FtpDeleteFileW \n\n";
+    char buf[500] = "FtpDeleteFileW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return FtpDeleteFileW();
+    }
+BOOL Hook_FtpFindFirstFileA() {
+    std::cout << "\n Hook_FtpFindFirstFileA \n\n";
+    char buf[500] = "FtpFindFirstFileA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return FtpFindFirstFileA();
+    }
+BOOL Hook_FtpFindFirstFileW() {
+    std::cout << "\n Hook_FtpFindFirstFileW \n\n";
+    char buf[500] = "FtpFindFirstFileW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return FtpFindFirstFileW();
+    }
+BOOL Hook_FtpGetCurrentDirectoryA() {
+    std::cout << "\n Hook_FtpGetCurrentDirectoryA \n\n";
+    char buf[500] = "FtpGetCurrentDirectoryA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return FtpGetCurrentDirectoryA();
+    }
+BOOL Hook_FtpGetCurrentDirectoryW() {
+    std::cout << "\n Hook_FtpGetCurrentDirectoryW \n\n";
+    char buf[500] = "FtpGetCurrentDirectoryW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return FtpGetCurrentDirectoryW();
+    }
+BOOL Hook_FtpGetFileA() {
+    std::cout << "\n Hook_FtpGetFileA \n\n";
+    char buf[500] = "FtpGetFileA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return FtpGetFileA();
+    }
+BOOL Hook_FtpGetFileEx() {
+    std::cout << "\n Hook_FtpGetFileEx \n\n";
+    char buf[500] = "FtpGetFileEx";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return FtpGetFileEx();
+    }
+BOOL Hook_FtpGetFileSize() {
+    std::cout << "\n Hook_FtpGetFileSize \n\n";
+    char buf[500] = "FtpGetFileSize";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return FtpGetFileSize();
+    }
+BOOL Hook_FtpGetFileW() {
+    std::cout << "\n Hook_FtpGetFileW \n\n";
+    char buf[500] = "FtpGetFileW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return FtpGetFileW();
+    }
+BOOL Hook_FtpOpenFileA() {
+    std::cout << "\n Hook_FtpOpenFileA \n\n";
+    char buf[500] = "FtpOpenFileA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return FtpOpenFileA();
+    }
+BOOL Hook_FtpOpenFileW() {
+    std::cout << "\n Hook_FtpOpenFileW \n\n";
+    char buf[500] = "FtpOpenFileW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return FtpOpenFileW();
+    }
+BOOL Hook_FtpPutFileA() {
+    std::cout << "\n Hook_FtpPutFileA \n\n";
+    char buf[500] = "FtpPutFileA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return FtpPutFileA();
+    }
+BOOL Hook_FtpPutFileEx() {
+    std::cout << "\n Hook_FtpPutFileEx \n\n";
+    char buf[500] = "FtpPutFileEx";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return FtpPutFileEx();
+    }
+BOOL Hook_FtpPutFileW() {
+    std::cout << "\n Hook_FtpPutFileW \n\n";
+    char buf[500] = "FtpPutFileW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return FtpPutFileW();
+    }
+BOOL Hook_FtpRemoveDirectoryA() {
+    std::cout << "\n Hook_FtpRemoveDirectoryA \n\n";
+    char buf[500] = "FtpRemoveDirectoryA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return FtpRemoveDirectoryA();
+    }
+BOOL Hook_FtpRemoveDirectoryW() {
+    std::cout << "\n Hook_FtpRemoveDirectoryW \n\n";
+    char buf[500] = "FtpRemoveDirectoryW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return FtpRemoveDirectoryW();
+    }
+BOOL Hook_HttpAddRequestHeadersA() {
+    std::cout << "\n Hook_HttpAddRequestHeadersA \n\n";
+    char buf[500] = "HttpAddRequestHeadersA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return HttpAddRequestHeadersA();
+    }
+BOOL Hook_HttpAddRequestHeadersW() {
+    std::cout << "\n Hook_HttpAddRequestHeadersW \n\n";
+    char buf[500] = "HttpAddRequestHeadersW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return HttpAddRequestHeadersW();
+    }
+BOOL Hook_HttpQueryInfoA() {
+    std::cout << "\n Hook_HttpQueryInfoA \n\n";
+    char buf[500] = "HttpQueryInfoA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return HttpQueryInfoA();
+    }
+BOOL Hook_HttpQueryInfoW() {
+    std::cout << "\n Hook_HttpQueryInfoW \n\n";
+    char buf[500] = "HttpQueryInfoW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return HttpQueryInfoW();
+    }
+BOOL Hook_HttpSendRequestA() {
+    std::cout << "\n Hook_HttpSendRequestA \n\n";
+    char buf[500] = "HttpSendRequestA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return HttpSendRequestA();
+    }
+BOOL Hook_HttpSendRequestExA() {
+    std::cout << "\n Hook_HttpSendRequestExA \n\n";
+    char buf[500] = "HttpSendRequestExA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return HttpSendRequestExA();
+    }
+BOOL Hook_HttpSendRequestExW() {
+    std::cout << "\n Hook_HttpSendRequestExW \n\n";
+    char buf[500] = "HttpSendRequestExW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return HttpSendRequestExW();
+    }
+BOOL Hook_HttpSendRequestW() {
+    std::cout << "\n Hook_HttpSendRequestW \n\n";
+    char buf[500] = "HttpSendRequestW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return HttpSendRequestW();
+    }
+BOOL Hook_InternetConnectA() {
+    std::cout << "\n Hook_InternetConnectA \n\n";
+    char buf[500] = "InternetConnectA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetConnectA();
+    }
+BOOL Hook_InternetConnectW() {
+    std::cout << "\n Hook_InternetConnectW \n\n";
+    char buf[500] = "InternetConnectW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetConnectW();
+    }
+BOOL Hook_InternetCreateUrlA() {
+    std::cout << "\n Hook_InternetCreateUrlA \n\n";
+    char buf[500] = "InternetCreateUrlA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetCreateUrlA();
+    }
+BOOL Hook_InternetCreateUrlW() {
+    std::cout << "\n Hook_InternetCreateUrlW \n\n";
+    char buf[500] = "InternetCreateUrlW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetCreateUrlW();
+    }
+BOOL Hook_InternetGetConnectedState() {
+    std::cout << "\n Hook_InternetGetConnectedState \n\n";
+    char buf[500] = "InternetGetConnectedState";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetGetConnectedState();
+    }
+BOOL Hook_InternetGetConnectedStateEx() {
+    std::cout << "\n Hook_InternetGetConnectedStateEx \n\n";
+    char buf[500] = "InternetGetConnectedStateEx";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetGetConnectedStateEx();
+    }
+BOOL Hook_InternetGetConnectedStateExA() {
+    std::cout << "\n Hook_InternetGetConnectedStateExA \n\n";
+    char buf[500] = "InternetGetConnectedStateExA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetGetConnectedStateExA();
+    }
+BOOL Hook_InternetGetConnectedStateExW() {
+    std::cout << "\n Hook_InternetGetConnectedStateExW \n\n";
+    char buf[500] = "InternetGetConnectedStateExW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetGetConnectedStateExW();
+    }
+BOOL Hook_InternetGetCookieA() {
+    std::cout << "\n Hook_InternetGetCookieA \n\n";
+    char buf[500] = "InternetGetCookieA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetGetCookieA();
+    }
+BOOL Hook_InternetGetCookieExA() {
+    std::cout << "\n Hook_InternetGetCookieExA \n\n";
+    char buf[500] = "InternetGetCookieExA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetGetCookieExA();
+    }
+BOOL Hook_InternetGetCookieExW() {
+    std::cout << "\n Hook_InternetGetCookieExW \n\n";
+    char buf[500] = "InternetGetCookieExW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetGetCookieExW();
+    }
+BOOL Hook_InternetGetCookieW() {
+    std::cout << "\n Hook_InternetGetCookieW \n\n";
+    char buf[500] = "InternetGetCookieW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetGetCookieW();
+    }
+BOOL Hook_InternetGetSecurityInfoByURL() {
+    std::cout << "\n Hook_InternetGetSecurityInfoByURL \n\n";
+    char buf[500] = "InternetGetSecurityInfoByURL";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetGetSecurityInfoByURL();
+    }
+BOOL Hook_InternetGetSecurityInfoByURLA() {
+    std::cout << "\n Hook_InternetGetSecurityInfoByURLA \n\n";
+    char buf[500] = "InternetGetSecurityInfoByURLA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetGetSecurityInfoByURLA();
+    }
+BOOL Hook_InternetGetSecurityInfoByURLW() {
+    std::cout << "\n Hook_InternetGetSecurityInfoByURLW \n\n";
+    char buf[500] = "InternetGetSecurityInfoByURLW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetGetSecurityInfoByURLW();
+    }
+BOOL Hook_InternetOpenUrlA() {
+    std::cout << "\n Hook_InternetOpenUrlA \n\n";
+    char buf[500] = "InternetOpenUrlA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetOpenUrlA();
+    }
+BOOL Hook_InternetOpenUrlW() {
+    std::cout << "\n Hook_InternetOpenUrlW \n\n";
+    char buf[500] = "InternetOpenUrlW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetOpenUrlW();
+    }
+BOOL Hook_InternetQueryOptionA() {
+    std::cout << "\n Hook_InternetQueryOptionA \n\n";
+    char buf[500] = "InternetQueryOptionA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetQueryOptionA();
+    }
+BOOL Hook_InternetQueryOptionW() {
+    std::cout << "\n Hook_InternetQueryOptionW \n\n";
+    char buf[500] = "InternetQueryOptionW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetQueryOptionW();
+    }
+BOOL Hook_InternetSecurityProtocolToStringA() {
+    std::cout << "\n Hook_InternetSecurityProtocolToStringA \n\n";
+    char buf[500] = "InternetSecurityProtocolToStringA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetSecurityProtocolToStringA();
+    }
+BOOL Hook_InternetSecurityProtocolToStringW() {
+    std::cout << "\n Hook_InternetSecurityProtocolToStringW \n\n";
+    char buf[500] = "InternetSecurityProtocolToStringW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetSecurityProtocolToStringW();
+    }
+BOOL Hook_InternetSetCookieA() {
+    std::cout << "\n Hook_InternetSetCookieA \n\n";
+    char buf[500] = "InternetSetCookieA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetSetCookieA();
+    }
+BOOL Hook_InternetSetCookieExA() {
+    std::cout << "\n Hook_InternetSetCookieExA \n\n";
+    char buf[500] = "InternetSetCookieExA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetSetCookieExA();
+    }
+BOOL Hook_InternetSetCookieExW() {
+    std::cout << "\n Hook_InternetSetCookieExW \n\n";
+    char buf[500] = "InternetSetCookieExW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetSetCookieExW();
+    }
+BOOL Hook_InternetSetCookieW() {
+    std::cout << "\n Hook_InternetSetCookieW \n\n";
+    char buf[500] = "InternetSetCookieW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetSetCookieW();
+    }
+BOOL Hook_InternetShowSecurityInfoByURL() {
+    std::cout << "\n Hook_InternetShowSecurityInfoByURL \n\n";
+    char buf[500] = "InternetShowSecurityInfoByURL";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetShowSecurityInfoByURL();
+    }
+BOOL Hook_InternetShowSecurityInfoByURLA() {
+    std::cout << "\n Hook_InternetShowSecurityInfoByURLA \n\n";
+    char buf[500] = "InternetShowSecurityInfoByURLA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetShowSecurityInfoByURLA();
+    }
+BOOL Hook_InternetShowSecurityInfoByURLW() {
+    std::cout << "\n Hook_InternetShowSecurityInfoByURLW \n\n";
+    char buf[500] = "InternetShowSecurityInfoByURLW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetShowSecurityInfoByURLW();
+    }
+BOOL Hook_InternetWriteFile() {
+    std::cout << "\n Hook_InternetWriteFile \n\n";
+    char buf[500] = "InternetWriteFile";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetWriteFile();
+    }
+BOOL Hook_InternetWriteFileExA() {
+    std::cout << "\n Hook_InternetWriteFileExA \n\n";
+    char buf[500] = "InternetWriteFileExA";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetWriteFileExA();
+    }
+BOOL Hook_InternetWriteFileExW() {
+    std::cout << "\n Hook_InternetWriteFileExW \n\n";
+    char buf[500] = "InternetWriteFileExW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return InternetWriteFileExW();
+    }
+BOOL Hook_ParseX509EncodedCertificateForListBoxEntry() {
+    std::cout << "\n Hook_ParseX509EncodedCertificateForListBoxEntry \n\n";
+    char buf[500] = "ParseX509EncodedCertificateForListBoxEntry";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return ParseX509EncodedCertificateForListBoxEntry();
+    }
+BOOL Hook_ResumeSuspendedDownload() {
+    std::cout << "\n Hook_ResumeSuspendedDownload \n\n";
+    char buf[500] = "ResumeSuspendedDownload";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return ResumeSuspendedDownload();
+    }
+BOOL Hook_ShowCertificate() {
+    std::cout << "\n Hook_ShowCertificate \n\n";
+    char buf[500] = "ShowCertificate";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return ShowCertificate();
+    }
+BOOL Hook_ShowClientAuthCerts() {
+    std::cout << "\n Hook_ShowClientAuthCerts \n\n";
+    char buf[500] = "ShowClientAuthCerts";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return ShowClientAuthCerts();
+    }
+BOOL Hook_ShowSecurityInfo() {
+    std::cout << "\n Hook_ShowSecurityInfo \n\n";
+    char buf[500] = "ShowSecurityInfo";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return ShowSecurityInfo();
+    }
+BOOL Hook_ShowX509EncodedCertificate() {
+    std::cout << "\n Hook_ShowX509EncodedCertificate \n\n";
+    char buf[500] = "ShowX509EncodedCertificate";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return ShowX509EncodedCertificate();
+    }

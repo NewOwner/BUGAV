@@ -1,0 +1,176 @@
+BOOL Hook_WinHttpAddRequestHeaders() {
+    std::cout << "\n Hook_WinHttpAddRequestHeaders \n\n";
+    char buf[500] = "WinHttpAddRequestHeaders";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return WinHttpAddRequestHeaders();
+    }
+BOOL Hook_WinHttpAutoProxySvcMain() {
+    std::cout << "\n Hook_WinHttpAutoProxySvcMain \n\n";
+    char buf[500] = "WinHttpAutoProxySvcMain";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return WinHttpAutoProxySvcMain();
+    }
+BOOL Hook_WinHttpCheckPlatform() {
+    std::cout << "\n Hook_WinHttpCheckPlatform \n\n";
+    char buf[500] = "WinHttpCheckPlatform";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return WinHttpCheckPlatform();
+    }
+BOOL Hook_WinHttpConnect() {
+    std::cout << "\n Hook_WinHttpConnect \n\n";
+    char buf[500] = "WinHttpConnect";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return WinHttpConnect();
+    }
+BOOL Hook_WinHttpCrackUrl() {
+    std::cout << "\n Hook_WinHttpCrackUrl \n\n";
+    char buf[500] = "WinHttpCrackUrl";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return WinHttpCrackUrl();
+    }
+BOOL Hook_WinHttpCreateUrl() {
+    std::cout << "\n Hook_WinHttpCreateUrl \n\n";
+    char buf[500] = "WinHttpCreateUrl";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return WinHttpCreateUrl();
+    }
+BOOL Hook_WinHttpOpen() {
+    std::cout << "\n Hook_WinHttpOpen \n\n";
+    char buf[500] = "WinHttpOpen";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return WinHttpOpen();
+    }
+BOOL Hook_WinHttpOpenRequest() {
+    std::cout << "\n Hook_WinHttpOpenRequest \n\n";
+    char buf[500] = "WinHttpOpenRequest";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return WinHttpOpenRequest();
+    }
+BOOL Hook_WinHttpQueryAuthSchemes() {
+    std::cout << "\n Hook_WinHttpQueryAuthSchemes \n\n";
+    char buf[500] = "WinHttpQueryAuthSchemes";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return WinHttpQueryAuthSchemes();
+    }
+BOOL Hook_WinHttpQueryDataAvailable() {
+    std::cout << "\n Hook_WinHttpQueryDataAvailable \n\n";
+    char buf[500] = "WinHttpQueryDataAvailable";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return WinHttpQueryDataAvailable();
+    }
+BOOL Hook_WinHttpQueryHeaders() {
+    std::cout << "\n Hook_WinHttpQueryHeaders \n\n";
+    char buf[500] = "WinHttpQueryHeaders";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return WinHttpQueryHeaders();
+    }
+BOOL Hook_WinHttpQueryOption() {
+    std::cout << "\n Hook_WinHttpQueryOption \n\n";
+    char buf[500] = "WinHttpQueryOption";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return WinHttpQueryOption();
+    }
+BOOL Hook_WinHttpReadData() {
+    std::cout << "\n Hook_WinHttpReadData \n\n";
+    char buf[500] = "WinHttpReadData";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return WinHttpReadData();
+    }
+BOOL Hook_WinHttpReceiveResponse() {
+    std::cout << "\n Hook_WinHttpReceiveResponse \n\n";
+    char buf[500] = "WinHttpReceiveResponse";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return WinHttpReceiveResponse();
+    }
+BOOL Hook_WinHttpSendRequest() {
+    std::cout << "\n Hook_WinHttpSendRequest \n\n";
+    char buf[500] = "WinHttpSendRequest";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return WinHttpSendRequest();
+    }
+BOOL Hook_WinHttpSetCredentials() {
+    std::cout << "\n Hook_WinHttpSetCredentials \n\n";
+    char buf[500] = "WinHttpSetCredentials";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return WinHttpSetCredentials();
+    }
+BOOL Hook_WinHttpSetDefaultProxyConfiguration() {
+    std::cout << "\n Hook_WinHttpSetDefaultProxyConfiguration \n\n";
+    char buf[500] = "WinHttpSetDefaultProxyConfiguration";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return WinHttpSetDefaultProxyConfiguration();
+    }
+BOOL Hook_WinHttpSetOption() {
+    std::cout << "\n Hook_WinHttpSetOption \n\n";
+    char buf[500] = "WinHttpSetOption";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return WinHttpSetOption();
+    }
+BOOL Hook_WinHttpSetTimeouts() {
+    std::cout << "\n Hook_WinHttpSetTimeouts \n\n";
+    char buf[500] = "WinHttpSetTimeouts";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return WinHttpSetTimeouts();
+    }
+BOOL Hook_WinHttpTimeFromSystemTime() {
+    std::cout << "\n Hook_WinHttpTimeFromSystemTime \n\n";
+    char buf[500] = "WinHttpTimeFromSystemTime";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return WinHttpTimeFromSystemTime();
+    }
+BOOL Hook_WinHttpTimeToSystemTime() {
+    std::cout << "\n Hook_WinHttpTimeToSystemTime \n\n";
+    char buf[500] = "WinHttpTimeToSystemTime";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return WinHttpTimeToSystemTime();
+    }
+BOOL Hook_WinHttpWriteData() {
+    std::cout << "\n Hook_WinHttpWriteData \n\n";
+    char buf[500] = "WinHttpWriteData";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    return WinHttpWriteData();
+    }
