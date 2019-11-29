@@ -77,7 +77,7 @@ namespace BUGAV {
             if (_method == "csharp") {
                 string[] args_arr = new string[] { _target };
                 de4dot.cui.Program.Main(args_arr);
-
+            
             } else if (_method == "cpp") {
                 //byte[] bytes_dir = Encoding.ASCII.GetBytes(System.Environment.CurrentDirectory + "\\bugav.exe");
                 //byte[] bytes_file = Encoding.ASCII.GetBytes(_target);

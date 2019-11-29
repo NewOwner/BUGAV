@@ -76,6 +76,7 @@ namespace StaticAnalyzeManager {
 
                 // Parameters
                 pinProcess.StartInfo.Arguments = "--output=json --hashes  --plugins=all " + _targetPath;
+                //pinProcess.StartInfo.Arguments = "--output=raw --hashes  --plugins=all " + _targetPath;
 
                 // Modify the following to hide / show the window
                 pinProcess.StartInfo.CreateNoWindow = true;
