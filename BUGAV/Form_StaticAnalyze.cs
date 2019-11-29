@@ -94,10 +94,18 @@ namespace BUGAV {
                 string _fext = ".yara.res.txt";
                 SAManager.RunToolOutCapture(_target, _toolpath, _argflags, _fext);
             }
-            bool res = resParser.ParseRes();
+            ResContainer res = resParser.ParseResVerbose();
             _notifyIcon.Visible = true;
-            if (res) {
-                _notifyIcon.ShowBalloonTip(5000, "Suspitious App", "Suspitious Activity in App: " + _target, System.Windows.Forms.ToolTipIcon.Warning);
+            string appInfo = string.Empty;
+            if (res.isMalware) {
+                _notifyIcon.ShowBalloonTip(5000, "Malware App", "Malware App: " + _target, System.Windows.Forms.ToolTipIcon.Error);
+                appInfo = String.Join("\n", res.suspiciousAttr.ToArray());
+            }
+            if (res.isSuspicious) {
+                _notifyIcon.ShowBalloonTip(5000, "Suspitious App", "Suspicious App: " + _target, System.Windows.Forms.ToolTipIcon.Warning);
+                appInfo = String.Join("\n", res.suspiciousAttr.ToArray());
+            } else {
+                _notifyIcon.ShowBalloonTip(5000, "Nothing Suspitious in App", "App: " + _target, System.Windows.Forms.ToolTipIcon.Info);
             }
         }
 

@@ -18,5 +18,8 @@ namespace DynamicAnalyzeCtrl {
             }
             return true;
         }
+        public ResContainer ParseResVerbose() {
+            return null;
+        }
     }
 }

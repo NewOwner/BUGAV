@@ -110,6 +110,7 @@
             // 
             // StaticAnalyze_notifyIcon
             // 
+            this.StaticAnalyze_notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("StaticAnalyze_notifyIcon.Icon")));
             this.StaticAnalyze_notifyIcon.Text = "notifyIcon1";
             // 
             // StaticAnalyze_Button_Yara

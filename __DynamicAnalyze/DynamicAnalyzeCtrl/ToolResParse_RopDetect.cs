@@ -21,5 +21,8 @@ namespace DynamicAnalyzeCtrl {
                 return false;
             }
         }
+        public ResContainer ParseResVerbose() {
+            return null;
+        }
     }
 }

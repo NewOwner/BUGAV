@@ -15,5 +15,22 @@ namespace DynamicAnalyzeCtrl {
             var logFile = File.ReadAllLines(ResFname);
             return false;
         }
+        public ResContainer ParseResVerbose() {
+            ResContainer resCont = new ResContainer();
+            var logFile = File.ReadAllLines(ResFname);
+            foreach(var line in logFile) {
+                if (line.Contains("suspicious")){
+                    resCont.isSuspicious = true;
+                }
+                if (line.Contains("malware")) {
+                    resCont.isMalware = true;
+                }
+                if (line.Contains("caused too many matches")) {
+                    resCont.isMalware = true;
+                }
+                resCont.suspiciousAttr.Add(line);
+            }
+            return resCont;
+        }
     }
 }
