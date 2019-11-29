@@ -33,6 +33,7 @@
             this.StaticAnalyze_checkedListBox_Files = new System.Windows.Forms.CheckedListBox();
             this.StaticAnalyze_Button_ScanCpp = new DarkUI.Controls.DarkButton();
             this.StaticAnalyze_notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.StaticAnalyze_Button_Yara = new DarkUI.Controls.DarkButton();
             this.SuspendLayout();
             // 
             // StaticAnalyze_TextBox_Info
@@ -58,7 +59,7 @@
             // 
             // StaticAnalyze_Button_DeleteFile
             // 
-            this.StaticAnalyze_Button_DeleteFile.Location = new System.Drawing.Point(419, 14);
+            this.StaticAnalyze_Button_DeleteFile.Location = new System.Drawing.Point(338, 14);
             this.StaticAnalyze_Button_DeleteFile.Name = "StaticAnalyze_Button_DeleteFile";
             this.StaticAnalyze_Button_DeleteFile.Padding = new System.Windows.Forms.Padding(5);
             this.StaticAnalyze_Button_DeleteFile.Size = new System.Drawing.Size(75, 23);
@@ -68,7 +69,7 @@
             // 
             // StaticAnalyze_Button_AddFile
             // 
-            this.StaticAnalyze_Button_AddFile.Location = new System.Drawing.Point(338, 14);
+            this.StaticAnalyze_Button_AddFile.Location = new System.Drawing.Point(257, 14);
             this.StaticAnalyze_Button_AddFile.Name = "StaticAnalyze_Button_AddFile";
             this.StaticAnalyze_Button_AddFile.Padding = new System.Windows.Forms.Padding(5);
             this.StaticAnalyze_Button_AddFile.Size = new System.Drawing.Size(75, 23);
@@ -111,11 +112,22 @@
             // 
             this.StaticAnalyze_notifyIcon.Text = "notifyIcon1";
             // 
+            // StaticAnalyze_Button_Yara
+            // 
+            this.StaticAnalyze_Button_Yara.Location = new System.Drawing.Point(419, 14);
+            this.StaticAnalyze_Button_Yara.Name = "StaticAnalyze_Button_Yara";
+            this.StaticAnalyze_Button_Yara.Padding = new System.Windows.Forms.Padding(5);
+            this.StaticAnalyze_Button_Yara.Size = new System.Drawing.Size(75, 23);
+            this.StaticAnalyze_Button_Yara.TabIndex = 24;
+            this.StaticAnalyze_Button_Yara.Text = "Yara";
+            this.StaticAnalyze_Button_Yara.Click += new System.EventHandler(this.StaticAnalyze_Button_Yara_Click);
+            // 
             // Form_StaticAnalyze
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(677, 397);
+            this.Controls.Add(this.StaticAnalyze_Button_Yara);
             this.Controls.Add(this.StaticAnalyze_Button_ScanCpp);
             this.Controls.Add(this.StaticAnalyze_TextBox_Info);
             this.Controls.Add(this.StaticAnalyze_Button_ScanCs);
@@ -140,5 +152,6 @@
         private System.Windows.Forms.CheckedListBox StaticAnalyze_checkedListBox_Files;
         private DarkUI.Controls.DarkButton StaticAnalyze_Button_ScanCpp;
         private System.Windows.Forms.NotifyIcon StaticAnalyze_notifyIcon;
+        private DarkUI.Controls.DarkButton StaticAnalyze_Button_Yara;
     }
 }

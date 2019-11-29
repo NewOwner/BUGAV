@@ -21,3 +21,13 @@ bool StaticAnalyzeCppWrap::WRAP_PerformStaticAnalyzeInstance(const char* dir, co
     ptr_StaticAnalyzeCppCtrl->PerformStaticAnalyzeInstance(argc, arr);
     return true;
 }
+
+//byte[] bytes_dir = Encoding.ASCII.GetBytes(System.Environment.CurrentDirectory + "\\bugav.exe");
+                //byte[] bytes_file = Encoding.ASCII.GetBytes(_target);
+                //unsafe {
+                //    sbyte* sp_dir;
+                //    sbyte* sp_file;
+                //    fixed (byte* p_dir = bytes_dir) { sp_dir = (sbyte*)p_dir; }
+                //    fixed (byte* p_file = bytes_file) { sp_file = (sbyte*)p_file; }
+                //    _StaticAnalyzeCppWrapInst.WRAP_PerformStaticAnalyzeInstance(sp_dir, sp_file);
+                //}

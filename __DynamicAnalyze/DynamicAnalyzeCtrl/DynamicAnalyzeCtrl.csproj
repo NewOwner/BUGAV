@@ -52,6 +52,7 @@
     <Compile Include="ToolResParse_RopDetect.cs" />
     <Compile Include="ToolResParse_StaticCpp.cs" />
     <Compile Include="ToolResParse_StaticCsharp.cs" />
+    <Compile Include="ToolResParse_StaticYara.cs" />
     <Compile Include="ToolResParse_ThreadStart.cs" />
   </ItemGroup>
   <ItemGroup>

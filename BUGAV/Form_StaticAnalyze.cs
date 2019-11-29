@@ -64,8 +64,14 @@ namespace BUGAV {
             foreach (var item in StaticAnalyze_checkedListBox_Files.CheckedItems.OfType<FilesStaticAnalyzeListBoxItem>().ToList()) {
                 StartStaticAnalyzeThread("cpp", item.Value, __StaticAnalyzeCppWrapInst, StaticAnalyze_notifyIcon);
             }
-
         }
+
+        private void StaticAnalyze_Button_Yara_Click(object sender, EventArgs e) {
+            foreach (var item in StaticAnalyze_checkedListBox_Files.CheckedItems.OfType<FilesStaticAnalyzeListBoxItem>().ToList()) {
+                StartStaticAnalyzeThread("yara", item.Value, __StaticAnalyzeCppWrapInst, StaticAnalyze_notifyIcon);
+            }
+        }
+
         public Thread StartStaticAnalyzeThread(string _method, string _target, StaticAnalyzeCppWrap _StaticAnalyzeCppWrapInst, System.Windows.Forms.NotifyIcon _notifyIcon) {
             var t = new Thread(() => StaticAnalyzeThreadFunc(_method, _target, _StaticAnalyzeCppWrapInst, _notifyIcon));
             t.Start();
@@ -77,18 +83,16 @@ namespace BUGAV {
             if (_method == "csharp") {
                 string[] args_arr = new string[] { _target };
                 de4dot.cui.Program.Main(args_arr);
-            
             } else if (_method == "cpp") {
-                //byte[] bytes_dir = Encoding.ASCII.GetBytes(System.Environment.CurrentDirectory + "\\bugav.exe");
-                //byte[] bytes_file = Encoding.ASCII.GetBytes(_target);
-                //unsafe {
-                //    sbyte* sp_dir;
-                //    sbyte* sp_file;
-                //    fixed (byte* p_dir = bytes_dir) { sp_dir = (sbyte*)p_dir; }
-                //    fixed (byte* p_file = bytes_file) { sp_file = (sbyte*)p_file; }
-                //    _StaticAnalyzeCppWrapInst.WRAP_PerformStaticAnalyzeInstance(sp_dir, sp_file);
-                //}
-                SAManager.RunToolOutCapture(_target);
+                string _toolpath = @"..\..\..\__LIBS\Manalyze\bin\manalyze.exe";
+                string _argflags = "--output=json --hashes --plugins=all";
+                string _fext = ".cpp.res.txt";
+                SAManager.RunToolOutCapture(_target, _toolpath, _argflags, _fext);
+            } else if (_method == "yara") {
+                string _toolpath = @"..\..\..\__LIBS\YARA\yara64.exe";
+                string _argflags = @"..\..\..\__LIBS\YARA\rules\index.yar -w";
+                string _fext = ".yara.res.txt";
+                SAManager.RunToolOutCapture(_target, _toolpath, _argflags, _fext);
             }
             bool res = resParser.ParseRes();
             _notifyIcon.Visible = true;
@@ -102,12 +106,14 @@ namespace BUGAV {
             if (_method == "csharp") { 
                 return new ToolResParse_StaticCsharp(targetname + ".cs.res.txt"); 
             } 
-            else 
-            if (_method == "cpp") { 
+            else if (_method == "cpp") { 
                 return new ToolResParse_StaticCpp(targetname + ".cpp.res.txt"); 
             }
-            else { return null; }
+            else if (_method == "yara") {
+                return new ToolResParse_StaticYara(targetname + ".yara.res.txt");
+            } else { return null; }
         }
+
 
     }
 
