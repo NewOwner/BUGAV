@@ -1,195 +1,17 @@
-BOOL Hook_GetAddrInfoExA() {
-    std::cout << "\n Hook_GetAddrInfoExA \n\n";
-    char buf[500] = "GetAddrInfoExA";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return GetAddrInfoExA();
-    }
-BOOL Hook_GetAddrInfoExW() {
-    std::cout << "\n Hook_GetAddrInfoExW \n\n";
-    char buf[500] = "GetAddrInfoExW";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return GetAddrInfoExW();
-    }
-BOOL Hook_GetAddrInfoW() {
-    std::cout << "\n Hook_GetAddrInfoW \n\n";
-    char buf[500] = "GetAddrInfoW";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return GetAddrInfoW();
-    }
-BOOL Hook_GetNameInfoW() {
-    std::cout << "\n Hook_GetNameInfoW \n\n";
-    char buf[500] = "GetNameInfoW";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return GetNameInfoW();
-    }
-BOOL Hook_SetAddrInfoExA() {
-    std::cout << "\n Hook_SetAddrInfoExA \n\n";
-    char buf[500] = "SetAddrInfoExA";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return SetAddrInfoExA();
-    }
-BOOL Hook_SetAddrInfoExW() {
-    std::cout << "\n Hook_SetAddrInfoExW \n\n";
-    char buf[500] = "SetAddrInfoExW";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return SetAddrInfoExW();
-    }
-BOOL Hook_WEP() {
-    std::cout << "\n Hook_WEP \n\n";
-    char buf[500] = "WEP";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return WEP();
-    }
-BOOL Hook_WPUCompleteOverlappedRequest() {
-    std::cout << "\n Hook_WPUCompleteOverlappedRequest \n\n";
-    char buf[500] = "WPUCompleteOverlappedRequest";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return WPUCompleteOverlappedRequest();
-    }
-BOOL Hook_WSAAccept() {
-    std::cout << "\n Hook_WSAAccept \n\n";
-    char buf[500] = "WSAAccept";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return WSAAccept();
-    }
-BOOL Hook_WSAAsyncGetHostByAddr() {
-    std::cout << "\n Hook_WSAAsyncGetHostByAddr \n\n";
-    char buf[500] = "WSAAsyncGetHostByAddr";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return WSAAsyncGetHostByAddr();
-    }
-BOOL Hook_WSAAsyncGetHostByName() {
-    std::cout << "\n Hook_WSAAsyncGetHostByName \n\n";
-    char buf[500] = "WSAAsyncGetHostByName";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return WSAAsyncGetHostByName();
-    }
-BOOL Hook_WSAAsyncGetProtoByName() {
-    std::cout << "\n Hook_WSAAsyncGetProtoByName \n\n";
-    char buf[500] = "WSAAsyncGetProtoByName";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return WSAAsyncGetProtoByName();
-    }
-BOOL Hook_WSAAsyncGetProtoByNumber() {
-    std::cout << "\n Hook_WSAAsyncGetProtoByNumber \n\n";
-    char buf[500] = "WSAAsyncGetProtoByNumber";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return WSAAsyncGetProtoByNumber();
-    }
-BOOL Hook_WSAAsyncGetServByName() {
-    std::cout << "\n Hook_WSAAsyncGetServByName \n\n";
-    char buf[500] = "WSAAsyncGetServByName";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return WSAAsyncGetServByName();
-    }
-BOOL Hook_WSAAsyncGetServByPort() {
-    std::cout << "\n Hook_WSAAsyncGetServByPort \n\n";
-    char buf[500] = "WSAAsyncGetServByPort";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return WSAAsyncGetServByPort();
-    }
-BOOL Hook_WSARecv() {
-    std::cout << "\n Hook_WSARecv \n\n";
-    char buf[500] = "WSARecv";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return WSARecv();
-    }
-BOOL Hook_WSARecvDisconnect() {
-    std::cout << "\n Hook_WSARecvDisconnect \n\n";
-    char buf[500] = "WSARecvDisconnect";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return WSARecvDisconnect();
-    }
-BOOL Hook_WSARecvFrom() {
-    std::cout << "\n Hook_WSARecvFrom \n\n";
-    char buf[500] = "WSARecvFrom";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return WSARecvFrom();
-    }
-BOOL Hook_WSASend() {
-    std::cout << "\n Hook_WSASend \n\n";
-    char buf[500] = "WSASend";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return WSASend();
-    }
-BOOL Hook_WSASendMsg() {
-    std::cout << "\n Hook_WSASendMsg \n\n";
-    char buf[500] = "WSASendMsg";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return WSASendMsg();
-    }
-BOOL Hook_WSASendTo() {
-    std::cout << "\n Hook_WSASendTo \n\n";
-    char buf[500] = "WSASendTo";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return WSASendTo();
-    }
-BOOL Hook_WSASetBlockingHook() {
-    std::cout << "\n Hook_WSASetBlockingHook \n\n";
-    char buf[500] = "WSASetBlockingHook";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return WSASetBlockingHook();
-    }
-BOOL Hook_WSASetEvent() {
-    std::cout << "\n Hook_WSASetEvent \n\n";
-    char buf[500] = "WSASetEvent";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return WSASetEvent();
-    }
-BOOL Hook_WSAStartup() {
-    std::cout << "\n Hook_WSAStartup \n\n";
-    char buf[500] = "WSAStartup";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return WSAStartup();
-    }
+BOOL Hook_WSAAccept() 
+
+BOOL Hook_WSARecv() 
+
+BOOL Hook_WSARecvDisconnect() 
+
+BOOL Hook_WSARecvFrom() 
+
+BOOL Hook_WSASend() 
+
+BOOL Hook_WSASendMsg() 
+
+BOOL Hook_WSASendTo() 
+
 BOOL Hook_accept() {
     std::cout << "\n Hook_accept \n\n";
     char buf[500] = "accept";
@@ -197,7 +19,8 @@ BOOL Hook_accept() {
     DWORD dwBytesToWrite = (DWORD)strlen(buf);
     WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
     return accept();
-    }
+    }
+
 BOOL Hook_connect() {
     std::cout << "\n Hook_connect \n\n";
     char buf[500] = "connect";
@@ -205,143 +28,8 @@ BOOL Hook_connect() {
     DWORD dwBytesToWrite = (DWORD)strlen(buf);
     WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
     return connect();
-    }
-BOOL Hook_getaddrinfo() {
-    std::cout << "\n Hook_getaddrinfo \n\n";
-    char buf[500] = "getaddrinfo";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return getaddrinfo();
-    }
-BOOL Hook_gethostbyaddr() {
-    std::cout << "\n Hook_gethostbyaddr \n\n";
-    char buf[500] = "gethostbyaddr";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return gethostbyaddr();
-    }
-BOOL Hook_gethostbyname() {
-    std::cout << "\n Hook_gethostbyname \n\n";
-    char buf[500] = "gethostbyname";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return gethostbyname();
-    }
-BOOL Hook_gethostname() {
-    std::cout << "\n Hook_gethostname \n\n";
-    char buf[500] = "gethostname";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return gethostname();
-    }
-BOOL Hook_getnameinfo() {
-    std::cout << "\n Hook_getnameinfo \n\n";
-    char buf[500] = "getnameinfo";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return getnameinfo();
-    }
-BOOL Hook_getpeername() {
-    std::cout << "\n Hook_getpeername \n\n";
-    char buf[500] = "getpeername";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return getpeername();
-    }
-BOOL Hook_getprotobyname() {
-    std::cout << "\n Hook_getprotobyname \n\n";
-    char buf[500] = "getprotobyname";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return getprotobyname();
-    }
-BOOL Hook_getprotobynumber() {
-    std::cout << "\n Hook_getprotobynumber \n\n";
-    char buf[500] = "getprotobynumber";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return getprotobynumber();
-    }
-BOOL Hook_getservbyname() {
-    std::cout << "\n Hook_getservbyname \n\n";
-    char buf[500] = "getservbyname";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return getservbyname();
-    }
-BOOL Hook_getservbyport() {
-    std::cout << "\n Hook_getservbyport \n\n";
-    char buf[500] = "getservbyport";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return getservbyport();
-    }
-BOOL Hook_getsockname() {
-    std::cout << "\n Hook_getsockname \n\n";
-    char buf[500] = "getsockname";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return getsockname();
-    }
-BOOL Hook_getsockopt() {
-    std::cout << "\n Hook_getsockopt \n\n";
-    char buf[500] = "getsockopt";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return getsockopt();
-    }
-BOOL Hook_inet_addr() {
-    std::cout << "\n Hook_inet_addr \n\n";
-    char buf[500] = "inet_addr";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return inet_addr();
-    }
-BOOL Hook_inet_ntoa() {
-    std::cout << "\n Hook_inet_ntoa \n\n";
-    char buf[500] = "inet_ntoa";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return inet_ntoa();
-    }
-BOOL Hook_inet_ntop() {
-    std::cout << "\n Hook_inet_ntop \n\n";
-    char buf[500] = "inet_ntop";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return inet_ntop();
-    }
-BOOL Hook_inet_pton() {
-    std::cout << "\n Hook_inet_pton \n\n";
-    char buf[500] = "inet_pton";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return inet_pton();
-    }
-BOOL Hook_ioctlsocket() {
-    std::cout << "\n Hook_ioctlsocket \n\n";
-    char buf[500] = "ioctlsocket";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return ioctlsocket();
-    }
+    }
+
 BOOL Hook_listen() {
     std::cout << "\n Hook_listen \n\n";
     char buf[500] = "listen";
@@ -349,7 +37,8 @@ BOOL Hook_listen() {
     DWORD dwBytesToWrite = (DWORD)strlen(buf);
     WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
     return listen();
-    }
+    }
+
 BOOL Hook_recv() {
     std::cout << "\n Hook_recv \n\n";
     char buf[500] = "recv";
@@ -357,7 +46,8 @@ BOOL Hook_recv() {
     DWORD dwBytesToWrite = (DWORD)strlen(buf);
     WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
     return recv();
-    }
+    }
+
 BOOL Hook_recvfrom() {
     std::cout << "\n Hook_recvfrom \n\n";
     char buf[500] = "recvfrom";
@@ -365,7 +55,8 @@ BOOL Hook_recvfrom() {
     DWORD dwBytesToWrite = (DWORD)strlen(buf);
     WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
     return recvfrom();
-    }
+    }
+
 BOOL Hook_send() {
     std::cout << "\n Hook_send \n\n";
     char buf[500] = "send";
@@ -373,7 +64,8 @@ BOOL Hook_send() {
     DWORD dwBytesToWrite = (DWORD)strlen(buf);
     WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
     return send();
-    }
+    }
+
 BOOL Hook_sendto() {
     std::cout << "\n Hook_sendto \n\n";
     char buf[500] = "sendto";
@@ -381,15 +73,8 @@ BOOL Hook_sendto() {
     DWORD dwBytesToWrite = (DWORD)strlen(buf);
     WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
     return sendto();
-    }
-BOOL Hook_setsockopt() {
-    std::cout << "\n Hook_setsockopt \n\n";
-    char buf[500] = "setsockopt";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return setsockopt();
-    }
+    }
+
 BOOL Hook_socket() {
     std::cout << "\n Hook_socket \n\n";
     char buf[500] = "socket";
@@ -397,4 +82,5 @@ BOOL Hook_socket() {
     DWORD dwBytesToWrite = (DWORD)strlen(buf);
     WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
     return socket();
-    }
+    }
+

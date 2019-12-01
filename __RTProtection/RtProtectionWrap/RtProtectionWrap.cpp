@@ -30,13 +30,6 @@ bool RtProtectionWrap::WRAP_RtProtectionDrv_NewProcMon() {
     return res;
 }
 
-VOID RtProtectionWrap::WRAP_InjectLib(int pid) {
-    PWCHAR dll_to_inject = L"RtProtectionPayloadDll.dll";
-    DWORD dll_data = pid;
-    ULONG data_sz = sizeof(DWORD);
-    ptr_RtProtectionInjectCtrl->InjectLib((DWORD)pid, dll_to_inject, &dll_data, data_sz);
-}
-
 bool RtProtectionWrap::Get_loaded() { return loaded; }
 
 int RtProtectionWrap::Get_ParentId() { return _ParentId; }
@@ -44,4 +37,32 @@ int RtProtectionWrap::Get_ParentId() { return _ParentId; }
 int RtProtectionWrap::Get_ProcessId() { return _ProcessId; }
 
 int RtProtectionWrap::Get_Create() { return _Create; }
+
+VOID RtProtectionWrap::WRAP_InjectBasicLib(int pid) {
+    PWCHAR dll_to_inject = L"RtProtectionPayloadDll.dll";
+    DWORD dll_data = pid;
+    ULONG data_sz = sizeof(DWORD);
+    ptr_RtProtectionInjectCtrl->InjectLib((DWORD)pid, dll_to_inject, &dll_data, data_sz);
+}
+
+VOID RtProtectionWrap::WRAP_InjectWinhttpLib(int pid) {
+    PWCHAR dll_to_inject = L"RtProtectionWinhttpDll.dll";
+    DWORD dll_data = pid;
+    ULONG data_sz = sizeof(DWORD);
+    ptr_RtProtectionInjectCtrl->InjectLib((DWORD)pid, dll_to_inject, &dll_data, data_sz);
+}
+
+VOID RtProtectionWrap::WRAP_InjectWininetLib(int pid) {
+    PWCHAR dll_to_inject = L"RtProtectionWininetDll.dll";
+    DWORD dll_data = pid;
+    ULONG data_sz = sizeof(DWORD);
+    ptr_RtProtectionInjectCtrl->InjectLib((DWORD)pid, dll_to_inject, &dll_data, data_sz);
+}
+
+VOID RtProtectionWrap::WRAP_InjectWs2_32Lib(int pid) {
+    PWCHAR dll_to_inject = L"RtProtectionWs2_32Dll.dll";
+    DWORD dll_data = pid;
+    ULONG data_sz = sizeof(DWORD);
+    ptr_RtProtectionInjectCtrl->InjectLib((DWORD)pid, dll_to_inject, &dll_data, data_sz);
+}
 

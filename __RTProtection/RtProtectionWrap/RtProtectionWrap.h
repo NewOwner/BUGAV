@@ -34,5 +34,8 @@ public:
 
     /////
 
-    VOID WRAP_InjectLib(int pid);
+    VOID WRAP_InjectBasicLib(int pid);
+    VOID WRAP_InjectWinhttpLib(int pid);
+    VOID WRAP_InjectWininetLib(int pid);
+    VOID WRAP_InjectWs2_32Lib(int pid);
 };

@@ -55,7 +55,34 @@ namespace BUGAV {
                 Console.WriteLine(@"\\.\pipe\myNamedPipe" + item.ProcessId.ToString());
                 NamedPipeServer PServer1 = new NamedPipeServer(@"\\.\pipe\myNamedPipe"+ item.ProcessId.ToString(), 0, RTProtection_notifyIcon);
                 PServer1.Start();
-                __RtProtectionInst.WRAP_InjectLib(item.ProcessId);
+                __RtProtectionInst.WRAP_InjectBasicLib(item.ProcessId);
+            }
+        }
+
+        private void RTProtection_Button_HookWinhttp_Click(object sender, EventArgs e) {
+            foreach (var item in RTProtection_checkedListBox_Processes.SelectedItems.OfType<ProcListBoxItem>().ToList()) {
+                Console.WriteLine(@"\\.\pipe\myNamedPipe" + item.ProcessId.ToString());
+                NamedPipeServer PServer1 = new NamedPipeServer(@"\\.\pipe\myNamedPipe" + item.ProcessId.ToString(), 0, RTProtection_notifyIcon);
+                PServer1.Start();
+                __RtProtectionInst.WRAP_InjectWinhttpLib(item.ProcessId);
+            }
+        }
+
+        private void RTProtection_Button_HookWininet_Click(object sender, EventArgs e) {
+            foreach (var item in RTProtection_checkedListBox_Processes.SelectedItems.OfType<ProcListBoxItem>().ToList()) {
+                Console.WriteLine(@"\\.\pipe\myNamedPipe" + item.ProcessId.ToString());
+                NamedPipeServer PServer1 = new NamedPipeServer(@"\\.\pipe\myNamedPipe" + item.ProcessId.ToString(), 0, RTProtection_notifyIcon);
+                PServer1.Start();
+                __RtProtectionInst.WRAP_InjectWininetLib(item.ProcessId);
+            }
+        }
+
+        private void RTProtection_Button_HookWs2_32_Click(object sender, EventArgs e) {
+            foreach (var item in RTProtection_checkedListBox_Processes.SelectedItems.OfType<ProcListBoxItem>().ToList()) {
+                Console.WriteLine(@"\\.\pipe\myNamedPipe" + item.ProcessId.ToString());
+                NamedPipeServer PServer1 = new NamedPipeServer(@"\\.\pipe\myNamedPipe" + item.ProcessId.ToString(), 0, RTProtection_notifyIcon);
+                PServer1.Start();
+                __RtProtectionInst.WRAP_InjectWs2_32Lib(item.ProcessId);
             }
         }
 
@@ -98,6 +125,26 @@ namespace BUGAV {
         private void RTProtection_notifyIcon_MouseClick(object sender, MouseEventArgs e) {
             RTProtection_notifyIcon.Visible = false;
         }
+
+        private void RTProtection_Button_Update_Click(object sender, EventArgs e) {
+            RTProtection_checkedListBox_Processes.Items.Clear();
+
+            Process[] processlist = Process.GetProcesses();
+
+            foreach (Process proc in processlist) {
+                Console.WriteLine("Process: {0} ID: {1}", proc.ProcessName, proc.Id);
+
+                ProcListBoxItem newListItem = new ProcListBoxItem {
+                    Name = proc.ProcessName,
+                    ParentId = 0,
+                    ProcessId = proc.Id,
+                    procHandler = proc
+                };
+
+                RTProtection_checkedListBox_Processes.Items.Insert(0, newListItem);
+            }
+        }
+
     }
     public class ProcListBoxItem {
         public string Name { get; set; }

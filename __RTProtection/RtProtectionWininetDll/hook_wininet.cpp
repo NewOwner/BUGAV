@@ -3,7 +3,7 @@
 
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 #include "pch.h"
-#include "hook_funcs.h"
+#include "hook_funcs_wininet.h"
 
 HANDLE hPipe1;
 
@@ -59,5 +59,24 @@ void __stdcall NativeInjectionEntryPoint(REMOTE_ENTRY_INFO* inRemoteInfo) {
     }
     WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
 
+    perform_hook(TEXT("wininet"), "FtpCommandA", wininet_ns::Hook_FtpCommandA);
+    perform_hook(TEXT("wininet"), "FtpCreateDirectoryA", wininet_ns::Hook_FtpCreateDirectoryA);
+    perform_hook(TEXT("wininet"), "FtpDeleteFileA", wininet_ns::Hook_FtpDeleteFileA);
+    perform_hook(TEXT("wininet"), "FtpFindFirstFileA", wininet_ns::Hook_FtpFindFirstFileA);
+    perform_hook(TEXT("wininet"), "FtpGetCurrentDirectoryA", wininet_ns::Hook_FtpGetCurrentDirectoryA);
+    perform_hook(TEXT("wininet"), "FtpGetFileA", wininet_ns::Hook_FtpGetFileA);
+    perform_hook(TEXT("wininet"), "FtpGetFileEx", wininet_ns::Hook_FtpGetFileEx);
+    perform_hook(TEXT("wininet"), "FtpPutFileA", wininet_ns::Hook_FtpPutFileA);
+    perform_hook(TEXT("wininet"), "FtpPutFileEx", wininet_ns::Hook_FtpPutFileEx);
+    perform_hook(TEXT("wininet"), "HttpAddRequestHeadersA", wininet_ns::Hook_HttpAddRequestHeadersA);
+    perform_hook(TEXT("wininet"), "HttpQueryInfoA", wininet_ns::Hook_HttpQueryInfoA);
+    perform_hook(TEXT("wininet"), "HttpSendRequestA", wininet_ns::Hook_HttpSendRequestA);
+    perform_hook(TEXT("wininet"), "HttpSendRequestExA", wininet_ns::Hook_HttpSendRequestExA);
+    perform_hook(TEXT("wininet"), "InternetConnectA", wininet_ns::Hook_InternetConnectA);
+    perform_hook(TEXT("wininet"), "InternetGetCookieA", wininet_ns::Hook_InternetGetCookieA);
+    perform_hook(TEXT("wininet"), "InternetGetCookieExA", wininet_ns::Hook_InternetGetCookieExA);
+    perform_hook(TEXT("wininet"), "InternetSetCookieA", wininet_ns::Hook_InternetSetCookieA);
+    perform_hook(TEXT("wininet"), "InternetSetCookieExA", wininet_ns::Hook_InternetSetCookieExA);
+    
     return;
 }

@@ -25,61 +25,65 @@
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_RTProtection));
-            this.RTProtection_Button_Hook = new DarkUI.Controls.DarkButton();
+            this.RTProtection_Button_HookBasic = new DarkUI.Controls.DarkButton();
             this.RTProtection_TextBox_ProcessInfo = new DarkUI.Controls.DarkTextBox();
-            this.RTProtection_Button_TerminateProcess = new DarkUI.Controls.DarkButton();
+            this.RTProtection_Button_Update = new DarkUI.Controls.DarkButton();
             this.RTProtection_checkedListBox_Processes = new System.Windows.Forms.CheckedListBox();
             this.RTProtection_Button_Activate = new DarkUI.Controls.DarkButton();
             this.darkLabel1 = new DarkUI.Controls.DarkLabel();
             this.RTProtection_Button_Auto = new DarkUI.Controls.DarkButton();
             this.RTProtection_notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.RTProtection_Button_HookWinhttp = new DarkUI.Controls.DarkButton();
+            this.RTProtection_Button_HookWininet = new DarkUI.Controls.DarkButton();
+            this.RTProtection_Button_HookWs2_32 = new DarkUI.Controls.DarkButton();
+            this.darkButton1 = new DarkUI.Controls.DarkButton();
             this.SuspendLayout();
             // 
-            // RTProtection_Button_Hook
+            // RTProtection_Button_HookBasic
             // 
-            this.RTProtection_Button_Hook.Location = new System.Drawing.Point(96, 12);
-            this.RTProtection_Button_Hook.Name = "RTProtection_Button_Hook";
-            this.RTProtection_Button_Hook.Padding = new System.Windows.Forms.Padding(5);
-            this.RTProtection_Button_Hook.Size = new System.Drawing.Size(75, 23);
-            this.RTProtection_Button_Hook.TabIndex = 6;
-            this.RTProtection_Button_Hook.Text = "Hook";
-            this.RTProtection_Button_Hook.Click += new System.EventHandler(this.RTProtection_Button_Hook_Click);
+            this.RTProtection_Button_HookBasic.Location = new System.Drawing.Point(24, 34);
+            this.RTProtection_Button_HookBasic.Name = "RTProtection_Button_HookBasic";
+            this.RTProtection_Button_HookBasic.Padding = new System.Windows.Forms.Padding(5);
+            this.RTProtection_Button_HookBasic.Size = new System.Drawing.Size(86, 23);
+            this.RTProtection_Button_HookBasic.TabIndex = 6;
+            this.RTProtection_Button_HookBasic.Text = "Hook Basic";
+            this.RTProtection_Button_HookBasic.Click += new System.EventHandler(this.RTProtection_Button_Hook_Click);
             // 
             // RTProtection_TextBox_ProcessInfo
             // 
             this.RTProtection_TextBox_ProcessInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
             this.RTProtection_TextBox_ProcessInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.RTProtection_TextBox_ProcessInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.RTProtection_TextBox_ProcessInfo.Location = new System.Drawing.Point(348, 42);
+            this.RTProtection_TextBox_ProcessInfo.Location = new System.Drawing.Point(455, 11);
             this.RTProtection_TextBox_ProcessInfo.Multiline = true;
             this.RTProtection_TextBox_ProcessInfo.Name = "RTProtection_TextBox_ProcessInfo";
-            this.RTProtection_TextBox_ProcessInfo.Size = new System.Drawing.Size(336, 364);
+            this.RTProtection_TextBox_ProcessInfo.Size = new System.Drawing.Size(247, 363);
             this.RTProtection_TextBox_ProcessInfo.TabIndex = 5;
             // 
-            // RTProtection_Button_TerminateProcess
+            // RTProtection_Button_Update
             // 
-            this.RTProtection_Button_TerminateProcess.Location = new System.Drawing.Point(177, 12);
-            this.RTProtection_Button_TerminateProcess.Name = "RTProtection_Button_TerminateProcess";
-            this.RTProtection_Button_TerminateProcess.Padding = new System.Windows.Forms.Padding(5);
-            this.RTProtection_Button_TerminateProcess.Size = new System.Drawing.Size(75, 23);
-            this.RTProtection_Button_TerminateProcess.TabIndex = 4;
-            this.RTProtection_Button_TerminateProcess.Text = "Terminate";
-            this.RTProtection_Button_TerminateProcess.Click += new System.EventHandler(this.RTProtection_Button_TerminateProcess_Click);
+            this.RTProtection_Button_Update.Location = new System.Drawing.Point(24, 295);
+            this.RTProtection_Button_Update.Name = "RTProtection_Button_Update";
+            this.RTProtection_Button_Update.Padding = new System.Windows.Forms.Padding(5);
+            this.RTProtection_Button_Update.Size = new System.Drawing.Size(86, 23);
+            this.RTProtection_Button_Update.TabIndex = 4;
+            this.RTProtection_Button_Update.Text = "Update";
+            this.RTProtection_Button_Update.Click += new System.EventHandler(this.RTProtection_Button_Update_Click);
             // 
             // RTProtection_checkedListBox_Processes
             // 
             this.RTProtection_checkedListBox_Processes.FormattingEnabled = true;
-            this.RTProtection_checkedListBox_Processes.Location = new System.Drawing.Point(14, 42);
+            this.RTProtection_checkedListBox_Processes.Location = new System.Drawing.Point(116, 12);
             this.RTProtection_checkedListBox_Processes.Name = "RTProtection_checkedListBox_Processes";
-            this.RTProtection_checkedListBox_Processes.Size = new System.Drawing.Size(319, 364);
+            this.RTProtection_checkedListBox_Processes.Size = new System.Drawing.Size(333, 364);
             this.RTProtection_checkedListBox_Processes.TabIndex = 8;
             // 
             // RTProtection_Button_Activate
             // 
-            this.RTProtection_Button_Activate.Location = new System.Drawing.Point(609, 12);
+            this.RTProtection_Button_Activate.Location = new System.Drawing.Point(24, 353);
             this.RTProtection_Button_Activate.Name = "RTProtection_Button_Activate";
             this.RTProtection_Button_Activate.Padding = new System.Windows.Forms.Padding(5);
-            this.RTProtection_Button_Activate.Size = new System.Drawing.Size(75, 23);
+            this.RTProtection_Button_Activate.Size = new System.Drawing.Size(86, 23);
             this.RTProtection_Button_Activate.TabIndex = 9;
             this.RTProtection_Button_Activate.Text = "Activate";
             this.RTProtection_Button_Activate.Click += new System.EventHandler(this.RTProtection_Button_Activate_Click);
@@ -88,7 +92,7 @@
             // 
             this.darkLabel1.AutoSize = true;
             this.darkLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.darkLabel1.Location = new System.Drawing.Point(14, 21);
+            this.darkLabel1.Location = new System.Drawing.Point(32, 13);
             this.darkLabel1.Name = "darkLabel1";
             this.darkLabel1.Size = new System.Drawing.Size(81, 13);
             this.darkLabel1.TabIndex = 10;
@@ -96,10 +100,10 @@
             // 
             // RTProtection_Button_Auto
             // 
-            this.RTProtection_Button_Auto.Location = new System.Drawing.Point(528, 12);
+            this.RTProtection_Button_Auto.Location = new System.Drawing.Point(24, 324);
             this.RTProtection_Button_Auto.Name = "RTProtection_Button_Auto";
             this.RTProtection_Button_Auto.Padding = new System.Windows.Forms.Padding(5);
-            this.RTProtection_Button_Auto.Size = new System.Drawing.Size(75, 23);
+            this.RTProtection_Button_Auto.Size = new System.Drawing.Size(86, 23);
             this.RTProtection_Button_Auto.TabIndex = 11;
             this.RTProtection_Button_Auto.Text = "Auto";
             // 
@@ -112,18 +116,61 @@
             this.RTProtection_notifyIcon.Text = "notifyIcon1";
             this.RTProtection_notifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.RTProtection_notifyIcon_MouseClick);
             // 
+            // RTProtection_Button_HookWinhttp
+            // 
+            this.RTProtection_Button_HookWinhttp.Location = new System.Drawing.Point(24, 63);
+            this.RTProtection_Button_HookWinhttp.Name = "RTProtection_Button_HookWinhttp";
+            this.RTProtection_Button_HookWinhttp.Padding = new System.Windows.Forms.Padding(5);
+            this.RTProtection_Button_HookWinhttp.Size = new System.Drawing.Size(86, 23);
+            this.RTProtection_Button_HookWinhttp.TabIndex = 12;
+            this.RTProtection_Button_HookWinhttp.Text = "Hook Winhttp";
+            this.RTProtection_Button_HookWinhttp.Click += new System.EventHandler(this.RTProtection_Button_HookWinhttp_Click);
+            // 
+            // RTProtection_Button_HookWininet
+            // 
+            this.RTProtection_Button_HookWininet.Location = new System.Drawing.Point(24, 92);
+            this.RTProtection_Button_HookWininet.Name = "RTProtection_Button_HookWininet";
+            this.RTProtection_Button_HookWininet.Padding = new System.Windows.Forms.Padding(5);
+            this.RTProtection_Button_HookWininet.Size = new System.Drawing.Size(86, 23);
+            this.RTProtection_Button_HookWininet.TabIndex = 13;
+            this.RTProtection_Button_HookWininet.Text = "Hook Wininet";
+            this.RTProtection_Button_HookWininet.Click += new System.EventHandler(this.RTProtection_Button_HookWininet_Click);
+            // 
+            // RTProtection_Button_HookWs2_32
+            // 
+            this.RTProtection_Button_HookWs2_32.Location = new System.Drawing.Point(24, 121);
+            this.RTProtection_Button_HookWs2_32.Name = "RTProtection_Button_HookWs2_32";
+            this.RTProtection_Button_HookWs2_32.Padding = new System.Windows.Forms.Padding(5);
+            this.RTProtection_Button_HookWs2_32.Size = new System.Drawing.Size(86, 23);
+            this.RTProtection_Button_HookWs2_32.TabIndex = 14;
+            this.RTProtection_Button_HookWs2_32.Text = "Hook Ws2_32";
+            this.RTProtection_Button_HookWs2_32.Click += new System.EventHandler(this.RTProtection_Button_HookWs2_32_Click);
+            // 
+            // darkButton1
+            // 
+            this.darkButton1.Location = new System.Drawing.Point(24, 266);
+            this.darkButton1.Name = "darkButton1";
+            this.darkButton1.Padding = new System.Windows.Forms.Padding(5);
+            this.darkButton1.Size = new System.Drawing.Size(86, 23);
+            this.darkButton1.TabIndex = 15;
+            this.darkButton1.Text = "Terminate";
+            // 
             // Form_RTProtection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(710, 428);
+            this.ClientSize = new System.Drawing.Size(723, 397);
+            this.Controls.Add(this.darkButton1);
+            this.Controls.Add(this.RTProtection_Button_HookWs2_32);
+            this.Controls.Add(this.RTProtection_Button_HookWininet);
+            this.Controls.Add(this.RTProtection_Button_HookWinhttp);
             this.Controls.Add(this.RTProtection_Button_Auto);
             this.Controls.Add(this.darkLabel1);
             this.Controls.Add(this.RTProtection_Button_Activate);
             this.Controls.Add(this.RTProtection_checkedListBox_Processes);
-            this.Controls.Add(this.RTProtection_Button_Hook);
+            this.Controls.Add(this.RTProtection_Button_HookBasic);
             this.Controls.Add(this.RTProtection_TextBox_ProcessInfo);
-            this.Controls.Add(this.RTProtection_Button_TerminateProcess);
+            this.Controls.Add(this.RTProtection_Button_Update);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form_RTProtection";
             this.Text = "Form_RTProtection";
@@ -133,13 +180,17 @@
         }
 
         #endregion
-        private DarkUI.Controls.DarkButton RTProtection_Button_Hook;
+        private DarkUI.Controls.DarkButton RTProtection_Button_HookBasic;
         private DarkUI.Controls.DarkTextBox RTProtection_TextBox_ProcessInfo;
-        private DarkUI.Controls.DarkButton RTProtection_Button_TerminateProcess;
+        private DarkUI.Controls.DarkButton RTProtection_Button_Update;
         private System.Windows.Forms.CheckedListBox RTProtection_checkedListBox_Processes;
         private DarkUI.Controls.DarkButton RTProtection_Button_Activate;
         private DarkUI.Controls.DarkLabel darkLabel1;
         private DarkUI.Controls.DarkButton RTProtection_Button_Auto;
         public System.Windows.Forms.NotifyIcon RTProtection_notifyIcon;
+        private DarkUI.Controls.DarkButton RTProtection_Button_HookWinhttp;
+        private DarkUI.Controls.DarkButton RTProtection_Button_HookWininet;
+        private DarkUI.Controls.DarkButton RTProtection_Button_HookWs2_32;
+        private DarkUI.Controls.DarkButton darkButton1;
     }
 }

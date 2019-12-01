@@ -3,7 +3,7 @@
 
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 #include "pch.h"
-#include "hook_funcs.h"
+#include "hook_funcs_basic.h"
 
 HANDLE hPipe1;
 

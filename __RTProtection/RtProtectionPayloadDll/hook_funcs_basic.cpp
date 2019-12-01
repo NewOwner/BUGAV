@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "hook_funcs.h"
+#include "hook_funcs_basic.h"
 
 extern HANDLE hPipe1;
 std::mutex m;
