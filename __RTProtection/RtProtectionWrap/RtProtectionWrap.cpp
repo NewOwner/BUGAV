@@ -66,3 +66,10 @@ VOID RtProtectionWrap::WRAP_InjectWs2_32Lib(int pid) {
     ptr_RtProtectionInjectCtrl->InjectLib((DWORD)pid, dll_to_inject, &dll_data, data_sz);
 }
 
+VOID RtProtectionWrap::WRAP_InjectConsoleLib(int pid) {
+    PWCHAR dll_to_inject = L"RtProtectionConsoleDll.dll";
+    DWORD dll_data = pid;
+    ULONG data_sz = sizeof(DWORD);
+    ptr_RtProtectionInjectCtrl->InjectLib((DWORD)pid, dll_to_inject, &dll_data, data_sz);
+}
+

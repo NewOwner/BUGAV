@@ -1,0 +1,11 @@
+ReadConsoleA
+ReadConsoleW
+ReadConsoleInputA
+ReadConsoleInputW
+ReadConsoleOutputA
+ReadConsoleOutputW
+ReadConsoleOutputCharacterA
+ReadConsoleOutputCharacterW
+SetConsoleMode
+WriteConsoleOutputCharacterA
+WriteConsoleOutputCharacterW

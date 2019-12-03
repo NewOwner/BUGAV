@@ -1,5 +1,16 @@
 #include "pch.h"
 #include "hook_funcs_winhttp.h"
+/*
++WinHttpOpen
++WinHttpConnect
+WinHttpOpenRequest
+WinHttpCreateUrl
+WinHttpSendRequest
+WinHttpReceiveResponse
+WinHttpQueryHeaders
+WinHttpQueryDataAvailable
+WinHttpReadData
+*/
 
 extern HANDLE hPipe1;
 
@@ -29,6 +40,14 @@ namespace winhttp_ns {
         char buf[500] = "WinHttpConnect";
         DWORD cbWritten;
         DWORD dwBytesToWrite = (DWORD)strlen(buf);
+
+        std::wstring argstr = L"Hook_WinHttpConnect: ";
+        argstr += std::wstring(pswzServerName);
+        argstr += L" ";
+        argstr += std::to_wstring(nServerPort);
+        int minlen = min(500, argstr.length());
+        memcpy(buf, argstr.c_str(), minlen);
+        
         WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
         return WinHttpConnect(
             hSession, 
@@ -68,6 +87,12 @@ namespace winhttp_ns {
         char buf[500] = "WinHttpOpen";
         DWORD cbWritten;
         DWORD dwBytesToWrite = (DWORD)strlen(buf);
+
+        std::wstring argstr = L"WinHttpOpen: ";
+        argstr += std::wstring(pszAgentW);
+        int minlen = min(500, argstr.length());
+        memcpy(buf, argstr.c_str(), minlen);
+
         WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
         return WinHttpOpen(
             pszAgentW,

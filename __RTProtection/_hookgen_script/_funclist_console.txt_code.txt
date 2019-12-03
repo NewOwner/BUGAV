@@ -1,0 +1,22 @@
+BOOL Hook_ReadConsoleA() 
+
+BOOL Hook_ReadConsoleW() 
+
+BOOL Hook_ReadConsoleInputA() 
+
+BOOL Hook_ReadConsoleInputW() 
+
+BOOL Hook_ReadConsoleOutputA() 
+
+BOOL Hook_ReadConsoleOutputW() 
+
+BOOL Hook_ReadConsoleOutputCharacterA() 
+
+BOOL Hook_ReadConsoleOutputCharacterW()
+
+BOOL Hook_SetConsoleMode() 
+
+BOOL Hook_WriteConsoleOutputCharacterA() 
+
+BOOL Hook_WriteConsoleOutputCharacterW() 
+

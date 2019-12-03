@@ -61,7 +61,6 @@ void __stdcall NativeInjectionEntryPoint(REMOTE_ENTRY_INFO* inRemoteInfo) {
 
     perform_hook(TEXT("kernel32"), "Beep", Hook_Beep);
 
-    //Input/output Create 	A 	CreatefileA CreatePipe CreateNamedPipeA ‎Kernel32);
     //perform_hook(TEXT("kernel32"), "CreatefileA", Hook_CreateFileA);
     //perform_hook(TEXT("kernel32"), "CreatefileW", Hook_CreateFileW);
     perform_hook(TEXT("kernel32"), "CreatePipe", Hook_CreatePipe);

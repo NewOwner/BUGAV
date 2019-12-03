@@ -86,6 +86,15 @@ namespace BUGAV {
             }
         }
 
+        private void RTProtection_Button_HookConsole_Click(object sender, EventArgs e) {
+            foreach (var item in RTProtection_checkedListBox_Processes.SelectedItems.OfType<ProcListBoxItem>().ToList()) {
+                Console.WriteLine(@"\\.\pipe\myNamedPipe" + item.ProcessId.ToString());
+                NamedPipeServer PServer1 = new NamedPipeServer(@"\\.\pipe\myNamedPipe" + item.ProcessId.ToString(), 0, RTProtection_notifyIcon);
+                PServer1.Start();
+                __RtProtectionInst.WRAP_InjectConsoleLib(item.ProcessId);
+            }
+        }
+
         public void ProcMonThreadFunc() {
             while (__procMonThread_working) {
                 Console.WriteLine("WRAP_RtProtectionDrv_NewProcMon");
@@ -130,21 +139,35 @@ namespace BUGAV {
             RTProtection_checkedListBox_Processes.Items.Clear();
 
             Process[] processlist = Process.GetProcesses();
-
+            string filtstr = RTProtection_TextBox_Filter.Text;
             foreach (Process proc in processlist) {
                 Console.WriteLine("Process: {0} ID: {1}", proc.ProcessName, proc.Id);
+                if (filtstr != string.Empty) {
+                    if (proc.ProcessName.Contains(filtstr)) {
+                        ProcListBoxItem newListItem = new ProcListBoxItem {
+                            Name = proc.ProcessName,
+                            ParentId = 0,
+                            ProcessId = proc.Id,
+                            procHandler = proc
+                        };
 
-                ProcListBoxItem newListItem = new ProcListBoxItem {
-                    Name = proc.ProcessName,
-                    ParentId = 0,
-                    ProcessId = proc.Id,
-                    procHandler = proc
-                };
+                        RTProtection_checkedListBox_Processes.Items.Insert(0, newListItem);
+                    }
+                } else {
+                    ProcListBoxItem newListItem = new ProcListBoxItem {
+                        Name = proc.ProcessName,
+                        ParentId = 0,
+                        ProcessId = proc.Id,
+                        procHandler = proc
+                    };
 
-                RTProtection_checkedListBox_Processes.Items.Insert(0, newListItem);
+                    RTProtection_checkedListBox_Processes.Items.Insert(0, newListItem);
+                }
+                
             }
         }
 
+        
     }
     public class ProcListBoxItem {
         public string Name { get; set; }

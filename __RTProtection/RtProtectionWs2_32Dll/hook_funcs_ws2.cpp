@@ -77,15 +77,8 @@ int Hook_WSARecvFrom(
     char buf[500] = "WSARecvFrom";
     DWORD cbWritten;
     DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    for (int i = 0; i < dwBufferCount; i++) {
-        int minlen = min(500, lpBuffers[i].len);
-        std::string hex_str = hexStr((BYTE*)lpBuffers[i].buf, minlen);
-        memcpy(buf, hex_str.c_str(), minlen);
-        WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    }
 
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return WSARecvFrom(
+    int rescode = WSARecvFrom(
         s,
         lpBuffers,
         dwBufferCount,
@@ -96,6 +89,18 @@ int Hook_WSARecvFrom(
         lpOverlapped,
         lpCompletionRoutine
     );
+
+    //std::string hex_str = "WSARecvFrom ";
+    //
+    //for (int i = 0; i < dwBufferCount; i++) {
+    //    hex_str += hexStr((BYTE*)lpBuffers[i].buf, lpBuffers[i].len);
+    //}
+    //int minlen = min(500, hex_str.length());
+    //memcpy(buf, hex_str.c_str(), minlen);
+
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+
+    return rescode;
 }
 
 
@@ -115,14 +120,16 @@ int Hook_WSASend(
     DWORD cbWritten;
     DWORD dwBytesToWrite = (DWORD)strlen(buf);
 
-    for (int i = 0; i < dwBufferCount; i++) {
-        int minlen = min(500, lpBuffers[i].len);
-        std::string hex_str = hexStr((BYTE*)lpBuffers[i].buf, minlen);
-        memcpy(buf, hex_str.c_str(), minlen);
-        WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    }
+    //std::string hex_str = "WSASend ";
+    //
+    //for (int i = 0; i < dwBufferCount; i++) {
+    //    hex_str += hexStr((BYTE*)lpBuffers[i].buf, lpBuffers[i].len);
+    //}
+    //int minlen = min(500, hex_str.length());
+    //memcpy(buf, hex_str.c_str(), minlen);
 
     WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+
     return WSASend(
         s,
         lpBuffers,
@@ -150,13 +157,14 @@ int Hook_WSASendTo(
     DWORD cbWritten;
     DWORD dwBytesToWrite = (DWORD)strlen(buf);
 
-    for (int i = 0; i < dwBufferCount; i++) {
-        int minlen = min(500, lpBuffers[i].len);
-        std::string hex_str = hexStr((BYTE*)lpBuffers[i].buf, minlen);
-        memcpy(buf, hex_str.c_str(), minlen);
-        WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    }
-
+    //std::string hex_str = "WSASendTo ";
+    //
+    //for (int i = 0; i < dwBufferCount; i++) {
+    //    hex_str += hexStr((BYTE*)lpBuffers[i].buf, lpBuffers[i].len);
+    //}
+    //int minlen = min(500, hex_str.length());
+    //memcpy(buf, hex_str.c_str(), minlen);
+    
     WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
 
     return WSASendTo(

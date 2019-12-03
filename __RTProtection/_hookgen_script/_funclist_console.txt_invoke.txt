@@ -1,0 +1,11 @@
+perform_hook(TEXT(""), "ReadConsoleA", Hook_ReadConsoleA);
+perform_hook(TEXT(""), "ReadConsoleW", Hook_ReadConsoleW);
+perform_hook(TEXT(""), "ReadConsoleInputA", Hook_ReadConsoleInputA);
+perform_hook(TEXT(""), "ReadConsoleInputW", Hook_ReadConsoleInputW);
+perform_hook(TEXT(""), "ReadConsoleOutputA", Hook_ReadConsoleOutputA);
+perform_hook(TEXT(""), "ReadConsoleOutputW", Hook_ReadConsoleOutputW);
+perform_hook(TEXT(""), "ReadConsoleOutputCharacterA", Hook_ReadConsoleOutputCharacterA);
+perform_hook(TEXT(""), "ReadConsoleOutputCharacterW", Hook_ReadConsoleOutputCharacterW);
+perform_hook(TEXT(""), "SetConsoleMode", Hook_SetConsoleMode);
+perform_hook(TEXT(""), "WriteConsoleOutputCharacterA", Hook_WriteConsoleOutputCharacterA);
+perform_hook(TEXT(""), "WriteConsoleOutputCharacterW", Hook_WriteConsoleOutputCharacterW);

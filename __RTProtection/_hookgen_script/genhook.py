@@ -1,7 +1,8 @@
 
 #inpname = "_funclist_winhttp.txt"
 #inpname = "_funclist_wininet.txt"
-inpname = "_funclist_ws2_32.txt"
+#inpname = "_funclist_ws2_32.txt"
+inpname = "_funclist_console.txt"
 
 with open(inpname) as f:
 	content = f.readlines()

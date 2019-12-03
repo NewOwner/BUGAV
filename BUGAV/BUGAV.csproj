@@ -188,9 +188,25 @@
       <Project>{f19472f5-8c44-4c51-a8a0-b9de5f555255}</Project>
       <Name>DarkUI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\__RTProtection\RtProtectionPayloadDll\RtProtectionPayloadDll.vcxproj">
+      <Project>{cabbb76f-8fec-4e3f-a7f5-ce91957eda6a}</Project>
+      <Name>RtProtectionPayloadDll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\__RTProtection\RtProtectionWinhttpDll\RtProtectionWinhttpDll.vcxproj">
+      <Project>{8c229791-7c2a-4914-bd1d-3dbe53133295}</Project>
+      <Name>RtProtectionWinhttpDll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\__RTProtection\RtProtectionWininetDll\RtProtectionWininetDll.vcxproj">
+      <Project>{9d90bccf-9c1f-4a0a-9579-b410403dd8fa}</Project>
+      <Name>RtProtectionWininetDll</Name>
+    </ProjectReference>
     <ProjectReference Include="..\__RTProtection\RtProtectionWrap\RtProtectionWrap.vcxproj">
       <Project>{ebf13f3d-3a90-475a-87ae-53985d470de9}</Project>
       <Name>RtProtectionWrap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\__RTProtection\RtProtectionWs2_32Dll\RtProtectionWs2_32Dll.vcxproj">
+      <Project>{c2e0987a-8856-4205-b9ce-8653d1ee14e2}</Project>
+      <Name>RtProtectionWs2_32Dll</Name>
     </ProjectReference>
     <ProjectReference Include="..\__StaticAnalyze\de4dot-x64\de4dot.cui\de4dot.cui.csproj">
       <Project>{446f4eb9-b10c-4e76-aeb0-06e35860c172}</Project>

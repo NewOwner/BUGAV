@@ -129,8 +129,8 @@ namespace BUGAV {
                 if (ReadLength > 0) {
                     byte[] Rc = new byte[ReadLength];
                     Buffer.BlockCopy(buffer, 0, Rc, 0, ReadLength);
-
-                    Console.WriteLine("C# App: Received " + ReadLength + " Bytes: " + encoder.GetString(Rc, 0, ReadLength));
+                    string retstr = encoder.GetString(Rc, 0, ReadLength);
+                    Console.WriteLine("C# App: Received " + ReadLength + " Bytes: " + retstr);
                     notIcon.Visible = true;
                     notIcon.ShowBalloonTip(5000, "Suspitious App", "Suspitious Activity in App: ", System.Windows.Forms.ToolTipIcon.Warning);
                     buffer.Initialize();
