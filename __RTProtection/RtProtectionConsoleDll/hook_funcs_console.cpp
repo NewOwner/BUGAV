@@ -70,7 +70,7 @@ VOID KeyEventProc(KEY_EVENT_RECORD ker) {
         if (ker.uChar.AsciiChar == 0x03) {
             std::cout << "\n CONTROL-C \n\n";
             cur_command = "";
-        }else if (ker.uChar.AsciiChar == 0x0D) {
+        } else if (ker.uChar.AsciiChar == 0x0D) {
             std::cout << "\n ENTER \n\n";
             char buf[500] = { 0 };
             memcpy(buf, cur_command.c_str(), cur_command.length());
@@ -96,7 +96,7 @@ BOOL Hook_ReadConsoleInputW(
         nLength,
         lpNumberOfEventsRead
     );
-    
+
     for (int i = 0; i < *lpNumberOfEventsRead; i++) {
         switch (lpBuffer[i].EventType) {
         case KEY_EVENT: // keyboard input 

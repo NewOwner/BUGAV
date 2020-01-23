@@ -74,9 +74,9 @@ int Hook_WSARecvFrom(
     LPWSAOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine
 ) {
     std::cout << "\n Hook_WSARecvFrom \n\n";
-    char buf[500] = "WSARecvFrom";
     DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    char buf[500] = { 0 };
+    
 
     int rescode = WSARecvFrom(
         s,
@@ -90,21 +90,19 @@ int Hook_WSARecvFrom(
         lpCompletionRoutine
     );
 
-    //std::string hex_str = "WSARecvFrom ";
-    //
-    //for (int i = 0; i < dwBufferCount; i++) {
-    //    hex_str += hexStr((BYTE*)lpBuffers[i].buf, lpBuffers[i].len);
-    //}
-    //int minlen = min(500, hex_str.length());
-    //memcpy(buf, hex_str.c_str(), minlen);
+    std::string hex_str = "WSARecvFrom ";
+    
+    for (int i = 0; i < dwBufferCount; i++) {
+        hex_str += hexStr((BYTE*)lpBuffers[i].buf, lpBuffers[i].len);
+    }
+    int minlen = min(500, hex_str.length());
+    memcpy(buf, hex_str.c_str(), minlen);
+    DWORD dwBytesToWrite = minlen;
 
     WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
 
     return rescode;
 }
-
-
-
 
 int Hook_WSASend(
     SOCKET                             s,
@@ -116,17 +114,18 @@ int Hook_WSASend(
     LPWSAOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine
 ) {
     std::cout << "\n Hook_WSASend \n\n";
-    char buf[500] = "WSASend";
+    char buf[500] = { 0 };
     DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
 
-    //std::string hex_str = "WSASend ";
-    //
-    //for (int i = 0; i < dwBufferCount; i++) {
-    //    hex_str += hexStr((BYTE*)lpBuffers[i].buf, lpBuffers[i].len);
-    //}
-    //int minlen = min(500, hex_str.length());
-    //memcpy(buf, hex_str.c_str(), minlen);
+    std::string hex_str = "WSASend ";
+    
+    for (int i = 0; i < dwBufferCount; i++) {
+        hex_str += hexStr((BYTE*)lpBuffers[i].buf, lpBuffers[i].len);
+    }
+    int minlen = min(500, hex_str.length());
+    memcpy(buf, hex_str.c_str(), minlen);
+
+    DWORD dwBytesToWrite = minlen;
 
     WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
 
@@ -153,18 +152,19 @@ int Hook_WSASendTo(
     LPWSAOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine
 ) {
     std::cout << "\n Hook_WSASendTo \n\n";
-    char buf[500] = "WSASendTo";
+    char buf[500] = { 0 };
     DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
 
-    //std::string hex_str = "WSASendTo ";
-    //
-    //for (int i = 0; i < dwBufferCount; i++) {
-    //    hex_str += hexStr((BYTE*)lpBuffers[i].buf, lpBuffers[i].len);
-    //}
-    //int minlen = min(500, hex_str.length());
-    //memcpy(buf, hex_str.c_str(), minlen);
+    std::string hex_str = "WSASendTo ";
     
+    for (int i = 0; i < dwBufferCount; i++) {
+        hex_str += hexStr((BYTE*)lpBuffers[i].buf, lpBuffers[i].len);
+    }
+    int minlen = min(500, hex_str.length());
+    memcpy(buf, hex_str.c_str(), minlen);
+    
+    DWORD dwBytesToWrite = minlen;
+
     WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
 
     return WSASendTo(
@@ -178,4 +178,117 @@ int Hook_WSASendTo(
         lpOverlapped,
         lpCompletionRoutine
     );
+}
+
+int WSAAPI Hook_send(
+    SOCKET     s,
+    const char* buf,
+    int        len,
+    int        flags
+) {
+    std::cout << "\n Hook_send \n\n";
+    char sendbuf[500] = "send ";
+    DWORD cbWritten;
+    int namelen = strlen(sendbuf);
+    int minlen = min(500, len+namelen);
+    DWORD dwBytesToWrite = minlen;
+    memcpy(sendbuf + namelen, buf, minlen);
+
+    WriteFile(hPipe1, sendbuf, dwBytesToWrite, &cbWritten, NULL);
+
+    return send(
+        s,
+        buf,
+        len,
+        flags
+    );
+}
+
+int Hook_sendto(
+    SOCKET         s,
+    const char* buf,
+    int            len,
+    int            flags,
+    const sockaddr* to,
+    int            tolen
+) {
+    std::cout << "\n Hook_sendto \n\n";
+    char sendbuf[500] = "sendto ";
+    DWORD cbWritten;
+    int namelen = strlen(sendbuf);
+    int minlen = min(500, len + namelen);
+    memcpy(sendbuf + namelen, buf, minlen);
+    
+    DWORD dwBytesToWrite = minlen;
+
+    WriteFile(hPipe1, sendbuf, dwBytesToWrite, &cbWritten, NULL);
+
+    return sendto(
+        s,
+        buf,
+        len,
+        flags,
+        to,
+        tolen
+    );
+}
+
+int Hook_recv(
+    SOCKET s,
+    char* buf,
+    int    len,
+    int    flags
+) {
+    std::cout << "\n Hook_recv \n\n";
+    char sendbuf[500] = "recv ";
+    DWORD cbWritten;
+
+    int rescode = recv(
+        s,
+        buf,
+        len,
+        flags
+    );
+    int namelen = strlen(sendbuf);
+    int minlen = min(500, len + namelen);
+    memcpy(sendbuf + namelen, buf, minlen);
+
+    DWORD dwBytesToWrite = minlen;
+
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+
+    return rescode;
+}
+
+
+int Hook_recvfrom(
+    SOCKET   s,
+    char* buf,
+    int      len,
+    int      flags,
+    sockaddr* from,
+    int* fromlen
+) {
+    std::cout << "\n Hook_recvfrom \n\n";
+    char sendbuf[500] = "recvfrom ";
+    DWORD cbWritten;
+
+    int rescode = recvfrom(
+        s,
+        buf,
+        len,
+        flags,
+        from,
+        fromlen
+    );
+
+    int namelen = strlen(sendbuf);
+    int minlen = min(500, len + namelen);
+    memcpy(sendbuf + namelen, buf, minlen);
+
+    DWORD dwBytesToWrite = minlen;
+
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+
+    return rescode;
 }

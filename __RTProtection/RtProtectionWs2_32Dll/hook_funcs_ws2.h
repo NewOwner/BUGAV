@@ -53,3 +53,35 @@ int Hook_WSASendTo(
     LPWSAOVERLAPPED                    lpOverlapped,
     LPWSAOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine
 );
+
+int WSAAPI Hook_send(
+    SOCKET     s,
+    const char* buf,
+    int        len,
+    int        flags
+);
+
+int Hook_sendto(
+    SOCKET         s,
+    const char* buf,
+    int            len,
+    int            flags,
+    const sockaddr* to,
+    int            tolen
+);
+
+int Hook_recv(
+    SOCKET s,
+    char* buf,
+    int    len,
+    int    flags
+);
+
+int Hook_recvfrom(
+    SOCKET   s,
+    char* buf,
+    int      len,
+    int      flags,
+    sockaddr* from,
+    int* fromlen
+);

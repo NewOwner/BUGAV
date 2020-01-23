@@ -64,6 +64,10 @@ void __stdcall NativeInjectionEntryPoint(REMOTE_ENTRY_INFO* inRemoteInfo) {
     perform_hook(TEXT("ws2_32"), "WSARecvFrom", Hook_WSARecvFrom);
     perform_hook(TEXT("ws2_32"), "WSASend", Hook_WSASend);
     perform_hook(TEXT("ws2_32"), "WSASendTo", Hook_WSASendTo);
+    perform_hook(TEXT("ws2_32"), "send", Hook_send);
+    perform_hook(TEXT("ws2_32"), "sendto", Hook_sendto);
+    perform_hook(TEXT("ws2_32"), "recv", Hook_recv);
+    perform_hook(TEXT("ws2_32"), "recvfrom", Hook_recvfrom);
 
     return;
 }
