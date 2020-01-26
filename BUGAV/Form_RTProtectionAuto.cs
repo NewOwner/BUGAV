@@ -10,9 +10,13 @@ using System.Windows.Forms;
 
 using DarkUI.Forms;
 
+using System.IO;
 using System.Diagnostics;
 using System.Threading;
 using System.Runtime.InteropServices;
+
+using DynamicAnalyzeCtrl;
+using StaticAnalyzeManager;
 
 namespace BUGAV {
     public partial class Form_RTProtectionAuto : DarkForm {
@@ -54,10 +58,80 @@ namespace BUGAV {
                 file.Close();
              
                 System.Console.WriteLine(fname);
-                
+
+                //StaticAnalyzeThreadFunc("csharp", fname, RTAuto_notifyIcon);
+                //StaticAnalyzeThreadFunc("cpp", fname, RTAuto_notifyIcon);
+                StaticAnalyzeThreadFunc("yara", fname, RTAuto_notifyIcon);
             }
         }
 
+
+        public Thread StartStaticAnalyzeThread(string _method, string _target, System.Windows.Forms.NotifyIcon _notifyIcon) {
+            var t = new Thread(() => StaticAnalyzeThreadFunc(_method, _target, _notifyIcon));
+            t.Start();
+            return t;
+        }
+
+        private static void StaticAnalyzeThreadFunc(string _method, string _target, System.Windows.Forms.NotifyIcon _notifyIcon) {
+            if (_target == null) { return; }
+            IToolResParse resParser = GetTool(_method, _target);
+            if (resParser == null) { return; }
+
+            System.Console.WriteLine(_method);
+            System.Console.WriteLine(_target);
+            System.Console.WriteLine(_notifyIcon.ToString());
+
+            if (!File.Exists(_target)) { return; }
+
+            if (_method == "csharp") {
+                Console.WriteLine("csharp analyze.");
+                string[] args_arr = new string[] { _target };
+                de4dot.cui.Program.Main(args_arr);
+                Console.WriteLine("csharp done.");
+            } else if (_method == "cpp") {
+                string _toolpath = @"Manalyze\bin\manalyze.exe";
+                string _argflags = "--output=json --hashes --plugins=all";
+                string _fext = ".cpp.res.txt";
+                SAManager.RunToolOutCapture(_target, _toolpath, _argflags, _fext);
+            } else if (_method == "yara") {
+                string _toolpath = @"YARA\yara64.exe";
+                string _argflags = @"YARA\rules\index.yar -w";
+                string _fext = ".yara.res.txt";
+                SAManager.RunToolOutCapture(_target, _toolpath, _argflags, _fext);
+            }
+            Console.WriteLine("resParser.ParseResVerbose +.");
+            ResContainer res = resParser.ParseResVerbose();
+            Console.WriteLine("resParser.ParseResVerbose -.");
+            if (res == null) { return; }
+                _notifyIcon.Visible = true;
+            string appInfo = string.Empty;
+            if (res.isMalware) {
+                _notifyIcon.ShowBalloonTip(5000, "Malware App", "Malware App: " + _target, System.Windows.Forms.ToolTipIcon.Error);
+                appInfo = String.Join("\n", res.suspiciousAttr.ToArray());
+            }
+            if (res.isSuspicious) {
+                _notifyIcon.ShowBalloonTip(5000, "Suspitious App", "Suspicious App: " + _target, System.Windows.Forms.ToolTipIcon.Warning);
+                appInfo = String.Join("\n", res.suspiciousAttr.ToArray());
+            } else {
+                _notifyIcon.ShowBalloonTip(5000, "Nothing Suspitious in App", "App: " + _target, System.Windows.Forms.ToolTipIcon.Info);
+            }
+        }
+
+        public static IToolResParse GetTool(string _method, string _target) {
+            try {
+                string targetname = Path.GetFileName(_target);
+                if (_method == "csharp") {
+                    return new ToolResParse_StaticCsharp(targetname + ".cs.res.txt");
+                } else if (_method == "cpp") {
+                    return new ToolResParse_StaticCpp(targetname + ".cpp.res.txt");
+                } else if (_method == "yara") {
+                    return new ToolResParse_StaticYara(targetname + ".yara.res.txt");
+                } else { return null; }
+            } catch (Exception e) {
+                Console.WriteLine("Exception caught.");
+                return null;
+            }
+        }
 
     }
 }
