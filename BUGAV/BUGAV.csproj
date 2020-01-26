@@ -99,11 +99,17 @@
     <Compile Include="Form_Info.Designer.cs">
       <DependentUpon>Form_Info.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form_RTProtection.cs">
+    <Compile Include="Form_RTProtectionAuto.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form_RTProtection.Designer.cs">
-      <DependentUpon>Form_RTProtection.cs</DependentUpon>
+    <Compile Include="Form_RTProtectionAuto.Designer.cs">
+      <DependentUpon>Form_RTProtectionAuto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_RTProtectionManual.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_RTProtectionManual.Designer.cs">
+      <DependentUpon>Form_RTProtectionManual.cs</DependentUpon>
     </Compile>
     <Compile Include="Form_StaticAnalyze.cs">
       <SubType>Form</SubType>
@@ -135,8 +141,11 @@
     <EmbeddedResource Include="Form_Info.resx">
       <DependentUpon>Form_Info.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form_RTProtection.resx">
-      <DependentUpon>Form_RTProtection.cs</DependentUpon>
+    <EmbeddedResource Include="Form_RTProtectionAuto.resx">
+      <DependentUpon>Form_RTProtectionAuto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_RTProtectionManual.resx">
+      <DependentUpon>Form_RTProtectionManual.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form_StaticAnalyze.resx">
       <DependentUpon>Form_StaticAnalyze.cs</DependentUpon>
@@ -188,6 +197,10 @@
       <Project>{f19472f5-8c44-4c51-a8a0-b9de5f555255}</Project>
       <Name>DarkUI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\__RTProtection\RTNewFilesWrap\RTNewFilesWrap.vcxproj">
+      <Project>{1fc79167-89f8-4d33-ab2a-647ee431bbe9}</Project>
+      <Name>RTNewFilesWrap</Name>
+    </ProjectReference>
     <ProjectReference Include="..\__RTProtection\RtProtectionPayloadDll\RtProtectionPayloadDll.vcxproj">
       <Project>{cabbb76f-8fec-4e3f-a7f5-ce91957eda6a}</Project>
       <Name>RtProtectionPayloadDll</Name>
@@ -208,6 +221,9 @@
       <Project>{80c317ae-01b9-4b12-987b-e26def3826ed}</Project>
       <Name>StaticAnalyzeManager</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -20,7 +20,7 @@ namespace BUGAV {
         public Form_StaticAnalyze() {
             InitializeComponent();
             try {
-                __StaticAnalyzeCppWrapInst = new StaticAnalyzeCppWrap();
+                //__StaticAnalyzeCppWrapInst = new StaticAnalyzeCppWrap();
             } catch (Exception e) {
                 Console.WriteLine("{0} Exception caught.", e.ToString());
             }

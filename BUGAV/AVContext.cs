@@ -10,7 +10,8 @@ namespace BUGAV {
         NotifyIcon notifyIcon = new NotifyIcon();
         Form_DynamicAnalyze form_dynamicanalyze = new Form_DynamicAnalyze();
         Form_StaticAnalyze form_staticanalyze = new Form_StaticAnalyze();
-        Form_RTProtection form_rtprotection = new Form_RTProtection();
+        Form_RTProtectionManual form_rtprotection = new Form_RTProtectionManual();
+        Form_RTProtectionAuto form_rtprotectionAuto = new Form_RTProtectionAuto();
         Form_FilterFile form_filterfile = new Form_FilterFile();
         Form_FilterRegistry form_filterregistry = new Form_FilterRegistry();
         Form_FilterNetwork form_filternetwork = new Form_FilterNetwork();
@@ -19,7 +20,8 @@ namespace BUGAV {
         public AVContext() {
             MenuItem DynamicAnalyze_MenuItem = new MenuItem("Dynamic Analyze", new EventHandler(show_DynamicAnalyze));
             MenuItem StaticAnalyze_MenuItem = new MenuItem("Static Analyze", new EventHandler(show_StaticAnalyze));
-            MenuItem RTProtection_MenuItem = new MenuItem("Real Time Protection", new EventHandler(show_RTProtection));
+            MenuItem RTProtection_MenuItem = new MenuItem("Manual RT Protection", new EventHandler(show_RTProtection));
+            MenuItem RTAProtection_MenuItem = new MenuItem("Auto RT Protection", new EventHandler(show_RTAProtection));
             MenuItem FilterFile_MenuItem = new MenuItem("File Filtering", new EventHandler(show_FilterFile));
             MenuItem FilterRegistry_MenuItem = new MenuItem("Registry Filtering", new EventHandler(show_FilterRegistry));
             MenuItem FilterNetwork_MenuItem = new MenuItem("Network Filtering", new EventHandler(show_FilterNetwork));
@@ -30,7 +32,8 @@ namespace BUGAV {
             notifyIcon.ContextMenu = new ContextMenu(new MenuItem[] { 
                 DynamicAnalyze_MenuItem, 
                 StaticAnalyze_MenuItem, 
-                RTProtection_MenuItem, 
+                RTProtection_MenuItem,
+                RTAProtection_MenuItem,
                 FilterFile_MenuItem,
                 FilterRegistry_MenuItem,
                 FilterNetwork_MenuItem,
@@ -58,6 +61,13 @@ namespace BUGAV {
                 form_rtprotection.Focus();
             } else {
                 form_rtprotection.ShowDialog();
+            }
+        }
+        void show_RTAProtection(object sender, EventArgs e) {
+            if (form_rtprotectionAuto.Visible) {
+                form_rtprotectionAuto.Focus();
+            } else {
+                form_rtprotectionAuto.ShowDialog();
             }
         }
         void show_FilterFile(object sender, EventArgs e) {
@@ -92,6 +102,5 @@ namespace BUGAV {
             notifyIcon.Visible = false;
             Application.Exit();
         }
-
     }
 }

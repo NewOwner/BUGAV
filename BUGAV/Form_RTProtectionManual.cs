@@ -14,11 +14,11 @@ using System.Threading;
 using System.Runtime.InteropServices;
 
 namespace BUGAV {
-    public partial class Form_RTProtection : DarkForm {
+    public partial class Form_RTProtectionManual : DarkForm {
         RtProtectionWrap __RtProtectionInst;
         Thread __procMonThread;
         bool __procMonThread_working;
-        public Form_RTProtection() {
+        public Form_RTProtectionManual() {
             InitializeComponent();
             try {
                 __RtProtectionInst = new RtProtectionWrap();

@@ -55,7 +55,6 @@ void __stdcall NativeInjectionEntryPoint(REMOTE_ENTRY_INFO* inRemoteInfo) {
     perform_hook(TEXT("kernel32"), "ReadProcessMemory", Hook_ReadProcessMemory);
     perform_hook(TEXT("kernel32"), "WriteProcessMemory", Hook_WriteProcessMemory);
     perform_hook(TEXT("User32"), "SetWindowsHookA", Hook_SetWindowsHookExA);
-    perform_hook(TEXT("User32"), "CallNextHookEx", Hook_CallNextHookEx);
     perform_hook(TEXT("kernel32"), "IsDebuggerPresent", Hook_IsDebuggerPresent);
     perform_hook(TEXT("Advapi32"), "CreateServiceA", Hook_CreateServiceA);
     perform_hook(TEXT("kernel32"), "GetSystemDirectoryW", Hook_GetSystemDirectoryW);

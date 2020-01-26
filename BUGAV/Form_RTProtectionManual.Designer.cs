@@ -1,5 +1,5 @@
 ﻿namespace BUGAV {
-    partial class Form_RTProtection {
+    partial class Form_RTProtectionManual {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_RTProtection));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_RTProtectionManual));
             this.RTProtection_Button_HookBasic = new DarkUI.Controls.DarkButton();
             this.RTProtection_TextBox_ProcessInfo = new DarkUI.Controls.DarkTextBox();
             this.RTProtection_Button_Update = new DarkUI.Controls.DarkButton();

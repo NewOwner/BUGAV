@@ -58,15 +58,6 @@ HHOOK Hook_SetWindowsHookExA(int idHook, HOOKPROC lpfn, HINSTANCE hmod, DWORD dw
     return SetWindowsHookExA(idHook, lpfn, hmod, dwThreadId);
 }
 
-LRESULT Hook_CallNextHookEx(HHOOK hhk, int nCode, WPARAM wParam, LPARAM lParam) {
-    std::cout << "\n Hook_CallNextHookEx \n\n";
-    char buf[500] = "CallNextHookEx";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return CallNextHookEx(hhk, nCode, wParam, lParam);
-}
-
 BOOL Hook_IsDebuggerPresent() {
     std::cout << "\n Hook_IsDebuggerPresent \n\n";
     char buf[500] = "IsDebuggerPresent";
