@@ -48,6 +48,16 @@ bool RTNewFilesCtrl::GetFileMessage() {
         std::string strMsg(inMsg + 16);
         std::string strMsg2 = strMsg;
 
+        const int siz_ar = sizeof(inMsg) / sizeof(char);
+
+        for (int i = 0; i < siz_ar; ++i)
+            std::cout << inMsg[i] << " ";
+        std::cout << std::endl;
+
+        for (int i = 0; i < siz_ar; ++i)
+            std::cout << std::hex << std::setfill('0') << std::setw(2) << inMsg[i] << " ";
+        std::cout << std::endl;
+
         /*
         \Device\HarddiskVolume3\DRAFTS\FilterNetworkWrap.dll
         \\?\HarddiskVolume3\DRAFTS\FilterNetworkWrap.dll

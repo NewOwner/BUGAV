@@ -7,7 +7,7 @@
 #include <iomanip>
 #include <fstream>
 
-#define NEWFILES_PORT_NAME                   L"\\FilterFilePort"
+#define NEWFILES_PORT_NAME                   L"\\NewFilePort"
 
 class RTNewFilesCtrl {
 
