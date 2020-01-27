@@ -27,6 +27,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_RTProtectionAuto));
             this.RTAuto_NMF_Button = new DarkUI.Controls.DarkButton();
             this.RTAuto_notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.ConsoleMonButton = new DarkUI.Controls.DarkButton();
+            this.RTAutoConsole_notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.SuspendLayout();
             // 
             // RTAuto_NMF_Button
@@ -47,11 +49,30 @@
             this.RTAuto_notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("RTAuto_notifyIcon.Icon")));
             this.RTAuto_notifyIcon.Text = "RTAuto_notifyIcon";
             // 
+            // ConsoleMonButton
+            // 
+            this.ConsoleMonButton.Location = new System.Drawing.Point(13, 43);
+            this.ConsoleMonButton.Name = "ConsoleMonButton";
+            this.ConsoleMonButton.Padding = new System.Windows.Forms.Padding(5);
+            this.ConsoleMonButton.Size = new System.Drawing.Size(144, 23);
+            this.ConsoleMonButton.TabIndex = 1;
+            this.ConsoleMonButton.Text = "ConsoleMonButton OFF";
+            this.ConsoleMonButton.Click += new System.EventHandler(this.ConsoleMonButton_Click);
+            // 
+            // RTAutoConsole_notifyIcon
+            // 
+            this.RTAutoConsole_notifyIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Warning;
+            this.RTAutoConsole_notifyIcon.BalloonTipText = "asdf";
+            this.RTAutoConsole_notifyIcon.BalloonTipTitle = "adsf";
+            this.RTAutoConsole_notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("RTAutoConsole_notifyIcon.Icon")));
+            this.RTAutoConsole_notifyIcon.Text = "RTAutoConsole_notifyIcon";
+            // 
             // Form_RTProtectionAuto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.ConsoleMonButton);
             this.Controls.Add(this.RTAuto_NMF_Button);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form_RTProtectionAuto";
@@ -64,5 +85,7 @@
 
         private DarkUI.Controls.DarkButton RTAuto_NMF_Button;
         public System.Windows.Forms.NotifyIcon RTAuto_notifyIcon;
+        private DarkUI.Controls.DarkButton ConsoleMonButton;
+        public System.Windows.Forms.NotifyIcon RTAutoConsole_notifyIcon;
     }
 }

@@ -53,7 +53,7 @@ namespace BUGAV {
         private void RTProtection_Button_Hook_Click(object sender, EventArgs e) {
             foreach (var item in RTProtection_checkedListBox_Processes.SelectedItems.OfType<ProcListBoxItem>().ToList()) {
                 Console.WriteLine(@"\\.\pipe\myNamedPipe" + item.ProcessId.ToString());
-                NamedPipeServer PServer1 = new NamedPipeServer(@"\\.\pipe\myNamedPipe"+ item.ProcessId.ToString(), 0, RTProtection_notifyIcon);
+                NamedPipeServer PServer1 = new NamedPipeServer(@"\\.\pipe\myNamedPipe"+ item.ProcessId.ToString(), 0, RTProtection_notifyIcon, "basic");
                 PServer1.Start();
                 __RtProtectionInst.WRAP_InjectBasicLib(item.ProcessId);
             }
@@ -62,7 +62,7 @@ namespace BUGAV {
         private void RTProtection_Button_HookWinhttp_Click(object sender, EventArgs e) {
             foreach (var item in RTProtection_checkedListBox_Processes.SelectedItems.OfType<ProcListBoxItem>().ToList()) {
                 Console.WriteLine(@"\\.\pipe\myNamedPipe" + item.ProcessId.ToString());
-                NamedPipeServer PServer1 = new NamedPipeServer(@"\\.\pipe\myNamedPipe" + item.ProcessId.ToString(), 0, RTProtection_notifyIcon);
+                NamedPipeServer PServer1 = new NamedPipeServer(@"\\.\pipe\myNamedPipe" + item.ProcessId.ToString(), 0, RTProtection_notifyIcon, "basic");
                 PServer1.Start();
                 __RtProtectionInst.WRAP_InjectWinhttpLib(item.ProcessId);
             }
@@ -71,7 +71,7 @@ namespace BUGAV {
         private void RTProtection_Button_HookWininet_Click(object sender, EventArgs e) {
             foreach (var item in RTProtection_checkedListBox_Processes.SelectedItems.OfType<ProcListBoxItem>().ToList()) {
                 Console.WriteLine(@"\\.\pipe\myNamedPipe" + item.ProcessId.ToString());
-                NamedPipeServer PServer1 = new NamedPipeServer(@"\\.\pipe\myNamedPipe" + item.ProcessId.ToString(), 0, RTProtection_notifyIcon);
+                NamedPipeServer PServer1 = new NamedPipeServer(@"\\.\pipe\myNamedPipe" + item.ProcessId.ToString(), 0, RTProtection_notifyIcon, "basic");
                 PServer1.Start();
                 __RtProtectionInst.WRAP_InjectWininetLib(item.ProcessId);
             }
@@ -80,7 +80,7 @@ namespace BUGAV {
         private void RTProtection_Button_HookWs2_32_Click(object sender, EventArgs e) {
             foreach (var item in RTProtection_checkedListBox_Processes.SelectedItems.OfType<ProcListBoxItem>().ToList()) {
                 Console.WriteLine(@"\\.\pipe\myNamedPipe" + item.ProcessId.ToString());
-                NamedPipeServer PServer1 = new NamedPipeServer(@"\\.\pipe\myNamedPipe" + item.ProcessId.ToString(), 0, RTProtection_notifyIcon);
+                NamedPipeServer PServer1 = new NamedPipeServer(@"\\.\pipe\myNamedPipe" + item.ProcessId.ToString(), 0, RTProtection_notifyIcon, "basic");
                 PServer1.Start();
                 __RtProtectionInst.WRAP_InjectWs2_32Lib(item.ProcessId);
             }
@@ -89,7 +89,7 @@ namespace BUGAV {
         private void RTProtection_Button_HookConsole_Click(object sender, EventArgs e) {
             foreach (var item in RTProtection_checkedListBox_Processes.SelectedItems.OfType<ProcListBoxItem>().ToList()) {
                 Console.WriteLine(@"\\.\pipe\myNamedPipe" + item.ProcessId.ToString());
-                NamedPipeServer PServer1 = new NamedPipeServer(@"\\.\pipe\myNamedPipe" + item.ProcessId.ToString(), 0, RTProtection_notifyIcon);
+                NamedPipeServer PServer1 = new NamedPipeServer(@"\\.\pipe\myNamedPipe" + item.ProcessId.ToString(), 0, RTProtection_notifyIcon, "basic");
                 PServer1.Start();
                 __RtProtectionInst.WRAP_InjectConsoleLib(item.ProcessId);
             }

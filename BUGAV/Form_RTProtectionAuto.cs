@@ -21,18 +21,26 @@ using StaticAnalyzeManager;
 namespace BUGAV {
     public partial class Form_RTProtectionAuto : DarkForm {
         RTNewFilesWrap __RTNewFilesWrapInst;
+        RtProtectionWrap __RtConsoleMonInst;
+
         Thread __NewFilesThread;
+        Thread __ConsoleMonThread;
+
         bool __NewFilesThread_working;
+        bool __ConsoleMonThread_working;
         public Form_RTProtectionAuto() {
             InitializeComponent();
             try {
                 __RTNewFilesWrapInst = new RTNewFilesWrap();
+                __RtConsoleMonInst = new RtProtectionWrap();
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
                 Console.WriteLine("{0} Exception caught.", e.ToString());
             }
         }
 
+
+        #region newFilesFilter
         private void darkButton1_Click(object sender, EventArgs e) {
             if (RTAuto_NMF_Button.Text == "New Malware Files OFF") {
                 RTAuto_NMF_Button.Text = "New Malware Files ON";
@@ -56,7 +64,7 @@ namespace BUGAV {
                 System.IO.StreamReader file = new System.IO.StreamReader(@"new_files.txt");
                 fname = file.ReadLine();
                 file.Close();
-             
+
                 System.Console.WriteLine(fname);
 
                 //StaticAnalyzeThreadFunc("csharp", fname, RTAuto_notifyIcon);
@@ -103,7 +111,7 @@ namespace BUGAV {
             ResContainer res = resParser.ParseResVerbose();
             Console.WriteLine("resParser.ParseResVerbose -.");
             if (res == null) { return; }
-                _notifyIcon.Visible = true;
+            _notifyIcon.Visible = true;
             string appInfo = string.Empty;
             if (res.isMalware) {
                 _notifyIcon.ShowBalloonTip(5000, "Malware App", "Malware App: " + _target, System.Windows.Forms.ToolTipIcon.Error);
@@ -132,6 +140,64 @@ namespace BUGAV {
                 return null;
             }
         }
+
+        #endregion
+
+        #region consoleMon
+        private void ConsoleMonButton_Click(object sender, EventArgs e) {
+            if (ConsoleMonButton.Text == "ConsoleMonButton OFF") {
+                __RtConsoleMonInst.WRAP_RtProtectionDrv_LoadDriver();
+                if (__RtConsoleMonInst.Get_loaded() == true) {
+                    ConsoleMonButton.Text = "ConsoleMonButton ON";
+                    __ConsoleMonThread = new Thread(new ThreadStart(ConsoleMonThreadFunc));
+                    __ConsoleMonThread_working = true;
+                    __ConsoleMonThread.Start();
+                }
+
+            } else {
+                __ConsoleMonThread_working = false;
+            }
+        }
+
+
+        public void ConsoleMonThreadFunc() {
+            while (__ConsoleMonThread_working) {
+                Console.WriteLine("WRAP_RtProtectionDrv_NewProcMon");
+                bool res = __RtConsoleMonInst.WRAP_RtProtectionDrv_NewProcMon();
+                Console.WriteLine(res.ToString());
+                if (res) {
+                    int _ParentId = __RtConsoleMonInst.Get_ParentId();
+                    int _ProcessId = __RtConsoleMonInst.Get_ProcessId();
+                    int _Create = __RtConsoleMonInst.Get_Create();
+                    if (_Create == 1) {
+                        Process newproc = Process.GetProcessById(_ProcessId);
+                        Console.WriteLine(newproc.ProcessName);
+                        Console.WriteLine(_ParentId);
+                        Console.WriteLine(_ProcessId);
+
+                        if(newproc.ProcessName=="cmd" ||
+                            newproc.ProcessName == "powershell") {
+                            NamedPipeServer PServer1 = 
+                                new NamedPipeServer(
+                                    @"\\.\pipe\myNamedPipe" + _ProcessId.ToString(), 
+                                    0, 
+                                    RTAutoConsole_notifyIcon,
+                                    "console"
+                                    );
+                            PServer1.Start();
+                            __RtConsoleMonInst.WRAP_InjectConsoleLib(_ProcessId);
+                        }
+                    }
+                }
+            }
+            __RtConsoleMonInst.WRAP_RtProtectionDrv_UnloadDriver();
+            if (__RtConsoleMonInst.Get_loaded() == false) {
+                ConsoleMonButton.Text = "ConsoleMonButton OFF";
+            }
+        }
+
+        #endregion
+
 
     }
 }

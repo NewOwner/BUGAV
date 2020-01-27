@@ -15,7 +15,6 @@ void perform_hook(LPCWSTR _module_name, LPCSTR _func_name, void* _hook_ptr) {
 
     std::cout << _func_name << " found at address: " << GetProcAddress(GetModuleHandle(_module_name), _func_name) << "\n";
 
-    // Install the hook
     NTSTATUS result = LhInstallHook(
         GetProcAddress(GetModuleHandle(_module_name), _func_name),
         _hook_ptr,
@@ -29,11 +28,8 @@ void perform_hook(LPCWSTR _module_name, LPCSTR _func_name, void* _hook_ptr) {
         std::cout << "NativeInjectionEntryPoint: Hook for "<< _func_name <<" installed successfully.\n";
     }
 
-    // If the threadId in the ACL is set to 0,
-    // then internally EasyHook uses GetCurrentThreadId()
     ULONG ACLEntries[1] = { 0 };
 
-    // Disable the hook for the provided threadIds, enable for all others
     LhSetExclusiveACL(ACLEntries, 1, &hHook);
 }
 
@@ -57,19 +53,9 @@ void __stdcall NativeInjectionEntryPoint(REMOTE_ENTRY_INFO* inRemoteInfo) {
     if ((hPipe1 == NULL || hPipe1 == INVALID_HANDLE_VALUE)) {
         printf("Could not open the pipe  - (error %d)\n", GetLastError());
     }
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
+    //WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
 
-    perform_hook(TEXT("Kernel32"), "ReadConsoleA", Hook_ReadConsoleA);
-    perform_hook(TEXT("Kernel32"), "ReadConsoleW", Hook_ReadConsoleW);
-    perform_hook(TEXT("Kernel32"), "ReadConsoleInputA", Hook_ReadConsoleInputA);
     perform_hook(TEXT("Kernel32"), "ReadConsoleInputW", Hook_ReadConsoleInputW);
-    perform_hook(TEXT("Kernel32"), "ReadConsoleOutputA", Hook_ReadConsoleOutputA);
-    perform_hook(TEXT("Kernel32"), "ReadConsoleOutputW", Hook_ReadConsoleOutputW);
-    perform_hook(TEXT("Kernel32"), "ReadConsoleOutputCharacterA", Hook_ReadConsoleOutputCharacterA);
-    perform_hook(TEXT("Kernel32"), "ReadConsoleOutputCharacterW", Hook_ReadConsoleOutputCharacterW);
-    //perform_hook(TEXT("Kernel32"), "SetConsoleMode", Hook_SetConsoleMode);
-    perform_hook(TEXT("Kernel32"), "WriteConsoleOutputCharacterA", Hook_WriteConsoleOutputCharacterA);
-    perform_hook(TEXT("Kernel32"), "WriteConsoleOutputCharacterW", Hook_WriteConsoleOutputCharacterW);
     
     return;
 }

@@ -9,7 +9,11 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.IO;
 
+using DynamicAnalyzeCtrl;
+using StaticAnalyzeManager;
+
 namespace BUGAV {
+
     public class NamedPipeServer {
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern SafeFileHandle CreateNamedPipe(
@@ -33,7 +37,7 @@ namespace BUGAV {
 
         public const uint DUPLEX = (0x00000003);
         public const uint FILE_FLAG_OVERLAPPED = (0x40000000);
-
+        public string method;
         public class Client {
             public SafeFileHandle handle;
             public FileStream stream;
@@ -49,10 +53,11 @@ namespace BUGAV {
 
         System.Windows.Forms.NotifyIcon notIcon;
 
-        public NamedPipeServer(string PName, int Mode, System.Windows.Forms.NotifyIcon _notIcon) {
+        public NamedPipeServer(string PName, int Mode, System.Windows.Forms.NotifyIcon _notIcon, string _method) {
             pipeName = PName;
             ClientType = Mode;//0 Reading Pipe, 1 Writing Pipe
             notIcon = _notIcon;
+            method = _method;
         }
 
         public void Start() {
@@ -92,6 +97,15 @@ namespace BUGAV {
                 Console.WriteLine("C# NOT Read thread");
             }
         }
+
+        public static string ByteArrayToString(byte[] ba) {
+            return BitConverter.ToString(ba).Replace("-", "");
+        }
+
+        public static byte[] removeTrailingNulls(byte[] ba) {
+            return ba.TakeWhile((v, index) => ba.Skip(index).Any(w => w != 0x00)).ToArray();
+        }
+
         private void Read() {
             Console.WriteLine("C# pipe server Read");
             //Client client = (Client)clientObj;
@@ -129,11 +143,37 @@ namespace BUGAV {
                 if (ReadLength > 0) {
                     byte[] Rc = new byte[ReadLength];
                     Buffer.BlockCopy(buffer, 0, Rc, 0, ReadLength);
-                    string retstr = encoder.GetString(Rc, 0, ReadLength);
+                    //Console.WriteLine("C# App: Received " + ReadLength + " Bytes: " + retstr);
+                    //Console.WriteLine("C# App: Received " + ReadLength + " Bytes: " + ByteArrayToString(Rc));
+                    byte[] RcTrail = removeTrailingNulls(Rc);
+                    string retstr = encoder.GetString(RcTrail, 0, RcTrail.Length);
                     Console.WriteLine("C# App: Received " + ReadLength + " Bytes: " + retstr);
-                    notIcon.Visible = true;
-                    notIcon.ShowBalloonTip(5000, "Suspitious App", "Suspitious Activity in App: ", System.Windows.Forms.ToolTipIcon.Warning);
                     buffer.Initialize();
+
+                    if (method == "console") {
+                        string _target = "console.txt";
+                        string _consoleIOCS = "consoleIOCS.txt";
+                        System.IO.File.WriteAllText(_target, retstr);
+
+                        string _toolpath = @"java";
+                        string _argflags = 
+                            "-jar similarity-uniform-fuzzy-hash-1.8.4.jar -cfh "
+                            + _target +" "+ _consoleIOCS+" -f 3 -x";
+                        string _fext = "res.console.txt";
+
+                        Console.WriteLine("CONSOOOLE "+ _argflags);
+                        IToolResParse resParser = new ToolResParse_ConsoleMon(_fext);
+                        SAManager.RunToolOutCapture("", _toolpath, _argflags, _fext);
+
+                        ResContainer res = resParser.ParseResVerbose();
+                        notIcon.Visible = true;
+                        if (res.isMalware) {
+                            notIcon.ShowBalloonTip(5000, "Malware App", "Malware App: ", System.Windows.Forms.ToolTipIcon.Error);
+                        }else if (res.isSuspicious) {
+                            notIcon.ShowBalloonTip(5000, "Suspitious App", "Suspicious App: ", System.Windows.Forms.ToolTipIcon.Warning);
+                        }
+                    }
+
                 }
 
             }

@@ -47,6 +47,7 @@
     <Compile Include="IToolResParse.cs" />
     <Compile Include="PinToolManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToolResParse_ConsoleMon.cs" />
     <Compile Include="ToolResParse_FuncArgs.cs" />
     <Compile Include="ToolResParse_ImageLoad.cs" />
     <Compile Include="ToolResParse_RopDetect.cs" />
