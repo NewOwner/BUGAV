@@ -115,9 +115,7 @@ namespace BUGAV {
                 string _fext = ".yara.res.txt";
                 SAManager.RunToolOutCapture(_target, _toolpath, _argflags, _fext);
             }
-            Console.WriteLine("resParser.ParseResVerbose +.");
             ResContainer res = resParser.ParseResVerbose();
-            Console.WriteLine("resParser.ParseResVerbose -.");
             if (res == null) { return; }
             _notifyIcon.Visible = true;
             string appInfo = string.Empty;
@@ -125,7 +123,7 @@ namespace BUGAV {
                 _notifyIcon.ShowBalloonTip(5000, "Malware App", "Malware App: " + _target, System.Windows.Forms.ToolTipIcon.Error);
                 appInfo = String.Join("\n", res.suspiciousAttr.ToArray());
             }
-            if (res.isSuspicious) {
+            else if (res.isSuspicious) {
                 _notifyIcon.ShowBalloonTip(5000, "Suspitious App", "Suspicious App: " + _target, System.Windows.Forms.ToolTipIcon.Warning);
                 appInfo = String.Join("\n", res.suspiciousAttr.ToArray());
             } else {
@@ -234,7 +232,7 @@ namespace BUGAV {
 
         #endregion
 
-        #region
+        #region ApiMon
         private void ApiMonButton_Click(object sender, EventArgs e) {
             if (ApiMonButton.Text == "ApiMon OFF") {
                 __RtApiMonInst.WRAP_RtProtectionDrv_LoadDriver();

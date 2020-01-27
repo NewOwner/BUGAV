@@ -25,7 +25,7 @@ namespace DynamicAnalyzeCtrl {
                 if (line.Contains("malware")) {
                     resCont.isMalware = true;
                 }
-                if (line.Contains("caused too many matches")) {
+                if (line.Contains("too many matches")) {
                     resCont.isMalware = true;
                 }
                 resCont.suspiciousAttr.Add(line);
