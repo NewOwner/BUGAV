@@ -30,6 +30,8 @@
             this.ConsoleMonButton = new DarkUI.Controls.DarkButton();
             this.RTAutoConsole_notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.WebApcMonButton = new DarkUI.Controls.DarkButton();
+            this.ApiMonButton = new DarkUI.Controls.DarkButton();
+            this.ApiMon_notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.SuspendLayout();
             // 
             // RTAuto_NMF_Button
@@ -78,11 +80,30 @@
             this.WebApcMonButton.Text = "WebApcMonButton OFF";
             this.WebApcMonButton.Click += new System.EventHandler(this.WebApcMonButton_Click);
             // 
+            // ApiMonButton
+            // 
+            this.ApiMonButton.Location = new System.Drawing.Point(13, 103);
+            this.ApiMonButton.Name = "ApiMonButton";
+            this.ApiMonButton.Padding = new System.Windows.Forms.Padding(5);
+            this.ApiMonButton.Size = new System.Drawing.Size(144, 23);
+            this.ApiMonButton.TabIndex = 3;
+            this.ApiMonButton.Text = "ApiMon OFF";
+            this.ApiMonButton.Click += new System.EventHandler(this.ApiMonButton_Click);
+            // 
+            // ApiMon_notifyIcon
+            // 
+            this.ApiMon_notifyIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Warning;
+            this.ApiMon_notifyIcon.BalloonTipText = "asdfasdf";
+            this.ApiMon_notifyIcon.BalloonTipTitle = "asdfa";
+            this.ApiMon_notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("ApiMon_notifyIcon.Icon")));
+            this.ApiMon_notifyIcon.Text = "ApiMon_notifyIcon";
+            // 
             // Form_RTProtectionAuto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.ApiMonButton);
             this.Controls.Add(this.WebApcMonButton);
             this.Controls.Add(this.ConsoleMonButton);
             this.Controls.Add(this.RTAuto_NMF_Button);
@@ -100,5 +121,7 @@
         private DarkUI.Controls.DarkButton ConsoleMonButton;
         public System.Windows.Forms.NotifyIcon RTAutoConsole_notifyIcon;
         private DarkUI.Controls.DarkButton WebApcMonButton;
+        private DarkUI.Controls.DarkButton ApiMonButton;
+        public System.Windows.Forms.NotifyIcon ApiMon_notifyIcon;
     }
 }

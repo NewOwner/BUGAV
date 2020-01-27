@@ -46,9 +46,7 @@ void __stdcall NativeInjectionEntryPoint(REMOTE_ENTRY_INFO* inRemoteInfo) {
     if ((hPipe1 == NULL || hPipe1 == INVALID_HANDLE_VALUE)) {
         printf("Could not open the pipe  - (error %d)\n", GetLastError());
     }
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-
-    perform_hook(TEXT("kernel32"), "Beep", Hook_Beep);
+    //WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
 
     perform_hook(TEXT("kernel32"), "LoadLibraryExW", Hook_LoadLibraryExW);
     perform_hook(TEXT("kernel32"), "WinExec", Hook_WinExec);
@@ -59,6 +57,5 @@ void __stdcall NativeInjectionEntryPoint(REMOTE_ENTRY_INFO* inRemoteInfo) {
     perform_hook(TEXT("Advapi32"), "CreateServiceA", Hook_CreateServiceA);
     perform_hook(TEXT("kernel32"), "GetSystemDirectoryW", Hook_GetSystemDirectoryW);
     perform_hook(TEXT("kernel32"), "GetSystemTime", Hook_GetSystemTime);
-    perform_hook(TEXT("kernel32"), "GetProcAddress", Hook_GetProcAddress);
     return;
 }

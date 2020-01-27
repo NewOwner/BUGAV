@@ -23,20 +23,24 @@ namespace BUGAV {
         RTNewFilesWrap __RTNewFilesWrapInst;
         RtProtectionWrap __RtConsoleMonInst;
         WebApcInjldrWrap __WebApcInjldrInst;
+        RtProtectionWrap __RtApiMonInst;
 
         Thread __NewFilesThread;
         Thread __ConsoleMonThread;
         Thread __WebApcInjldrThread;
+        Thread __ApiMonThread;
 
         bool __NewFilesThread_working;
         bool __ConsoleMonThread_working;
         bool __WebApcInjldrThread_working;
+        bool __ApiMonThread_working;
         public Form_RTProtectionAuto() {
             InitializeComponent();
             try {
                 __RTNewFilesWrapInst = new RTNewFilesWrap();
                 __RtConsoleMonInst = new RtProtectionWrap();
                 __WebApcInjldrInst = new WebApcInjldrWrap();
+                __RtApiMonInst = new RtProtectionWrap();
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
                 Console.WriteLine("{0} Exception caught.", e.ToString());
@@ -225,36 +229,65 @@ namespace BUGAV {
             while (__WebApcInjldrThread_working) {
                 Console.WriteLine("WebApcInjldrThreadFunc");
                 __WebApcInjldrInst.WRAP_StartSession();
-                //bool res = __RtConsoleMonInst.WRAP_RtProtectionDrv_NewProcMon();
-                //Console.WriteLine(res.ToString());
-                //if (res) {
-                //    int _ParentId = __RtConsoleMonInst.Get_ParentId();
-                //    int _ProcessId = __RtConsoleMonInst.Get_ProcessId();
-                //    int _Create = __RtConsoleMonInst.Get_Create();
-                //    if (_Create == 1) {
-                //        Process newproc = Process.GetProcessById(_ProcessId);
-                //        Console.WriteLine(newproc.ProcessName);
-                //        Console.WriteLine(_ParentId);
-                //        Console.WriteLine(_ProcessId);
-                //
-                //        if (newproc.ProcessName == "cmd" ||
-                //            newproc.ProcessName == "powershell") {
-                //            NamedPipeServer PServer1 =
-                //                new NamedPipeServer(
-                //                    @"\\.\pipe\myNamedPipe" + _ProcessId.ToString(),
-                //                    0,
-                //                    RTAutoConsole_notifyIcon,
-                //                    "console"
-                //                    );
-                //            PServer1.Start();
-                //            __RtConsoleMonInst.WRAP_InjectConsoleLib(_ProcessId);
-                //        }
-                //    }
-                //}
             }
         }
 
         #endregion
+
+        #region
+        private void ApiMonButton_Click(object sender, EventArgs e) {
+            if (ApiMonButton.Text == "ApiMon OFF") {
+                __RtApiMonInst.WRAP_RtProtectionDrv_LoadDriver();
+                if (__RtApiMonInst.Get_loaded() == true) {
+                    ApiMonButton.Text = "ApiMon ON";
+                    __ApiMonThread = new Thread(new ThreadStart(ApiMonThreadFunc));
+                    __ApiMonThread_working = true;
+                    __ApiMonThread.Start();
+                }
+
+            } else {
+                __ApiMonThread_working = false;
+            }
+        }
+
+        public void ApiMonThreadFunc() {
+            while (__ApiMonThread_working) {
+                Console.WriteLine("WRAP_RtProtectionDrv_NewProcMon");
+                bool res = __RtApiMonInst.WRAP_RtProtectionDrv_NewProcMon();
+                Console.WriteLine(res.ToString());
+                if (res) {
+                    int _ParentId = __RtApiMonInst.Get_ParentId();
+                    int _ProcessId = __RtApiMonInst.Get_ProcessId();
+                    int _Create = __RtApiMonInst.Get_Create();
+                    if (_Create == 1) {
+                        Process newproc = Process.GetProcessById(_ProcessId);
+                        Console.WriteLine(newproc.ProcessName);
+                        Console.WriteLine(_ParentId);
+                        Console.WriteLine(_ProcessId);
+
+                        if (newproc.ProcessName != "cmd" &&
+                            newproc.ProcessName != "powershell") {
+                            NamedPipeServer PServer1 =
+                                new NamedPipeServer(
+                                    @"\\.\pipe\myNamedPipe" + _ProcessId.ToString(),
+                                    0,
+                                    ApiMon_notifyIcon,
+                                    "apimon"
+                                    );
+                            PServer1.Start();
+                            __RtApiMonInst.WRAP_InjectBasicLib(_ProcessId);
+                        }
+                    }
+                }
+            }
+            __RtApiMonInst.WRAP_RtProtectionDrv_UnloadDriver();
+            if (__RtApiMonInst.Get_loaded() == false) {
+                ApiMonButton.Text = "ApiMon OFF";
+            }
+        }
+
+        #endregion
+
 
     }
 }

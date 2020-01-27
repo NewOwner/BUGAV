@@ -2,16 +2,6 @@
 #include "hook_funcs_basic.h"
 
 extern HANDLE hPipe1;
-std::mutex m;
-
-BOOL WINAPI Hook_Beep(DWORD dwFreq, DWORD dwDuration) {
-    std::cout << "\n Hook_Beep \n\n";
-    char buf[500] = "Beep";
-    DWORD cbWritten;
-    DWORD dwBytesToWrite = (DWORD)strlen(buf);
-    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return Beep(dwFreq + 1000, dwDuration);
-}
 
 HMODULE Hook_LoadLibraryExW(LPCWSTR lpLibFileName, HANDLE hFile, DWORD dwFlags) {
     std::cout << "\n Hook_LoadLibraryExW \n\n";
@@ -78,20 +68,18 @@ SC_HANDLE Hook_CreateServiceA(SC_HANDLE hSCManager, LPCSTR lpServiceName, LPCSTR
 
 UINT Hook_GetSystemDirectoryW(LPWSTR lpBuffer, UINT uSize) {
     std::cout << "\n Hook_GetSystemDirectoryW \n\n";
+    char buf[500] = "GetSystemDirectoryW";
+    DWORD cbWritten;
+    DWORD dwBytesToWrite = (DWORD)strlen(buf);
+    WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
     return GetSystemDirectoryW(lpBuffer, uSize);
 }
 
 void Hook_GetSystemTime(LPSYSTEMTIME lpSystemTime) {
     std::cout << "\n Hook_GetSystemTime \n\n";
-    GetSystemTime(lpSystemTime);
-}
-
-FARPROC Hook_GetProcAddress(HMODULE hModule, LPCSTR lpProcName) {
-    std::cout << "\n Hook_GetProcAddress \n\n";
-    char buf[500] = "GetProcAddress";
+    char buf[500] = "GetSystemTime";
     DWORD cbWritten;
     DWORD dwBytesToWrite = (DWORD)strlen(buf);
     WriteFile(hPipe1, buf, dwBytesToWrite, &cbWritten, NULL);
-    return GetProcAddress(hModule, lpProcName);
+    GetSystemTime(lpSystemTime);
 }
-

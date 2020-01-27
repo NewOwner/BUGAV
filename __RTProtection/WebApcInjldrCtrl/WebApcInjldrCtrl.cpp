@@ -205,10 +205,7 @@ BOOL WebApcInjldrCtrl::StartSession() {
         std::cout << "driver not installed!" << std::endl;
         return EXIT_SUCCESS;
     }
-    //if (session_started) {
-    //    std::cout << "Tracing session already started" << std::endl;
-    //    return EXIT_SUCCESS;
-    //}
+
     std::cout << "Starting tracing session..." << std::endl;
 
     ULONG ErrorCode = TraceStart();
