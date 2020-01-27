@@ -29,6 +29,7 @@
             this.RTAuto_notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.ConsoleMonButton = new DarkUI.Controls.DarkButton();
             this.RTAutoConsole_notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.WebApcMonButton = new DarkUI.Controls.DarkButton();
             this.SuspendLayout();
             // 
             // RTAuto_NMF_Button
@@ -67,11 +68,22 @@
             this.RTAutoConsole_notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("RTAutoConsole_notifyIcon.Icon")));
             this.RTAutoConsole_notifyIcon.Text = "RTAutoConsole_notifyIcon";
             // 
+            // WebApcMonButton
+            // 
+            this.WebApcMonButton.Location = new System.Drawing.Point(13, 73);
+            this.WebApcMonButton.Name = "WebApcMonButton";
+            this.WebApcMonButton.Padding = new System.Windows.Forms.Padding(5);
+            this.WebApcMonButton.Size = new System.Drawing.Size(144, 23);
+            this.WebApcMonButton.TabIndex = 2;
+            this.WebApcMonButton.Text = "WebApcMonButton OFF";
+            this.WebApcMonButton.Click += new System.EventHandler(this.WebApcMonButton_Click);
+            // 
             // Form_RTProtectionAuto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.WebApcMonButton);
             this.Controls.Add(this.ConsoleMonButton);
             this.Controls.Add(this.RTAuto_NMF_Button);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -87,5 +99,6 @@
         public System.Windows.Forms.NotifyIcon RTAuto_notifyIcon;
         private DarkUI.Controls.DarkButton ConsoleMonButton;
         public System.Windows.Forms.NotifyIcon RTAutoConsole_notifyIcon;
+        private DarkUI.Controls.DarkButton WebApcMonButton;
     }
 }

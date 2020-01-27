@@ -22,17 +22,21 @@ namespace BUGAV {
     public partial class Form_RTProtectionAuto : DarkForm {
         RTNewFilesWrap __RTNewFilesWrapInst;
         RtProtectionWrap __RtConsoleMonInst;
+        WebApcInjldrWrap __WebApcInjldrInst;
 
         Thread __NewFilesThread;
         Thread __ConsoleMonThread;
+        Thread __WebApcInjldrThread;
 
         bool __NewFilesThread_working;
         bool __ConsoleMonThread_working;
+        bool __WebApcInjldrThread_working;
         public Form_RTProtectionAuto() {
             InitializeComponent();
             try {
                 __RTNewFilesWrapInst = new RTNewFilesWrap();
                 __RtConsoleMonInst = new RtProtectionWrap();
+                __WebApcInjldrInst = new WebApcInjldrWrap();
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
                 Console.WriteLine("{0} Exception caught.", e.ToString());
@@ -198,6 +202,59 @@ namespace BUGAV {
 
         #endregion
 
+        #region WebApcHook
+
+        private void WebApcMonButton_Click(object sender, EventArgs e) {
+            if (WebApcMonButton.Text == "WebApcMonButton OFF") {
+                __WebApcInjldrInst.WRAP_Load();
+                if (__WebApcInjldrInst.Get_loaded() == true) {
+                    WebApcMonButton.Text = "WebApcMonButton ON";
+                    __WebApcInjldrThread = new Thread(new ThreadStart(WebApcInjldrThreadFunc));
+                    __WebApcInjldrThread_working = true;
+                    __WebApcInjldrThread.Start();
+                }
+
+            } else {
+                __WebApcInjldrThread_working = false;
+                __WebApcInjldrInst.WRAP_StopSession();
+                WebApcMonButton.Text = "WebApcMonButton OFF";
+            }
+        }
+
+        public void WebApcInjldrThreadFunc() {
+            while (__WebApcInjldrThread_working) {
+                Console.WriteLine("WebApcInjldrThreadFunc");
+                __WebApcInjldrInst.WRAP_StartSession();
+                //bool res = __RtConsoleMonInst.WRAP_RtProtectionDrv_NewProcMon();
+                //Console.WriteLine(res.ToString());
+                //if (res) {
+                //    int _ParentId = __RtConsoleMonInst.Get_ParentId();
+                //    int _ProcessId = __RtConsoleMonInst.Get_ProcessId();
+                //    int _Create = __RtConsoleMonInst.Get_Create();
+                //    if (_Create == 1) {
+                //        Process newproc = Process.GetProcessById(_ProcessId);
+                //        Console.WriteLine(newproc.ProcessName);
+                //        Console.WriteLine(_ParentId);
+                //        Console.WriteLine(_ProcessId);
+                //
+                //        if (newproc.ProcessName == "cmd" ||
+                //            newproc.ProcessName == "powershell") {
+                //            NamedPipeServer PServer1 =
+                //                new NamedPipeServer(
+                //                    @"\\.\pipe\myNamedPipe" + _ProcessId.ToString(),
+                //                    0,
+                //                    RTAutoConsole_notifyIcon,
+                //                    "console"
+                //                    );
+                //            PServer1.Start();
+                //            __RtConsoleMonInst.WRAP_InjectConsoleLib(_ProcessId);
+                //        }
+                //    }
+                //}
+            }
+        }
+
+        #endregion
 
     }
 }
