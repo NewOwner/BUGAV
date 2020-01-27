@@ -77,18 +77,28 @@ namespace BUGAV {
 
                 //StaticAnalyzeThreadFunc("csharp", fname, RTAuto_notifyIcon);
                 //StaticAnalyzeThreadFunc("cpp", fname, RTAuto_notifyIcon);
-                StaticAnalyzeThreadFunc("yara", fname, RTAuto_notifyIcon);
+                StaticAnalyzeThreadFunc("yara", fname, RTAuto_notifyIcon, RTAuto_textBox);
             }
         }
 
 
-        public Thread StartStaticAnalyzeThread(string _method, string _target, System.Windows.Forms.NotifyIcon _notifyIcon) {
-            var t = new Thread(() => StaticAnalyzeThreadFunc(_method, _target, _notifyIcon));
+        public Thread StartStaticAnalyzeThread(
+            string _method, 
+            string _target, 
+            System.Windows.Forms.NotifyIcon _notifyIcon,
+            System.Windows.Forms.TextBox _info_textbox
+            ) {
+            var t = new Thread(() => StaticAnalyzeThreadFunc(_method, _target, _notifyIcon, _info_textbox));
             t.Start();
             return t;
         }
 
-        private static void StaticAnalyzeThreadFunc(string _method, string _target, System.Windows.Forms.NotifyIcon _notifyIcon) {
+        private static void StaticAnalyzeThreadFunc(
+            string _method, 
+            string _target, 
+            System.Windows.Forms.NotifyIcon _notifyIcon,
+            System.Windows.Forms.TextBox _info_textbox
+            ) {
             if (_target == null) { return; }
             IToolResParse resParser = GetTool(_method, _target);
             if (resParser == null) { return; }
@@ -118,16 +128,20 @@ namespace BUGAV {
             ResContainer res = resParser.ParseResVerbose();
             if (res == null) { return; }
             _notifyIcon.Visible = true;
+            _info_textbox.Clear();
             string appInfo = string.Empty;
             if (res.isMalware) {
                 _notifyIcon.ShowBalloonTip(5000, "Malware App", "Malware App: " + _target, System.Windows.Forms.ToolTipIcon.Error);
                 appInfo = String.Join("\n", res.suspiciousAttr.ToArray());
+                _info_textbox.Text = appInfo;
             }
             else if (res.isSuspicious) {
                 _notifyIcon.ShowBalloonTip(5000, "Suspitious App", "Suspicious App: " + _target, System.Windows.Forms.ToolTipIcon.Warning);
                 appInfo = String.Join("\n", res.suspiciousAttr.ToArray());
+                _info_textbox.Text = appInfo;
             } else {
                 _notifyIcon.ShowBalloonTip(5000, "Nothing Suspitious in App", "App: " + _target, System.Windows.Forms.ToolTipIcon.Info);
+                _info_textbox.Text = appInfo;
             }
         }
 
@@ -188,7 +202,8 @@ namespace BUGAV {
                                     @"\\.\pipe\myNamedPipe" + _ProcessId.ToString(), 
                                     0, 
                                     RTAutoConsole_notifyIcon,
-                                    "console"
+                                    "console",
+                                    newproc.ProcessName
                                     );
                             PServer1.Start();
                             __RtConsoleMonInst.WRAP_InjectConsoleLib(_ProcessId);
@@ -270,7 +285,8 @@ namespace BUGAV {
                                     @"\\.\pipe\myNamedPipe" + _ProcessId.ToString(),
                                     0,
                                     ApiMon_notifyIcon,
-                                    "apimon"
+                                    "apimon",
+                                    newproc.ProcessName
                                     );
                             PServer1.Start();
                             __RtApiMonInst.WRAP_InjectBasicLib(_ProcessId);

@@ -32,6 +32,7 @@
             this.WebApcMonButton = new DarkUI.Controls.DarkButton();
             this.ApiMonButton = new DarkUI.Controls.DarkButton();
             this.ApiMon_notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.RTAuto_textBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // RTAuto_NMF_Button
@@ -98,11 +99,22 @@
             this.ApiMon_notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("ApiMon_notifyIcon.Icon")));
             this.ApiMon_notifyIcon.Text = "ApiMon_notifyIcon";
             // 
+            // RTAuto_textBox
+            // 
+            this.RTAuto_textBox.BackColor = System.Drawing.SystemColors.WindowFrame;
+            this.RTAuto_textBox.ForeColor = System.Drawing.SystemColors.Info;
+            this.RTAuto_textBox.Location = new System.Drawing.Point(164, 13);
+            this.RTAuto_textBox.Multiline = true;
+            this.RTAuto_textBox.Name = "RTAuto_textBox";
+            this.RTAuto_textBox.Size = new System.Drawing.Size(624, 425);
+            this.RTAuto_textBox.TabIndex = 4;
+            // 
             // Form_RTProtectionAuto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.RTAuto_textBox);
             this.Controls.Add(this.ApiMonButton);
             this.Controls.Add(this.WebApcMonButton);
             this.Controls.Add(this.ConsoleMonButton);
@@ -111,6 +123,7 @@
             this.Name = "Form_RTProtectionAuto";
             this.Text = "Form_RTProtectionAuto";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -123,5 +136,6 @@
         private DarkUI.Controls.DarkButton WebApcMonButton;
         private DarkUI.Controls.DarkButton ApiMonButton;
         public System.Windows.Forms.NotifyIcon ApiMon_notifyIcon;
+        private System.Windows.Forms.TextBox RTAuto_textBox;
     }
 }

@@ -38,6 +38,7 @@ namespace BUGAV {
         public const uint DUPLEX = (0x00000003);
         public const uint FILE_FLAG_OVERLAPPED = (0x40000000);
         public string method;
+        public string processname;
         public class Client {
             public SafeFileHandle handle;
             public FileStream stream;
@@ -53,11 +54,12 @@ namespace BUGAV {
 
         System.Windows.Forms.NotifyIcon notIcon;
 
-        public NamedPipeServer(string PName, int Mode, System.Windows.Forms.NotifyIcon _notIcon, string _method) {
+        public NamedPipeServer(string PName, int Mode, System.Windows.Forms.NotifyIcon _notIcon, string _method, string _processname) {
             pipeName = PName;
             ClientType = Mode;//0 Reading Pipe, 1 Writing Pipe
             notIcon = _notIcon;
             method = _method;
+            processname = _processname;
         }
 
         public void Start() {
@@ -168,9 +170,9 @@ namespace BUGAV {
                         ResContainer res = resParser.ParseResVerbose();
                         notIcon.Visible = true;
                         if (res.isMalware) {
-                            notIcon.ShowBalloonTip(5000, "Malware App", "Malware App: ", System.Windows.Forms.ToolTipIcon.Error);
+                            notIcon.ShowBalloonTip(5000, "Malware App", "Malware App: "+processname, System.Windows.Forms.ToolTipIcon.Error);
                         }else if (res.isSuspicious) {
-                            notIcon.ShowBalloonTip(5000, "Suspitious App", "Suspicious App: ", System.Windows.Forms.ToolTipIcon.Warning);
+                            notIcon.ShowBalloonTip(5000, "Suspitious App", "Suspicious App: " + processname, System.Windows.Forms.ToolTipIcon.Warning);
                         }
 
                     }else if(method== "apimon") {
@@ -180,9 +182,9 @@ namespace BUGAV {
                         ResContainer res = resParser.ParseResVerbose();
                         notIcon.Visible = true;
                         if (res.isMalware) {
-                            notIcon.ShowBalloonTip(5000, "Malware App", "Malware App: ", System.Windows.Forms.ToolTipIcon.Error);
+                            notIcon.ShowBalloonTip(5000, "Malware App", "Malware App: " + processname, System.Windows.Forms.ToolTipIcon.Error);
                         } else if (res.isSuspicious) {
-                            notIcon.ShowBalloonTip(5000, "Suspitious App", "Suspicious App: ", System.Windows.Forms.ToolTipIcon.Warning);
+                            notIcon.ShowBalloonTip(5000, "Suspitious App", "Suspicious App: " + processname, System.Windows.Forms.ToolTipIcon.Warning);
                         }
                     }
 
