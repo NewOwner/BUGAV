@@ -172,6 +172,18 @@ namespace BUGAV {
                         }else if (res.isSuspicious) {
                             notIcon.ShowBalloonTip(5000, "Suspitious App", "Suspicious App: ", System.Windows.Forms.ToolTipIcon.Warning);
                         }
+
+                    }else if(method== "apimon") {
+                        string _target = "apimon.txt";
+                        System.IO.File.WriteAllText(_target, retstr);
+                        IToolResParse resParser = new ToolResParse_ApiMon(_target);
+                        ResContainer res = resParser.ParseResVerbose();
+                        notIcon.Visible = true;
+                        if (res.isMalware) {
+                            notIcon.ShowBalloonTip(5000, "Malware App", "Malware App: ", System.Windows.Forms.ToolTipIcon.Error);
+                        } else if (res.isSuspicious) {
+                            notIcon.ShowBalloonTip(5000, "Suspitious App", "Suspicious App: ", System.Windows.Forms.ToolTipIcon.Warning);
+                        }
                     }
 
                 }
