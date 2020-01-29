@@ -1,0 +1,6 @@
+	download here:
+boost 1_17_0
+EasyHook
+Manalyze
+pin_dbi
+YARA
